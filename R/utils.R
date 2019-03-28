@@ -1,4 +1,4 @@
-login.jaqpot <- function(basepath){
+LoginJaqpot <- function(basepath){
   method <- readline("Please choose authentication method: login[1] / Provide Api Key[2]: ")
   if(method == 1){
     username <- readline("Username: ")
@@ -10,11 +10,9 @@ login.jaqpot <- function(basepath){
     res <- content(res, "text")
     authResponse <- fromJSON(res)
     token = authResponse$authToken
-  }
-  if(method == 2){
+  } else if(method == 2) {
     token <- getPass(msg = "Api Key: ", noblank = FALSE, forcemask = FALSE)
-  }
-  else{
+  } else {
     print("Wrong input");
   }
   return(token)
