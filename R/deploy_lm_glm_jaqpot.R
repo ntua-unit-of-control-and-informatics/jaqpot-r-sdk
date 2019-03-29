@@ -1,50 +1,80 @@
-# Deploy lm glm
-#
-# This is the base function of jaqpot named 'deploy.on.jaqpot'
-# which deploys a model on 'Jaqpot'.
-#
-#' deploy.on.jaqpot takes as input a trained model, it uploads it
-#' after some prompt questions and returns a model id
+#' Deploy (generalized) linear models on Jaqpot
 #'
+#' Uploads trained linear models and generalized linear models on 'Jaqpot'. 
+#' 
 #' Suports lm from base
-#' @param model
-
-# source('login.jaqpot.R', local = TRUE)
-
-deploy.lm.glm.jaqpot <- function(object){
-
-  basep <- readline("Base path of jaqpot *etc: https://api.jaqpot.org/ : ")
-  token <- login.jaqpot(basep)
-
-  checkfeatures <- array( names(coef(object)));
-  if(checkfeatures[1]  %in% "(Intercept)"){
-    independentFeaturesfm <- checkfeatures[!checkfeatures  %in% "(Intercept)"]
-  }else{
-    independentFeaturesfm <- checkfeatures
-  }
+#' @param object An object of either class "lm" (base function \code{lm()}) or "lm" "glm" 
+#' (base function \code{glm()})
+#'  
+#'  @return  None
+#'  
+#'  @details The user can upload on Jaqpot a model that has been trained using the base 
+#'  function \code{lm()} or \code{glm()}. The data used for training are deleted before the
+#'  model is uploaded on the platform. Apart from the model object, the user is requested
+#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short 
+#'  description etc.) via prompt messages. If the upload process is successful,
+#'  the user is given a unique model id key. 
+#'  
+#'  @examples
+#'  lm.model <- lm(y~x, data=df)
+#'  DeployLmGlmJaqpot(lm.model)
+#'  
+#'  glm.model <- glm(y~x, data=df, family =  "gaussian")
+#'  DeployLmGlmJaqpot(glm.model)
+#'
+#' @export
+DeployLmGlmJaqpot <- function(object){
+  # Get object class
+  obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
+  # If object not an lm or glm through error
+  if  ( (obj.class != "lm") && (obj.class != "glm")){
+    stop("Model should be of class 'lm' or 'glm' ")
+  }  
+   
+  # Read the base path from the reader
+  base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
+  # Log into Jaqpot using the LoginJaqpot helper function in utils.R
+  token <- .LoginJaqpot(base.path)
+  # Ask the user for a a model title 
   title <- readline("Title of the model: ")
-  discription <- readline("Discription of the model:")
-  if(library_check == 1){
-    libabry_in <- "base"
+  # Ask the user for a short model description
+  description <- readline("Short description of the model:")
+  
+  # Retrieve the independent variables of the model 
+  check.features <- array(names(coef(object)))
+  # Create the names of the  features by excluding the "(Intercept)"
+  if(check.features[1]  %in% "(Intercept)"){
+    independent.vars <- check.features[!check.features  %in% "(Intercept)"]
+  } else {
+    independent.vars <- check.features
   }
-  predicts <- readline("Actual name of the predicted feature: ")
+  
+  # Retrieve predicted variables by using set difference
+  dependent.vars <- setdiff(names(object$model), independent.vars)
+  
+  # Delete attributes that are not necessary in the prediction process and increase object size
+  object$residuals <- NULL
+  object$model <- NULL
+  object$effects<- NULL
+  object$fitted.values<- NULL
+  object$qr$qr <- NULL
+  # Models of class "glm lm" have more unecessary attributes than simple lm models 
+  if (obj.class == "glm"){
+    object$linear.predictors <- NULL
+    object$weights <- NULL
+    object$prior.weights <- NULL
+    object$y <- NULL
+    object$data <- NULL
+  } 
+  # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
-  tojson <- list(rawModel=model,runtime="R-lm-glm", implementedWith="lm or a glm in r",pmmlModel=NULL,independentFeatures=independentFeaturesfm,
-                 predictedFeatures=predicts, dependentFeatures=predicts, title=title, description=discription, algorithm="lm or a glm in r")
-  json <- toJSON(tojson)
-  bearer = paste("Bearer", token, sep=" ")
-  res = POST(basep, path="jaqpot/services/model",
-             add_headers(Authorization=bearer),
-             accept_json(),
-             content_type("application/json"),
-             body = json, encode = "json")
-  code <- status_code(res)
-  if(status_code(res) == 200 ){
-    resp <- content(res, "text")
-    respon <- fromJSON(resp)
-    response <- paste("Model created. The id is: ", respon$modelId, ". Please visit: https://app.jaqpot.org/ to complete ", sep=" ")
-    response
-  }else{
-    code
-  }
+  # Create a list containing the information that will be uploaded on Jaqpot
+  tojson <- list(rawModel=model, runtime="R-lm-glm", implementedWith="lm or a glm in r",
+                 pmmlModel=NULL, independentFeatures=independent.vars,
+                 predictedFeatures=dependent.vars, dependentFeatures=dependent.vars, 
+                 title=title, description=description, algorithm="lm/glm")
+  # Convert the list to a JSON data format
+  json <- jsonlite::toJSON(tojson)
+  # Function that posts the model on Jaqpot
+  .PostOnService(base.path, token, json)
 }
