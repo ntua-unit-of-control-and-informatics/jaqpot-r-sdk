@@ -3,7 +3,7 @@
   method <- readline("Please choose authentication method: [1]: login / [2]: Api Key ")
   # If the user provided his Jaqpot credentials:
   if(method == 1){
-    # Get username and 
+    # Get username and
     username <- readline("Username: ")
     password <- getPass::getPass(msg = "PASSWORD: ", noblank = FALSE, forcemask = FALSE)
     loginto <- paste(basepath, "jaqpot/services/aa/login/", sep = "")
@@ -26,7 +26,7 @@
   authentication = paste("Bearer", token, sep=" ")
   # Post the information to jaqpot
   res = httr::POST(basepath, path="jaqpot/services/model", add_headers(Authorization=authentication),
-             accept_json(), content_type("application/json"), body = json, encode = "json")
+                   accept_json(), content_type("application/json"), body = json, encode = "json")
   # If the model is successfully uploaded, it will receive the status '200'
   code <- httr::status_code(res)
   if(status_code(res) == 200 ){
@@ -34,7 +34,7 @@
     resp <- httr::content(res, "text")
     # Deserialize the JSON object
     respon <- jsonlite::fromJSON(resp)
-    response <- paste("Model created. The id is: ", respon$modelId, 
+    response <- paste("Model created. The id is: ", respon$modelId,
                       ". Please visit the application to further document your model.", sep=" ")
     # Inform the user about the success of the upload process and the model id
     response

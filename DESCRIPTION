@@ -1,12 +1,12 @@
-Package: JaqpotTest
+Package: jaqpotr
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Pantelis Karatzas
+Author: Pantelis Karatzas, Periklis Tsiros
 Maintainer: Pantelis Karatzas <pantelispanka@gmail.com>
 Description: Jaqpot client
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: jsonlite, httr, getPass
-RoxygenNote: 6.1.1
+RoxygenNote: 6.0.1
