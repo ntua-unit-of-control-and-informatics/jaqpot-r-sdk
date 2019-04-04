@@ -1,6 +1,6 @@
 .LoginJaqpot <- function(basepath){
   # Ask user to select authentication method; user credentials or API key
-  method <- readline("Please choose authentication method: [1]: login / [2]: Api Key ")
+  method <- readline("Please choose authentication method ([1]=login / [2]=Provide Api Key): ")
   # If the user provided his Jaqpot credentials:
   if(method == 1){
     # Get username and
