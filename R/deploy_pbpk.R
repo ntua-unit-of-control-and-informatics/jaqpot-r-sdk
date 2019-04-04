@@ -70,9 +70,9 @@ deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names){
   title <- readline("Title of the model: ")
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
-  independent.features <- c(names(data), "time.start" , "time.end", "time.by)"
+  independent.features <- c(names(data), "time.start" , "time.end", "time.by")
   cov.pars <- data[,1:(dim(data)[2]-2-length(comp.names))]
-                         
+
   libabry_in <- "deSolve"
   predicts <- comp.names
   predicts[length(predicts)+1] <- "time"
@@ -81,8 +81,8 @@ deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names){
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
-                 dependentFeatures=predicts, title=title, description=discription,
-                 algorithm=algorithm, additionalInfo =list(comp = comp.names, cov = cov.pars ))
+                 dependentFeatures=predicts, title=title, description=description,
+                 algorithm="PBPK custom", additionalInfo =list(comp = comp.names, cov = cov.pars ))
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
