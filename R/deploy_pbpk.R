@@ -71,7 +71,7 @@ deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names){
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
   independent.features <- c(names(data), "time.start" , "time.end", "time.by")
-  cov.pars <- data[,1:(dim(data)[2]-2-length(comp.names))]
+  cov.pars <- names(data[,1:(dim(data)[2]-2-length(comp.names))])
 
   libabry_in <- "deSolve"
   predicts <- comp.names
