@@ -71,7 +71,8 @@ deploy.pbpk <- function(data, cov.model =NULL, odes, comp.names){
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
   independent.features <- c(names(data), "time.start" , "time.end", "time.by)"
-  
+  cov.pars <- data[,1:(dim(data)[2]-2-length(comp.names))]  
+                         
   libabry_in <- "deSolve" 
   predicts <- comp.names
   predicts[length(predicts)+1] <- "time"
@@ -81,7 +82,7 @@ deploy.pbpk <- function(data, cov.model =NULL, odes, comp.names){
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts, 
                  dependentFeatures=predicts, title=title, description=discription, 
-                 algorithm=algorithm, additionalInfo =list(comp = comp.names ))
+                 algorithm=algorithm, additionalInfo =list(comp = comp.names, cov = cov.pars ))
   # Convert the list to a JSON data format
   json <- toJSON(tojson)
   # Function that posts the model on Jaqpot
