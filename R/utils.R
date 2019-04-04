@@ -8,9 +8,9 @@
     password <- getPass::getPass(msg = "PASSWORD: ", noblank = FALSE, forcemask = FALSE)
     loginto <- paste(basepath, "jaqpot/services/aa/login/", sep = "")
     body <- list(username=username, password = password)
-    httr::set_config(config(ssl_verifypeer = 0L))
+    httr::set_config(httr::config(ssl_verifypeer = 0L))
     res <-  httr::POST(loginto, body = body, encode = "form")
-    res <- httr::content(res, "text")
+    res <- httr::content(res, "text", encoding = 'UTF-8')
     authResponse <- jsonlite::fromJSON(res)
     token = authResponse$authToken
   } else if(method == 2) {
@@ -25,13 +25,13 @@
   # Create a string representing the authentication method (bearer authentication)
   authentication = paste("Bearer", token, sep=" ")
   # Post the information to jaqpot
-  res = httr::POST(basepath, path="jaqpot/services/model", add_headers(Authorization=authentication),
-                   accept_json(), content_type("application/json"), body = json, encode = "json")
+  res = httr::POST(basepath, path="jaqpot/services/model", httr::add_headers(Authorization=authentication),
+                   httr::accept_json(), httr::content_type("application/json"), body = json, encode = "json")
   # If the model is successfully uploaded, it will receive the status '200'
   code <- httr::status_code(res)
-  if(status_code(res) == 200 ){
+  if(code == 200 ){
     # Read the response returned by Jaqpot API
-    resp <- httr::content(res, "text")
+    resp <- httr::content(res, "text", encoding = 'UTF-8')
     # Deserialize the JSON object
     respon <- jsonlite::fromJSON(resp)
     response <- paste("Model created. The id is: ", respon$modelId,
