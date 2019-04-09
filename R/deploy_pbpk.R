@@ -15,6 +15,7 @@
 #' must be in line with the \code{ode())} solver of the \code{deSolve} package (see Details section.)
 #' @param comp.names a string vector containing the names of the compartments of the PBPK model,
 #' which should be in line with the order of the differential equations provided in \code{odes()}.
+#' @param comp.in The compartment through which the substance enters the system. 
 #' @return  The id of the uploaded model, if the upload process is succesful.
 #' @details The indivdual related parameters must be the first parameters declared in the list,
 #' followed by the dose (named 'dose'), the infusion time (named 'infusion.time') and finally the
@@ -61,7 +62,7 @@
 #' deploy.pbpk(data, cov.model, odes, comp.names)
 #' @export
 
-deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names){
+deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names, comp.in = NULL){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
@@ -82,7 +83,7 @@ deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names){
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
                  dependentFeatures=predicts, title=title, description=description,
-                 algorithm="PBPK custom", additionalInfo =list(comp = comp.names, cov = cov.pars ))
+                 algorithm="PBPK custom", additionalInfo =list(comp = comp.names, cov = cov.pars, incomp = comp.in ))
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
