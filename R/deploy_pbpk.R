@@ -19,7 +19,7 @@
 #' @return  The id of the uploaded model, if the upload process is succesful.
 #' @details The indivdual related parameters must be the first parameters declared in the list,
 #' followed by the dose (named 'dose'), the infusion time (named 'infusion.time') and finally the
-#' initial organ concentrtions. The latter should be named as 'C0_NAME' where name is the compartment
+#' initial organ concentrtions. The latter should be named as 'init_NAME' where name is the compartment
 #' name, as provided in the comp.names vector. Note that the names of the individual-related
 #' parameters and the compartments cannot be further modified via the Jaqpot User Interface,
 #' so the user should choose them with caution. The order of the individual-related parameters should
@@ -29,8 +29,8 @@
 #' output of the covariate model.
 #'
 #' @examples
-#' user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, C0_blood=0,
-#'  C0_liver=0)
+#' user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0,
+#'  _liver=0)
 #'
 #' comp_names <- c("blood", "liver")
 #'
@@ -62,7 +62,7 @@
 #' deploy.pbpk(data, cov.model, odes, comp.names)
 #' @export
 
-deploy.pbpk <- function(data, cov.model=NULL, odes, comp.names, comp.in = NULL){
+deploy.pbpk <- function(data, odes, comp.names, comp.in, cov.model=NULL ){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
