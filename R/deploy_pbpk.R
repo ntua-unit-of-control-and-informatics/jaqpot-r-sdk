@@ -1,6 +1,6 @@
 #' Deploy a pbpk model on Jaqpot.
 #'
-#' Uploads a PBPK mode on Jaqpot given a dataset, a set of differential equations and
+#' Uploads a PBPK model on Jaqpot given a dataset, a set of differential equations and
 #' -if applicable- a covariate model.
 #'
 #' @param data A list of positive numbers. It should contain the independent parameters,
@@ -62,7 +62,9 @@
 #' deploy.pbpk(data, cov.model, odes, comp.names)
 #' @export
 
-deploy.pbpk <- function(data, odes, comp.names, comp.in, cov.model=NULL ){
+
+deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits, create.events, 
+                        custom.func, ode.func){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
@@ -71,19 +73,23 @@ deploy.pbpk <- function(data, odes, comp.names, comp.in, cov.model=NULL ){
   title <- readline("Title of the model: ")
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
-  independent.features <- c(names(data), "time.start" , "time.end", "time.by")
-  cov.pars <- names(data[,1:(dim(data)[2]-2-length(comp.names))])
-
+  # Set the time vector variables (for ODE output)
+  independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step", "solver")
+  
+  # Which library is necessary for obtaining predictions from the PBPK model
   libabry_in <- "deSolve"
-  predicts <- comp.names
+  # What the model output is
+  predicts <- predicted.feats
   predicts[length(predicts)+1] <- "time"
   # Serialize the model in order to upload it on Jaqpot
-  model <- serialize(list(COVMODEL=cov.model, ODEMODEL=odes),connection=NULL)
+  model <- serialize(list(create.params = create.params, create.inits = create.inits, 
+                          create.events = create.events, custom.func = custom.func,
+                          ode.func = ode.func),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
                  dependentFeatures=predicts, title=title, description=description,
-                 algorithm="PBPK custom", additionalInfo =list(comp = comp.names, cov = cov.pars, incomp = comp.in ))
+                 algorithm="PBPK custom", additionalInfo =list())
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
