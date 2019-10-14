@@ -64,7 +64,7 @@
 
 
 deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits, create.events, 
-                        custom.func, ode.func){
+                        custom.func, ode.func, method = "lsodes", ...){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
@@ -74,7 +74,9 @@ deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
   # Set the time vector variables (for ODE output)
-  independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step", "solver")
+  independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step")
+  # Convert three dots into list
+  extra.args <- list(...)
   
   # Which library is necessary for obtaining predictions from the PBPK model
   libabry_in <- "deSolve"
@@ -89,7 +91,7 @@ deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
                  dependentFeatures=predicts, title=title, description=description,
-                 algorithm="PBPK custom", additionalInfo =list())
+                 algorithm="PBPK custom", additionalInfo = list(extra.args, method)
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
