@@ -91,7 +91,7 @@ deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
                  dependentFeatures=predicts, title=title, description=description,
-                 algorithm="PBPK custom", additionalInfo = list(extra.args, method)
+                 algorithm="PBPK custom", additionalInfo = list(extra.args, method))
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
