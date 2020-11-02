@@ -1,9 +1,9 @@
 #' Deploy (generalized) linear models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
-#' an "lm" or "glm" "lm" object.
+#' an "lm" or "glm" object.
 #'
-#' @param object An object of either class "lm" (base function \code{lm()}) or "lm" "glm"
+#' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()})
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
@@ -30,13 +30,14 @@ deploy.lm.glm <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
+  # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
+  base.path <- .SelectBasePath()
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
   title <- readline("Title of the model: ")
   # Ask the user for a short model description
-  description <- readline("Short description of the model:")
+  description <- readline("Short description of the model: ")
 
   # Retrieve the independent variables of the model
   check.features <- array(names(coef(object)))
@@ -46,6 +47,7 @@ deploy.lm.glm <- function(object){
   } else {
     independent.vars <- check.features
   }
+
 
   # Retrieve predicted variables by using set difference
   dependent.vars <- setdiff(names(object$model), independent.vars)
@@ -76,3 +78,10 @@ deploy.lm.glm <- function(object){
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
+
+
+
+
+
+
+

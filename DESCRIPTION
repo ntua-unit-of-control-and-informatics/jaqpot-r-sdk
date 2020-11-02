@@ -9,4 +9,4 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: jsonlite, httr, getPass
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0

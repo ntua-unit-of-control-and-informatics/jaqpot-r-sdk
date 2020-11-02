@@ -1,25 +1,24 @@
-#' Deploy (tree) Tree models on Jaqpot
+#' Deploy (party) Tree models on Jaqpot
 #'
 #' Uploads trained tree tree regression model on Jaqpot given
 #' a "tree" object.
 #'
-#' @param object An object of either class "" (base function \code{tree()}) or "tree"
-#' (base function \code{tree()})
+#' @param object An object of either clasa party (base function \code{party()})
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{tree()}. The data used for training are deleted before the
+#'  function \code{party()}. The data used for training are deleted before the
 #'  model is uploaded on the platform. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  tree.model <- tree(y~x, data=df)
+#'  party.model <- party(y~x, data=df)
 #'  deploy.tree(tree.model)
 #'
 #'
 #' @export
-deploy.tree <- function(object){
+deploy.party <- function(object){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -37,9 +36,9 @@ deploy.tree <- function(object){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-  independent.vars <- attributes(object$terms)$term.labels
+  independent.vars <- list(party@data@formula$input)
   # Retrieve predicted variables by using set difference
-  dependent.vars <- as.character(attributes(object$terms)$predvars[[2]])
+  dependent.vars <- list(party@data@formula$response)
 
   # Delete attributes that are not necessary in the prediction process and increase object size
   object$where <- NULL

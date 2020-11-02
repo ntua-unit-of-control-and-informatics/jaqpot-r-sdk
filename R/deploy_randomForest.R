@@ -1,6 +1,6 @@
-#' Deploy (tree) Tree models on Jaqpot
+#' Deploy (rpart) Tree models on Jaqpot
 #'
-#' Uploads trained tree tree regression model on Jaqpot given
+#' Uploads trained rpart tree model on Jaqpot given
 #' a "tree" object.
 #'
 #' @param object An object of either class "" (base function \code{tree()}) or "tree"
@@ -19,13 +19,13 @@
 #'
 #'
 #' @export
-deploy.tree <- function(object){
+deploy.randomForest <- function(object){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
-  if  ( (obj.class != "tree")){
-    stop("Model should be of class 'tree' ")
+  if (obj.class != "randomForest.formula"){
+    stop("Model should be of class 'randomForest' ")
   }
 
   # Read the base path from the reader
@@ -37,24 +37,36 @@ deploy.tree <- function(object){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-  independent.vars <- attributes(object$terms)$term.labels
+  independent.vars <- array(attributes(object$terms)$term.labels)
   # Retrieve predicted variables by using set difference
-  dependent.vars <- as.character(attributes(object$terms)$predvars[[2]])
+  dependent.vars <- names(attributes(object$terms)$dataClasses)[[1]]
 
   # Delete attributes that are not necessary in the prediction process and increase object size
-  object$where <- NULL
-  object$call <- NULL
   object$y <- NULL
-  object$weights <- NULL
+  object$mse <- NULL
+  object$rsq <- NULL
+  object$oob.times <- NULL
+  object$importance <- NULL
+  object$proximity <- NULL
+  object$coefs <- NULL
+  object$inbag <- NULL
+  object$localImportance <- NULL
+  object$importanceSD <- NULL
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
-  tojson <- list(rawModel=model, runtime="R-tree", implementedWith="tree in R",
+  tojson <- list(rawModel=model, runtime="R-rf-tree", implementedWith="Random forest in R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="R/tree")
+                 title=title, description=description, algorithm="R/rf")
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
+
+
+
+
+
+

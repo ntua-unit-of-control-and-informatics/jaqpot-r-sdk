@@ -7,7 +7,7 @@
 deploy.lm.glm(object)
 }
 \arguments{
-\item{object}{An object of either class "lm" (base function \code{lm()}) or "lm" "glm"
+\item{object}{An object of either class "lm" (base function \code{lm()}) or "glm"
 (base function \code{glm()})}
 }
 \value{
@@ -15,7 +15,7 @@ The id of the uploaded model
 }
 \description{
 Uploads trained linear and generalized linear models on Jaqpot given
-an "lm" or "glm" "lm" object.
+an "lm" or "glm" object.
 }
 \details{
 The user can upload on Jaqpot a model that has been trained using the base

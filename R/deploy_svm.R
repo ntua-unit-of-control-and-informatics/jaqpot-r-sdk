@@ -1,31 +1,31 @@
-#' Deploy (tree) Tree models on Jaqpot
+#' Deploy (svm) svm models on Jaqpot
 #'
 #' Uploads trained tree tree regression model on Jaqpot given
-#' a "tree" object.
+#' a "svm" object.
 #'
-#' @param object An object of either class "" (base function \code{tree()}) or "tree"
-#' (base function \code{tree()})
+#' @param object An object of either class "" (base function \code{svm()}) or "svm"
+#' (base function \code{tsvm()})
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{tree()}. The data used for training are deleted before the
+#'  function \code{svm()}. The data used for training are deleted before the
 #'  model is uploaded on the platform. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  tree.model <- tree(y~x, data=df)
-#'  deploy.tree(tree.model)
+#'  svm.model <- svm(y~x, data=df)
+#'  deploy.svm(tree.model)
 #'
 #'
 #' @export
-deploy.tree <- function(object){
+deploy.svm <- function(object){
 
   # Get object class
-  obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
-  # If object not an lm or glm through error
-  if  ( (obj.class != "tree")){
-    stop("Model should be of class 'tree' ")
+  obj.class <- attributes(object)$class[1]
+  # If object not an svm through error
+  if  ( (obj.class != "svm.formula")){
+    stop("Model should be of class 'svm' ")
   }
 
   # Read the base path from the reader
@@ -41,18 +41,13 @@ deploy.tree <- function(object){
   # Retrieve predicted variables by using set difference
   dependent.vars <- as.character(attributes(object$terms)$predvars[[2]])
 
-  # Delete attributes that are not necessary in the prediction process and increase object size
-  object$where <- NULL
-  object$call <- NULL
-  object$y <- NULL
-  object$weights <- NULL
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
-  tojson <- list(rawModel=model, runtime="R-tree", implementedWith="tree in R",
+  tojson <- list(rawModel=model, runtime="R-svm", implementedWith="e1071",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="R/tree")
+                 title=title, description=description, algorithm="r / svm")
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
