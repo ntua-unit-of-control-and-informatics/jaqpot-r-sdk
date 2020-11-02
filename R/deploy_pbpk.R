@@ -15,7 +15,7 @@
 #' must be in line with the \code{ode())} solver of the \code{deSolve} package (see Details section.)
 #' @param comp.names a string vector containing the names of the compartments of the PBPK model,
 #' which should be in line with the order of the differential equations provided in \code{odes()}.
-#' @param comp.in The compartment through which the substance enters the system. 
+#' @param comp.in The compartment through which the substance enters the system.
 #' @return  The id of the uploaded model, if the upload process is succesful.
 #' @details The indivdual related parameters must be the first parameters declared in the list,
 #' followed by the dose (named 'dose'), the infusion time (named 'infusion.time') and finally the
@@ -29,8 +29,7 @@
 #' output of the covariate model.
 #'
 #' @examples
-#' user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0,
-#'  _liver=0)
+#' user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0, liver=0)
 #'
 #' comp_names <- c("blood", "liver")
 #'
@@ -63,8 +62,8 @@
 #' @export
 
 
-deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits, create.events, 
-                        custom.func, ode.func){
+deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits, create.events,
+                        custom.func, ode.func, method = "lsodes", ...){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
@@ -74,22 +73,25 @@ deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits
   # Ask the user for a short model description
   description <- readline("Short description of the model:")
   # Set the time vector variables (for ODE output)
-  independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step", "solver")
-  
+  independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step")
+  # Convert three dots into list
+  extra.args <- list(...)
+
   # Which library is necessary for obtaining predictions from the PBPK model
   libabry_in <- "deSolve"
   # What the model output is
   predicts <- predicted.feats
   predicts[length(predicts)+1] <- "time"
   # Serialize the model in order to upload it on Jaqpot
-  model <- serialize(list(create.params = create.params, create.inits = create.inits, 
+  model <- serialize(list(create.params = create.params, create.inits = create.inits,
                           create.events = create.events, custom.func = custom.func,
                           ode.func = ode.func),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
                  independentFeatures=independent.features, predictedFeatures=predicts,
                  dependentFeatures=predicts, title=title, description=description,
-                 algorithm="PBPK custom", additionalInfo =list())
+                 algorithm="PBPK custom", additionalInfo = list("extra.args" = extra.args,
+                                                                "method" = method))
   # Convert the list to a JSON data format
   json <- jsonlite::toJSON(tojson)
   # Function that posts the model on Jaqpot
