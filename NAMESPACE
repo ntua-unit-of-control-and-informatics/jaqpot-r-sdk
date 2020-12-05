@@ -2,6 +2,7 @@
 
 export(deploy.gbm)
 export(deploy.lm.glm)
+export(deploy.naive.bayess)
 export(deploy.party)
 export(deploy.pbpk)
 export(deploy.randomForest)
