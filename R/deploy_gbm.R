@@ -13,12 +13,12 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  gbm.model <- gbm(y~x, data=df)
-#'  deploy.tree(gbm.model)
+#'  #gbm.model <- gbm(y~x, data=df)
+#'  #deploy.tree(gbm.model)
 #'
 #'
 #' @export
-deploy.gmb <- function(object){
+deploy.gbm <- function(object){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -39,7 +39,6 @@ deploy.gmb <- function(object){
   independent.vars <- object$var.names
   # Retrieve predicted variables by using set difference
   dependent.vars <- object$response.name
-  print(dependent.vars)
   # Delete attributes that are not necessary in the prediction process and increase object size
   object$train.error <- NULL
   object$valid.error <- NULL
@@ -47,7 +46,7 @@ deploy.gmb <- function(object){
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
-  tojson <- list(rawModel=model, runtime="R-gmb", implementedWith="gmb tree in R",
+  tojson <- list(rawModel=model, runtime="R-gbm", implementedWith="gbm tree in R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
                  title=title, description=description, algorithm="R/tree/gmb")

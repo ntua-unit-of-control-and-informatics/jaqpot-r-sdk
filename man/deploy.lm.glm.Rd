@@ -26,10 +26,10 @@ The user can upload on Jaqpot a model that has been trained using the base
  the user is given a unique model id key.
 }
 \examples{
- lm.model <- lm(y~x, data=df)
- deploy.lm.glm(lm.model)
+ #lm.model <- lm(y~x, data=df)
+ #deploy.lm.glm(lm.model)
 
- glm.model <- glm(y~x, data=df, family =  "gaussian")
- deploy.lm.glm(glm.model)
+ #glm.model <- glm(y~x, data=df, family =  "gaussian")
+ #deploy.lm.glm(glm.model)
 
 }

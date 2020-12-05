@@ -3,29 +3,31 @@
 #' Uploads trained tree tree regression model on Jaqpot given
 #' a "tree" object.
 #'
-#' @param object An object of either clasa party (base function \code{party()})
+#' @param object An object of  (party function \code{ctree(()}) or "party model"
+#' (party function \code{ctree(()})
+#'
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{party()}. The data used for training are deleted before the
+#'  function \code{ctree()}. The data used for training are deleted before the
 #'  model is uploaded on the platform. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  party.model <- party(y~x, data=df)
-#'  deploy.tree(tree.model)
+#'  #party.model <- party(y~x, data=df)
+#'  #deploy.tree(tree.model)
 #'
 #'
 #' @export
 deploy.party <- function(object){
 
   # Get object class
-  obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
+  #obj.class <- attributes(object)$class[1] # class of tree models is "tree"
   # If object not an lm or glm through error
-  if  ( (obj.class != "tree")){
-    stop("Model should be of class 'tree' ")
-  }
+  #if  ( (obj.class != "tree")){
+  #  stop("Model should be of class 'tree' ")
+  #}
 
   # Read the base path from the reader
   base.path <- .SelectBasePath()
@@ -36,15 +38,18 @@ deploy.party <- function(object){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-  independent.vars <- list(party@data@formula$input)
+  independent.vars.str <- as.character(object@data@formula$input)[2]
+  independent.vars <- unlist(strsplit(independent.vars.str,split='+', fixed=TRUE))
+
   # Retrieve predicted variables by using set difference
-  dependent.vars <- list(party@data@formula$response)
+  dependent.vars.str <- as.character(object@data@formula$response)[2]
+  dependent.vars <-  unlist(strsplit(dependent.vars.str,split='+', fixed=TRUE))
 
   # Delete attributes that are not necessary in the prediction process and increase object size
-  object$where <- NULL
-  object$call <- NULL
-  object$y <- NULL
-  object$weights <- NULL
+  #object$where <- NULL
+  #object$call <- NULL
+  #object$y <- NULL
+  #object$weights <- NULL
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot

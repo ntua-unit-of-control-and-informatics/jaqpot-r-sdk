@@ -14,11 +14,11 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  lm.model <- lm(y~x, data=df)
-#'  deploy.lm.glm(lm.model)
+#'  #lm.model <- lm(y~x, data=df)
+#'  #deploy.lm.glm(lm.model)
 #'
-#'  glm.model <- glm(y~x, data=df, family =  "gaussian")
-#'  deploy.lm.glm(glm.model)
+#'  #glm.model <- glm(y~x, data=df, family =  "gaussian")
+#'  #deploy.lm.glm(glm.model)
 #'
 #' @export
 deploy.lm.glm <- function(object){
@@ -40,7 +40,7 @@ deploy.lm.glm <- function(object){
   description <- readline("Short description of the model: ")
 
   # Retrieve the independent variables of the model
-  check.features <- array(names(coef(object)))
+  check.features <- array(names(stats::coef(object)))
   # Create the names of the  features by excluding the "(Intercept)"
   if(check.features[1]  %in% "(Intercept)"){
     independent.vars <- check.features[!check.features  %in% "(Intercept)"]

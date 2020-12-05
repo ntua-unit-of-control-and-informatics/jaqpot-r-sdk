@@ -3,8 +3,8 @@
 #' Uploads trained tree tree regression model on Jaqpot given
 #' a "svm" object.
 #'
-#' @param object An object of either class "" (base function \code{svm()}) or "svm"
-#' (base function \code{tsvm()})
+#' @param object An object of either class "" (e1071 function \code{svm()}) or "svm"
+#' (e1071 function \code{tsvm()})
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
 #'  function \code{svm()}. The data used for training are deleted before the
@@ -14,8 +14,8 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  svm.model <- svm(y~x, data=df)
-#'  deploy.svm(tree.model)
+#'  #svm.model <- svm(y~x, data=df)
+#'  #deploy.svm(tree.model)
 #'
 #'
 #' @export

@@ -14,8 +14,8 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  rpart.model <- rpart(y~x, data=df)
-#'  deploy.rpart.tree(rpart.model)
+#'  #rpart.model <- rpart(y~x, data=df)
+#'  #deploy.rpart.tree(rpart.model)
 #'
 #'
 #' @export
@@ -80,8 +80,8 @@ deploy.rpart.class.tree <- function(object){
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  rpart.model <- rpart(y~x, data=df)
-#'  deploy.rpart.tree(rpart.model)
+#'  #rpart.model <- rpart(y~x, data=df)
+#'  #deploy.rpart.tree(rpart.model)
 #'
 #'
 #' @export
@@ -146,8 +146,8 @@ deploy.rpart.regr.tree <- function(object){
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  rpart.model <- rpart(y~x, data=df)
-#'  deploy.rpart.tree(rpart.model)
+#'  #rpart.model <- rpart(y~x, data=df)
+#'  #deploy.rpart.tree(rpart.model)
 #'
 #'
 #' @export

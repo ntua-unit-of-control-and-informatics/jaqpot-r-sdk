@@ -1,12 +1,28 @@
 Package: jaqpotr
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Pantelis Karatzas, Periklis Tsiros
-Maintainer: Pantelis Karatzas <pantelispanka@gmail.com>
-Description: Jaqpot client
-License: What license is it under?
+Title: Deploys R models as web services on the Jaqpot platform
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Pantelis",
+             family = "Karatzas",
+             role = c("aut", "cre"),
+             email = "pantelispanka@gmail.com"),
+      person(given = "Periklis",
+             family = "Tsiros",
+             role = "ctb",
+             email = "ptsirostsib@gmail.com"))
+Description: This library allows R users to deploy their models on the Jaqpot platform and expose them as ready to use web services.
+License: MIT + file LICENSE
+URL: https://github.com/euclia/jaqpotr/
+BugReports: https://github.com/euclia/jaqpotr/issues
 Encoding: UTF-8
 LazyData: true
-Imports: jsonlite, httr, getPass
-RoxygenNote: 7.1.0
+Imports: httr, jsonlite, getPass, stats
+RoxygenNote: 7.1.1
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2020-11-19 20:05:56 UTC; periklis
+Author: Pantelis Karatzas [aut, cre],
+  Periklis Tsiros [ctb]
+Maintainer: Pantelis Karatzas <pantelispanka@gmail.com>

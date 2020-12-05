@@ -55,34 +55,34 @@ user should take into consideration that the parameters of the \code{odes()} fun
 output of the covariate model.
 }
 \examples{
-user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0, liver=0)
+#user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0, liver=0)
 
-comp_names <- c("blood", "liver")
+#comp_names <- c("blood", "liver")
 
-covariates <- function(weight, gender){
-  Q_blood <-  #some function of weight and gender
-  Q_liver <-  #some function of weight and gender
-  V_blood <-  #some function of weight and gender
-  V_liver <-   #some function of weight and gender
-  return(Q_blood, Q_liver, V_blood, V_liver)
-}
+#covariates <- function(weight, gender){
+#   Q_blood <-  #some function of weight and gender
+#   Q_liver <-  #some function of weight and gender
+#   V_blood <-  #some function of weight and gender
+#   V_liver <-   #some function of weight and gender
+#   return(Q_blood, Q_liver, V_blood, V_liver)
+# }
 
-odes <- function(time,C,params){
-   dCdt<-rep(0,14)
-   Q_blood <- params[1]
-   Q_liver <- params[2]
-   V_blood <- params[3]
-   V_liver <- params[4]
-   ...
-   dose <- params[N-1]
-   infusion_time <- params[N] # dose and infusion time must be the last two parameters
-   kp= 10
-   CL=10
+#odes <- function(time,C,params){
+#  dCdt<-rep(0,14)
+#    Q_blood <- params[1]
+#    Q_liver <- params[2]
+#    V_blood <- params[3]
+#    V_liver <- params[4]
+#    ...
+#    dose <- params[N-1]
+#    infusion_time <- params[N] # dose and infusion time must be the last two parameters
+#    kp= 10
+#    CL=10
 
-   dCdt[1]<- Q_blood * C[2] /  V_blood
-   dCdt[2]<-(-Q_liver * C[2] / (kp * V_liver)) -CL
+#    dCdt[1]<- Q_blood * C[2] /  V_blood
+#    dCdt[2]<-(-Q_liver * C[2] / (kp * V_liver)) -CL
 
-   list(dCdt)
-}
-deploy.pbpk(data, cov.model, odes, comp.names)
+#    list(dCdt)
+# }
+#deploy.pbpk(data, cov.model, odes, comp.names)
 }

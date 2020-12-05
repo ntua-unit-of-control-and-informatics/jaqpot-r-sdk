@@ -14,8 +14,8 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  tree.model <- tree(y~x, data=df)
-#'  deploy.tree(tree.model)
+#'  #tree.model <- tree(y~x, data=df)
+#'  #deploy.tree(tree.model)
 #'
 #'
 #' @export
