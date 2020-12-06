@@ -1,25 +1,25 @@
-#' Deploy Naive Bayess models on Jaqpot
+#' Deploy Naive Bayes models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
-#' an "naive_bayess" object.
+#' a "naive_bayes" object of the 'naivebayes' package.
 #'
-#' @param object An object of either class "naive_bayess" (base function \code{naiveBayess()})
-#' (base function \code{naiveBayess()})
+#' @param object An object of class "naive_bayes"  (function \code{naiveBayess()} of package 'naivebayes')
 #' @return  The id of the uploaded model
-#' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{naiveBayess()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
+#' @details The user can upload on Jaqpot a model that has been trained using the 
+#'  function \code{naive_bayes()} of package 'naivebayes'. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
-#'  description etc.) via prompt messages. If the upload process is successful,
+#'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
+#'  \dontrun{
 #'  #nb.model <- naivebayes::naive_bayes(y~x, data=df)
-#'  #deploy.naive.bayess(nb.model)
+#'  #deploy.nb(nb.model)
+#'  }
 #'
 #'
 #' @export
-deploy.naive.bayess <- function(object){
+deploy.nb <- function(object){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an "naive_bayes" through error
