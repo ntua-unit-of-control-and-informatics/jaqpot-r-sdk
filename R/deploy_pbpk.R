@@ -1,7 +1,14 @@
-#' Deploy a pbpk model on Jaqpot.
+#' Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.
 #'
-#' Uploads a PBPK model on Jaqpot given a dataset, a set of differential equations and
-#' -if applicable- a covariate model.
+#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode} function of package 'deSolve' 
+#' The user must provide two vectors, one with the inputs that the end-user will provide on the Jaqpot 
+#' User Interface (UI) and one with the predicted features that will be printed on the UI upon execution
+#' of the ODE system. In addition, the user can provide five functions, all of which should return
+#' lists. The first function transforms the user input according to the needs of the ODE model, the 
+#' second creates the initial conditions of the ODEs, the third creates the events that are forced
+#' on the system, the fourth gives the ability to the user to use custom functions inside the ODEs and
+#' the last is the ODEs, with syntax in line with the one used by package 'deSolve'. The functions
+#' can be used in a nested style (see example).
 #'
 #' @param data A list of positive numbers. It should contain the independent parameters,
 #' i.e. parameters related to the individual (e.g. weight, age etc.) that will be forwarded to
@@ -29,41 +36,132 @@
 #' output of the covariate model.
 #'
 #' @examples
-#' #user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0, liver=0)
-#'
-#' #comp_names <- c("blood", "liver")
-#'
-#' #covariates <- function(weight, gender){
-#' #   Q_blood <-  #some function of weight and gender
-#' #   Q_liver <-  #some function of weight and gender
-#' #   V_blood <-  #some function of weight and gender
-#' #   V_liver <-   #some function of weight and gender
-#' #   return(Q_blood, Q_liver, V_blood, V_liver)
-#' # }
-#'
-#' #odes <- function(time,C,params){
-#' #  dCdt<-rep(0,14)
-#' #    Q_blood <- params[1]
-#' #    Q_liver <- params[2]
-#' #    V_blood <- params[3]
-#' #    V_liver <- params[4]
-#' #    ...
-#' #    dose <- params[N-1]
-#' #    infusion_time <- params[N] # dose and infusion time must be the last two parameters
-#' #    kp= 10
-#' #    CL=10
-#'
-#' #    dCdt[1]<- Q_blood * C[2] /  V_blood
-#' #    dCdt[2]<-(-Q_liver * C[2] / (kp * V_liver)) -CL
-#'
-#' #    list(dCdt)
-#' # }
-#' #deploy.pbpk(data, cov.model, odes, comp.names)
+#' \dontrun{
+#' user.input <-list("weight" = 250,"dose" = c(10,12), "administration.time" = c(0,1.5) )
+#' predicted.feats <- c("Li")
+#' ##########################################
+#' # Function for creating parameter vector #
+#' ##########################################
+#' 
+#' create.params <- function(input){
+#'   with( as.list(input),{
+#'     
+#'   ############################
+#'   # Physiological parameters #
+#'   ############################
+#'   # tissue weights (in g)
+#'   W_tot <- weight # ;body weight, experimental data - g
+#'   W_lu <-1.2 # weight of lungs, experimental data - g
+#'   W_li <- 10.03 # weight of liver, experimental data - g
+#'  
+#'   W_blood <- 0.065 * W_tot
+#'   W_rob <- W_tot - (W_blood + W_li + W_lu)
+#'  
+#'   #Regional blood flows (in mL per hour)
+#'   fQl = 0.183 # fraction of cardiac output to liver, unitless
+#'   fQrob = 1-fQl # fraction of cardiac output to rest of the body,  unitless
+#'   Q_tot <- 4980 # cardiac output, mL/h    
+#'   Q_li <- fQl*Q_tot    # blood flow to liver, mL/h
+#'   Q_rob <- fQrob*Q_tot # blood flow to rest of the body, mL/h
+#'  
+#'   P <-1.435445 # partition coefficient tissue:blood, unitless
+#'   CLE_f <- 9.958839e-05 # clearance rate to feces from liver,  mL/h
+#'  
+#'   return(list("W_lu" = W_lu, "W_li" = W_li, "W_rob" = W_rob, "W_blood" = W_blood, "Q_tot" =  Q_tot,
+#'                 "Q_li" = Q_li, "Q_rob" = Q_rob, "P" = P,"CLE_f" = CLE_f, "dose" = dose))
+#'   })
+#' }
+#' 
+#' ### store the values
+#' params <- create.params(user_input)
+#' 
+#' #################################################
+#' # Function for creating initial values for ODEs #
+#' #################################################
+#' 
+#' create.inits <- function(parameters){
+#'   with( as.list(parameters),{
+#'     Lu <- 0; Rob <- 0;Li <- 0; Art_blood <- 0; Ven_blood <- 0;
+#'     
+#'     return(c("Lu" = Lu, "Rob" = Rob, "Li" = Li, "Art_blood" = Art_blood,
+#'              "Ven_blood" = Ven_blood))
+#'   })
+#' }
+#' ##store the values
+#' inits <- create.inits(params)
+#' 
+#' #################################################
+#' # Function for creating events #
+#' #################################################
+#' create.events<- function(parameters){
+#'   with( as.list(parameters),{
+#'     
+#'     ldose <- length(dose)
+#'     ltimes <- length(administration.time)
+#'     
+#'     addition <- dose
+#'     if (ltimes == ldose){
+#'       events <- list(data = rbind(data.frame(var = "Ven_blood",  time = administration.time,
+#'                                              value = addition, method = c("add")) ))
+#'     }else{
+#'       stop("The times when the drug is injected should be equal in number to the doses")
+#'     }
+#'     
+#'     
+#'     return(events)
+#'   })
+#' }
+#' 
+#' events <- create.events(params)
+#' 
+#' ###################
+#' # Custom function #
+#' ###################
+#' custom.func <- function(W_li){
+#'   if (W_li<15){
+#'       a = 10
+#'   }else{
+#'       a = 15
+#'   }
+#'   return(a)
+#' }
+#' 
+#' #################
+#' # ODEs system #
+#' #################
+#' 
+#' ode.func <- function(time, Initial.values, Parameters, custom.func){
+#'   with( as.list(c(Initial.values, Parameters)),{
+#'  
+#'   #cleararance coefficient
+#'   cl = custom.func(weight)
+#'   # concentrations in tissues
+#'   C_lu <- Lu/W_lu
+#'   C_re  <-  Rob/W_re
+#'   C_li  <-  Li_tissue/W_li
+#'   C_art <- Art_blood/(0.2*W_blood)
+#'   C_ven <- Ven_blood/(0.8*W_blood)
+#'  
+#'  # Lungs
+#'   dlu <- Q_tot * (C_ven - C_lu/P)
+#'   # Rest of the body
+#'   dRob_tissue <-  Q_rob * (C_art - C_rob/P)
+#'   # Liver
+#'   dLi_tissue <- Q_li * (C_art - C_li/P)- CLE*cl*C_li
+#'   # Arterial blood
+#'   dArt_blood <- Q_tot* C_lu/P - Cart * (Q_li + Q_rob)
+#'   # Venous blood
+#'   dVen_blood <- Q_li*C_li/P + Q_rob*C_rob/P - Q_tot * C_ven
+#'   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
+#'   })
+#' }
+#' deploy.pbpk(user.input, predicted.feats, create.params, create.inits, create.events, custom.func, ode.func, method = "bdf", list(rtol=1e-07, atol=1e-09)
+#' }
 #' @export
 
 
 
-deploy.pbpk <- function(user.input, predicted.feats, create.params, create.inits, create.events,
+deploy.ode <- function(user.input, predicted.feats, create.params, create.inits, create.events,
                         custom.func, ode.func, method = "lsodes", ...){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
