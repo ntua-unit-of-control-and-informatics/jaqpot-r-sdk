@@ -1,24 +1,25 @@
 #' Deploy (generalized) linear models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
-#' an "lm" or "glm" object.
+#' an "lm" or "glm" object of the 'base' package.
 #'
 #' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()})
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{lm()} or \code{glm()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
+#'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
-#'  description etc.) via prompt messages. If the upload process is successful,
+#'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
+#'  \dontrun{
 #'  #lm.model <- lm(y~x, data=df)
 #'  #deploy.lm.glm(lm.model)
 #'
 #'  #glm.model <- glm(y~x, data=df, family =  "gaussian")
 #'  #deploy.lm.glm(glm.model)
+#'  }
 #'
 #' @export
 deploy.lm.glm <- function(object){
