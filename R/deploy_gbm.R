@@ -1,21 +1,21 @@
-#' Deploy (gbm) Tree models on Jaqpot
+#' Deploy Generalized Boosted Regression Models (GBM) on Jaqpot
 #'
-#' Uploads trained tree tree regression model on Jaqpot given
-#' a "gbm" object.
+#' Uploads a trained GBM regression model on Jaqpot given
+#' a "gbm" object of library gbm.
 #'
-#' @param object An object of either class "gbm" (base function \code{gbm()})
+#' @param object An object of either class "gbm" (function \code{gbm()} of package gbm)
 #' @return  The id of the uploaded model
-#' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{gbm()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
+#' @details The user can upload on Jaqpot a model that has been trained using the
+#'   \code{gbm()} function of package gbm. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
-#'  description etc.) via prompt messages. If the upload process is successful,
+#'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  #gbm.model <- gbm(y~x, data=df)
+#'  \dontrun{
+#'  #gbm.model <- gbm::gbm(y~x, data=df)
 #'  #deploy.tree(gbm.model)
-#'
+#'  }
 #'
 #' @export
 deploy.gbm <- function(object){
