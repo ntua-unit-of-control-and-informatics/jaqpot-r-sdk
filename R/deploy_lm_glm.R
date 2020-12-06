@@ -1,4 +1,4 @@
-#' Deploy (generalized) linear models on Jaqpot
+#' Deploy (Generalized) Linear Models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
 #' an "lm" or "glm" object of the 'base' package.
