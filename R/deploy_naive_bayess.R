@@ -1,9 +1,9 @@
 #' Deploy Naive Bayes models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
-#' a "naive_bayes" object of the 'naivebayes' package.
+#' a "naive_bayes" object.
 #'
-#' @param object An object of class "naive_bayes"  (function \code{naiveBayess()} of package 'naivebayes')
+#' @param object An object of class "naive_bayes"  (function \code{naive_bayes()} of package 'naivebayes')
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the 
 #'  function \code{naive_bayes()} of package 'naivebayes'. Apart from the model object, the user is requested
