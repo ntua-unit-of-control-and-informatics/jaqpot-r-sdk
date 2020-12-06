@@ -1,7 +1,7 @@
 #' Deploy (Generalized) Linear Models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
-#' an "lm" or "glm" object of the 'base' package.
+#' an "lm" or "glm" object.
 #'
 #' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()})
