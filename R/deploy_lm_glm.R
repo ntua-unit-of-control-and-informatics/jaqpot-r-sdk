@@ -15,14 +15,14 @@
 #' @examples
 #'  \dontrun{
 #'  #lm.model <- lm(y~x, data=df)
-#'  #deploy.lm.glm(lm.model)
+#'  #deploy.lm(lm.model)
 #'
 #'  #glm.model <- glm(y~x, data=df, family =  "gaussian")
-#'  #deploy.lm.glm(glm.model)
+#'  #deploy.lm(glm.model)
 #'  }
 #'
 #' @export
-deploy.lm.glm <- function(object){
+deploy.lm <- function(object){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
@@ -79,10 +79,3 @@ deploy.lm.glm <- function(object){
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
-
-
-
-
-
-
-
