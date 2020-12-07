@@ -13,9 +13,10 @@
 #'  the user is given a unique model id key.
 #'
 #' @examples
+#'  \dontrun{
 #'  #svm.model <- svm(y~x, data=df)
 #'  #deploy.svm(tree.model)
-#'
+#'  }
 #'
 #' @export
 deploy.svm <- function(object){
