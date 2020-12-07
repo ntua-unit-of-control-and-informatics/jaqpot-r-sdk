@@ -4,8 +4,8 @@
 #' an "lm" or "glm" object.
 #'
 #' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
-#' (base function \code{glm()})
-#' @return  The id of the uploaded model
+#' (base function \code{glm()}).
+#' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the base
 #'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
 #'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
