@@ -1,39 +1,33 @@
 #' Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.
 #'
-#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode} function of package 'deSolve' 
+#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode} function of package 'deSolve'. 
 #' 
-#' @param user.input A list of positive numbers. It should contain the independent parameters,
-#' i.e. parameters related to the individual (e.g. weight, age etc.) that will be forwarded to
-#' the covariate model (if one is provided), dose, infusion_time and initial concentration in organs.
-#' The naming and order of the variables included in the dataframe is very important (see Details
-#' section).
-#' @param predicted.feats A function that takes as input the individual-related parameters provided
-#' in the dataframe and outputs a vector of individualised physiological parameters that will
-#' be forwarded to the \code{odes()} function.
-#' @param create.params A function that contains the ODEs of the PBPK model. The format of the function
-#' must be in line with the \code{ode())} solver of the \code{deSolve} package (see Details section.)
-#' @param create.inits a string vector containing the names of the compartments of the PBPK model,
-#' which should be in line with the order of the differential equations provided in \code{odes()}.
-#' @param custom.fun The compartment through which the substance enters the system.
-#' @param ode.fun The 
+#' @param user.input A vector containing the names of the inputs that the end-user will be asked to complete on the Jaqpot 
+#' User Interface (UI). The elements of the vector should be strings. 
+#' @param out.vars The names of the state variables of the ODEs to be printed on the UI. The names should be a
+#' subset of the names of the state variables of the ODE system. The elements of the vector should be strings. 
+#' @param create.params A function  
+#' @param create.inits  A function  
+#' @param custom.fun  A function  
+#' @param ode.fun  A function  
 #' @param method
 #' @param ...
-#' @return  The id of the uploaded model, if the upload process is succesful.
-#' @details #' The user must provide two vectors, one with the inputs that the end-user will provide on the Jaqpot 
+#' @return  The id of the uploaded model.
+#' @details #' The user should provide two vectors, one with the inputs that the end-user will provide on the Jaqpot 
 #' User Interface (UI) and one with the predicted features that will be printed on the UI upon execution
 #' of the ODE system. In addition, the user should provide five functions, all of which return
 #' lists. The first function transforms the user input according to the needs of the ODE model, the 
 #' second creates the initial conditions of the ODEs, the third creates the events that are forced
 #' on the system, the fourth gives enables the use of custom functions inside the ODEs and
 #' the last is the ODEs, with syntax compatible with package 'deSolve'. The functions
-#' can be used in a nested style (see example). Note that the names of dependent and independent
-#' features cannot be further modified via the Jaqpot UI,
+#' can be used in a nested style (see examples). Note that the names of independent and dependent
+#' features (i.e. user.input and  cannot be further modified via the Jaqpot UI,
 #' so the user should choose them with caution. 
 #' 
 #' @examples
 #' \dontrun{
 #' user.input <-list("weight" = 250,"dose" = c(10,12), "administration.time" = c(0,1.5) )
-#' predicted.feats <- c("Li")
+#' out.vars <- c("Li")
 #' ##########################################
 #' # Function for creating parameter vector #
 #' ##########################################
@@ -150,11 +144,11 @@
 #'   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
 #'   })
 #' }
-#' deploy.ode(user.input, predicted.feats, create.params, create.inits, create.events, custom.fun, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+#' deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.fun, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
 #' }
 #' @export
 
-deploy.ode <- function(user.input, predicted.feats, create.params, create.inits, create.events,
+deploy.ode <- function(user.input, out.vars, create.params, create.inits, create.events,
                         custom.fun, ode.fun, method = "lsodes", ...){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
@@ -172,7 +166,7 @@ deploy.ode <- function(user.input, predicted.feats, create.params, create.inits,
   # Which library is necessary for obtaining predictions from the PBPK model
   libabry_in <- "deSolve"
   # What the model output is
-  predicts <- predicted.feats
+  predicts <- out.vars
   predicts[length(predicts)+1] <- "time"
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(create.params = create.params, create.inits = create.inits,
