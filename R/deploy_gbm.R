@@ -3,11 +3,11 @@
 #' Uploads a trained GBM regression model on Jaqpot given
 #' a "gbm" object.
 #'
-#' @param object An object of either class "gbm" (function \code{gbm()} of package 'gbm')
+#' @param object An object of class "gbm" (function \code{gbm()} of package 'gbm')
 #' @return  The id of the uploaded model
 #' @details The user can upload on Jaqpot a model that has been trained using the
 #'   \code{gbm()} function of package 'gbm'. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title, short
 #'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
