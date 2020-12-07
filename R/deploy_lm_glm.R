@@ -3,12 +3,12 @@
 #' Uploads trained linear and generalized linear models on Jaqpot given
 #' an "lm" or "glm" object.
 #'
-#' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
+#' @param object An object of class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()}).
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the base
 #'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
-#'  to provide further information (i.e. Jaqpot API key or credentials, model title, short
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
