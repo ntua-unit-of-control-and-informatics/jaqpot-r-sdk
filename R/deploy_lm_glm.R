@@ -8,7 +8,7 @@
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the base
 #'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title, short
 #'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
