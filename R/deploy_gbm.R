@@ -1,10 +1,9 @@
 #' Deploy Generalized Boosted Regression Models (GBM) on Jaqpot
 #'
-#' Uploads a trained GBM regression model on Jaqpot given
-#' a "gbm" object.
+#' Uploads a trained GBM model on Jaqpot given a "gbm" object.
 #'
-#' @param object An object of class "gbm" (function \code{gbm()} of package 'gbm')
-#' @return  The id of the uploaded model
+#' @param object An object of class "gbm" (function \code{gbm()} of package 'gbm').
+#' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the
 #'   \code{gbm()} function of package 'gbm'. Apart from the model object, the user is requested
 #'  to provide further information (i.e. Jaqpot API key or credentials, model title, short
