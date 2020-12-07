@@ -10,7 +10,7 @@
 #'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
 #'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description) via prompt messages. If the upload process is successful,
-#'  the user is given a unique model id key.
+#'  the user is given a unique model id key. 
 #'
 #' @examples
 #'  \dontrun{
