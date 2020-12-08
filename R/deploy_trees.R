@@ -1,22 +1,21 @@
-#' Deploy (tree) Tree models on Jaqpot
+#' Deploy Tree Models on Jaqpot
 #'
-#' Uploads trained tree tree regression model on Jaqpot given
+#' Uploads trained tree models on Jaqpot given
 #' a "tree" object.
 #'
-#' @param object An object of either class "" (base function \code{tree()}) or "tree"
-#' (base function \code{tree()})
-#' @return  The id of the uploaded model
-#' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{tree()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
+#' @param object An object of class "tree" (function \code{tree()} of package 'tree'). 
+#' @return  The id of the uploaded model.
+#' @details The user can upload on Jaqpot a model that has been trained using the
+#'  function \code{tree()} of package 'tree'. Apart from the model object, the user is requested
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
+#'  \dontrun{
 #'  #tree.model <- tree(y~x, data=df)
 #'  #deploy.tree(tree.model)
-#'
+#' }
 #'
 #' @export
 deploy.tree <- function(object){
