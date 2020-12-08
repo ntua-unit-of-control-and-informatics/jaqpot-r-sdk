@@ -1,27 +1,57 @@
 #' Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.
 #'
-#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode} function of package 'deSolve'. 
+#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode}
+#' function of package 'deSolve'. 
 #' 
-#' @param user.input A vector containing the names of the inputs that the end-user will be asked to complete on the Jaqpot 
-#' User Interface (UI). The elements of the vector should be strings. 
-#' @param out.vars The names of the state variables of the ODEs to be printed on the UI. The names should be a
-#' subset of the names of the state variables of the ODE system. The elements of the vector should be strings. 
-#' @param create.params A function  
-#' @param create.inits  A function  
-#' @param custom.fun  A function  
-#' @param ode.fun  A function  
-#' @param method
-#' @param ...
+#' @param user.input A list with keys the names of the inputs that the
+#' end-user will be asked to complete on the Jaqpot 
+#' User Interface (UI) and values expemplary input values. 
+#'
+#' @param out.vars A vector containing the names of the state variables 
+#' of the ODEs to be printed on the UI. The names should be a
+#' subset of the names of the state variables of the ODE system. 
+#'
+#' @param create.params A function that receives a list of inputs (with 
+#' key being the name and value the corresponding value)
+#' and with inner tranformations converts them to an appropriate parameter
+#' vector that is used by the create.inits,
+#' create.events and ode.fun. The function should return a list.
+#'
+#' @param create.inits A function that receives the list returned by 
+#' create.params and uses it to create the initial conditions of the
+#' ODE system. The function should return a named vector.
+#'
+#' @param create.events A function that receives the list returned by 
+#' create.params and uses it to create the events to be forced on the
+#' ODE system. The function should return a list.
+#'
+#' @param custom.fun  A custom function that the user can call from 
+#' within the ode.fun
+#'
+#' @param ode.fun  The ODE system in a function format that is
+#' appropriate for use in the 'deSolve' package solvers.
+#'
+#' @param method A string declaring the ODE solver to be used. The
+#' user should see all available options from 'deSolve' package
+#'
+#' @param ... Extra arguments to be passed down to the solver.
+#'
 #' @return  The id of the uploaded model.
-#' @details #' The user should provide two vectors, one with the inputs that the end-user will provide on the Jaqpot 
-#' User Interface (UI) and one with the predicted features that will be printed on the UI upon execution
-#' of the ODE system. In addition, the user should provide five functions, all of which return
-#' lists. The first function transforms the user input according to the needs of the ODE model, the 
-#' second creates the initial conditions of the ODEs, the third creates the events that are forced
-#' on the system, the fourth gives enables the use of custom functions inside the ODEs and
-#' the last is the ODEs, with syntax compatible with package 'deSolve'. The functions
-#' can be used in a nested style (see examples). Note that the names of independent and dependent
-#' features (i.e. user.input and  cannot be further modified via the Jaqpot UI,
+#' @details The user should  the inputs 
+#' that the end-user will provide on the Jaqpot 
+#' User Interface (UI) and the state variables of the ODE system
+#' that are to be printed on the UI upon execution
+#' of the ODE system. In addition, the user should provide five functions.
+#' The first function transforms the user input according to the needs 
+#" of the ODE model, the 
+#' second creates the initial conditions of the ODEs, the third creates the  
+#' events that are forced
+#' on the system, the fourth enables the use of custom functions 
+#' inside the ODEs and the last is the ODEs,
+#' with syntax compatible with package 'deSolve'. The functions
+#' are used in a nested style (see examples). Note that the names of 
+#' independent and dependent
+#' features (i.e. user.input) cannot be further modified via the Jaqpot UI,
 #' so the user should choose them with caution. 
 #' 
 #' @examples
@@ -148,8 +178,9 @@
 #' }
 #' @export
 
-deploy.ode <- function(user.input, out.vars, create.params, create.inits, create.events,
-                        custom.fun, ode.fun, method = "lsodes", ...){
+deploy.ode <- function(user.input, out.vars, create.params, create.inits, 
+                       create.events,custom.fun, ode.fun, method = "lsodes",
+                       ...){
   # Read the base path from the reader
   base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
