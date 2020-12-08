@@ -1,20 +1,19 @@
 #' Deploy Support Vector Machine (SVM) Models on Jaqpot
 #'
-#' Uploads trained SVM model on Jaqpot given
-#' an "svm" object.
+#' Uploads trained SVM models on Jaqpot given
+#' an "svm.formula" object.
 #'
-#' @param object An object of  class "svm" (function \code{svm()} of package 'e1071') or "tsvm"
-#' (function \code{tsvm()} of package 'e1071').
+#' @param object An object of  class "svm.formula" (function \code{svm()} of package 'e1071'). 
 #' @return  The id of the uploaded model.
-#' @details The user can upload on Jaqpot a model that has been trained using the
-#'   \code{svm()} or \code{tsvm() functions of package 'e1071'. Apart from the model object, the user is requested
+#' @details The user can upload on Jaqpot a model that has been trained using the function
+#'   \code{svm()} of package 'e1071'. Apart from the model object, the user is requested
 #'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
 #'  \dontrun{
-#'  #svm.model <- svm(y~x, data=df)
+#'  #svm.model <- e1071::svm(y~x, data=df)
 #'  #deploy.svm(tree.model)
 #'  }
 #'
