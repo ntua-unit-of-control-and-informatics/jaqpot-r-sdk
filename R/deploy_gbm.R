@@ -3,6 +3,8 @@
 #' Uploads a trained GBM model on Jaqpot given a "gbm" object.
 #'
 #' @param object An object of class "gbm" (function \code{gbm()} of package 'gbm').
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the
 #'   \code{gbm()} function of package 'gbm'. Apart from the model object, the user is requested
@@ -17,7 +19,7 @@
 #'  }
 #'
 #' @export
-deploy.gbm <- function(object){
+deploy.gbm <- function(object, url = "https://api.jaqpot.org/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -27,7 +29,7 @@ deploy.gbm <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- .SelectBasePath()
+   base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
