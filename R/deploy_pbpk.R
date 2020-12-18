@@ -33,6 +33,8 @@
 #'
 #' @param method A string declaring the ODE solver to be used. The
 #' user should see all available options from 'deSolve' package
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #'
 #' @param ... Extra arguments to be passed down to the solver.
 #'
@@ -180,9 +182,9 @@
 
 deploy.ode <- function(user.input, out.vars, create.params, create.inits, 
                        create.events,custom.fun, ode.fun, method = "lsodes",
-                       ...){
+                       url = "https://api.jaqpot.org/", ...){
   # Read the base path from the reader
-  base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
