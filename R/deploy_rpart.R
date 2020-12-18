@@ -4,6 +4,8 @@
 #' an "rpart" object.
 #'
 #' @param object An object of class "rpart" (function \code{rpart()} of package 'rpart').
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot an rpart model that has been trained using the
 #'  function \code{rpart()} of package 'rpart'. Apart from the model object, the user is requested
@@ -19,7 +21,7 @@
 #'
 #' @export
 
-deploy.rpart <- function(object){
+deploy.rpart <- function(object, url = "https://api.jaqpot.org/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
@@ -28,7 +30,7 @@ deploy.rpart <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- .SelectBasePath()
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
