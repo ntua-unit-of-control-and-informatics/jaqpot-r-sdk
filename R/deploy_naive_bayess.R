@@ -3,6 +3,8 @@
 #' Uploads trained NB models on Jaqpot given a "naive_bayes" object.
 #'
 #' @param object An object of class "naive_bayes"  (function \code{naive_bayes()} of package 'naivebayes').
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the 
 #'  function \code{naive_bayes()} of package 'naivebayes'. Apart from the model object, the user is requested
@@ -18,7 +20,7 @@
 #'
 #'
 #' @export
-deploy.nb <- function(object){
+deploy.nb <- function(object, url = "https://api.jaqpot.org/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an "naive_bayes" through error
@@ -28,7 +30,7 @@ deploy.nb <- function(object){
 
   # Read the base path from the reader
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
-  base.path <- .SelectBasePath()
+   base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
