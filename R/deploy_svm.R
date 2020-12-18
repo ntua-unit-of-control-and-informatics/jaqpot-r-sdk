@@ -4,6 +4,8 @@
 #' an "svm.formula" object.
 #'
 #' @param object An object of  class "svm.formula" (function \code{svm()} of package 'e1071'). 
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the function
 #'   \code{svm()} of package 'e1071'. Apart from the model object, the user is requested
@@ -18,7 +20,7 @@
 #'  }
 #'
 #' @export
-deploy.svm <- function(object){
+deploy.svm <- function(object, url = "https://api.jaqpot.org/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1]
@@ -28,7 +30,7 @@ deploy.svm <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- .SelectBasePath()
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
