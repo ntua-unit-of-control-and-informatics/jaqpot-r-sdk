@@ -5,6 +5,8 @@
 #'
 #' @param object An object of class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()}).
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the base
 #'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
@@ -22,7 +24,7 @@
 #'  }
 #'
 #' @export
-deploy.lm <- function(object){
+deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
@@ -32,7 +34,7 @@ deploy.lm <- function(object){
 
   # Read the base path from the reader
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
-  base.path <- .SelectBasePath()
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
