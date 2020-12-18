@@ -50,7 +50,12 @@ deploy.svm <- function(object, url = "https://api.jaqpot.org/"){
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
                  title=title, description=description, algorithm="r / svm")
   # Convert the list to a JSON data format
-  json <- jsonlite::toJSON(tojson)
+  tryCatch({
+    json <- jsonlite::toJSON(tojson)
+    }, error = function(e) {
+          e$message <-"Failed to convert object to json. "
+          stop(e)
+    })
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
