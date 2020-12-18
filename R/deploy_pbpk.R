@@ -212,7 +212,12 @@ deploy.ode <- function(user.input, out.vars, create.params, create.inits,
                  algorithm="PBPK custom", additionalInfo = list("extra.args" = extra.args,
                                                                 "method" = method))
   # Convert the list to a JSON data format
-  json <- jsonlite::toJSON(tojson)
+  tryCatch({
+    json <- jsonlite::toJSON(tojson)
+    }, error = function(e) {
+          e$message <-"Failed to convert object to json. "
+          stop(e)
+    })
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
