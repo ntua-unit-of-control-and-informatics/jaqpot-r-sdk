@@ -15,11 +15,11 @@
 #'
 #' @examples
 #'  #rpart.model <- rpart(y~x, data=df)
-#'  #deploy.rpart.tree(rpart.model)
+#'  #deploy.rpart(rpart.model)
 #'
 #'
 #' @export
-deploy.rpart.class.tree <- function(object){
+deploy.rpart.regr.tree <- function(object){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -147,7 +147,7 @@ deploy.rpart.regr.tree <- function(object){
 #'
 #' @examples
 #'  #rpart.model <- rpart(y~x, data=df)
-#'  #deploy.rpart.tree(rpart.model)
+#'  #deploy.rpart(rpart.model)
 #'
 #'
 #' @export
