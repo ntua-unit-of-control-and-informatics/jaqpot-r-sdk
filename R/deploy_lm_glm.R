@@ -1,27 +1,30 @@
-#' Deploy (generalized) linear models on Jaqpot
+#' Deploy (Generalized) Linear Models on Jaqpot
 #'
 #' Uploads trained linear and generalized linear models on Jaqpot given
 #' an "lm" or "glm" object.
 #'
-#' @param object An object of either class "lm" (base function \code{lm()}) or "glm"
-#' (base function \code{glm()})
-#' @return  The id of the uploaded model
+#' @param object An object of class "lm" (base function \code{lm()}) or "glm"
+#' (base function \code{glm()}).
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
+#' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{lm()} or \code{glm()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
-#'  description etc.) via prompt messages. If the upload process is successful,
-#'  the user is given a unique model id key.
+#'  functions \code{lm()} or \code{glm()}. Apart from the model object, the user is requested
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
+#'  description) via prompt messages. If the upload process is successful,
+#'  the user is given a unique model id key. 
 #'
 #' @examples
+#'  \dontrun{
 #'  #lm.model <- lm(y~x, data=df)
-#'  #deploy.lm.glm(lm.model)
+#'  #deploy.lm(lm.model)
 #'
 #'  #glm.model <- glm(y~x, data=df, family =  "gaussian")
-#'  #deploy.lm.glm(glm.model)
+#'  #deploy.lm(glm.model)
+#'  }
 #'
 #' @export
-deploy.lm.glm <- function(object){
+deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
@@ -31,7 +34,7 @@ deploy.lm.glm <- function(object){
 
   # Read the base path from the reader
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
-  base.path <- .SelectBasePath()
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
@@ -74,14 +77,12 @@ deploy.lm.glm <- function(object){
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
                  title=title, description=description, algorithm="lm/glm")
   # Convert the list to a JSON data format
-  json <- jsonlite::toJSON(tojson)
+  tryCatch({
+    json <- jsonlite::toJSON(tojson)
+    }, error = function(e) {
+          e$message <-"Failed to convert object to json. "
+          stop(e)
+    })
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
-
-
-
-
-
-
-

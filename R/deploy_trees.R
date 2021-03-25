@@ -1,25 +1,26 @@
-#' Deploy (tree) Tree models on Jaqpot
+#' Deploy Tree Models on Jaqpot
 #'
-#' Uploads trained tree tree regression model on Jaqpot given
+#' Uploads trained tree models on Jaqpot given
 #' a "tree" object.
 #'
-#' @param object An object of either class "" (base function \code{tree()}) or "tree"
-#' (base function \code{tree()})
-#' @return  The id of the uploaded model
-#' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{tree()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
+#' @param object An object of class "tree" (function \code{tree()} of package 'tree'). 
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
+#' @return  The id of the uploaded model.
+#' @details The user can upload on Jaqpot a model that has been trained using the
+#'  function \code{tree()} of package 'tree'. Apart from the model object, the user is requested
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
+#'  \dontrun{
 #'  #tree.model <- tree(y~x, data=df)
 #'  #deploy.tree(tree.model)
-#'
+#' }
 #'
 #' @export
-deploy.tree <- function(object){
+deploy.tree <- function(object, url = "https://api.jaqpot.org/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -29,7 +30,7 @@ deploy.tree <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- .SelectBasePath()
+    base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
@@ -54,7 +55,12 @@ deploy.tree <- function(object){
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
                  title=title, description=description, algorithm="R/tree")
   # Convert the list to a JSON data format
-  json <- jsonlite::toJSON(tojson)
+  tryCatch({
+    json <- jsonlite::toJSON(tojson)
+    }, error = function(e) {
+          e$message <-"Failed to convert object to json. "
+          stop(e)
+    })
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }

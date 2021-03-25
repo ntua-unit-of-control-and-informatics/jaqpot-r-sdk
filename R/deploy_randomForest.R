@@ -1,25 +1,29 @@
-#' Deploy (rpart) Tree models on Jaqpot
+#' Deploy Random Forest Models on Jaqpot
 #'
-#' Uploads trained rpart tree model on Jaqpot given
-#' a "tree" object.
+#' Uploads trained random forest models on Jaqpot given
+#' a "randomForest.formula" object (function \code{(randomForest)} 
+#' of package 'randomForest').
 #'
-#' @param object An object of either class "" (base function \code{tree()}) or "tree"
-#' (randomForest function \code{tree()})
-#' @return  The id of the uploaded model
-#' @details The user can upload on Jaqpot a model that has been trained using the base
-#'  function \code{tree()}. The data used for training are deleted before the
-#'  model is uploaded on the platform. Apart from the model object, the user is requested
-#'  to provide further information (e.g. Jaqpot API key or credentials, model title, short
+#' @param object An object of class "randomForest.formula"
+#' (function \code{randomForest()} of package 'randomForest').
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
+#' @return  The id of the uploaded model.
+#' @details The user can upload on Jaqpot a model that has been trained using the
+#'  function function \code{(randomForest)} 
+#' of package 'randomForest'. Apart from the model object, the user is requested
+#'  to provide further information (i.e. Jaqpot API key or credentials, model title and short
 #'  description etc.) via prompt messages. If the upload process is successful,
 #'  the user is given a unique model id key.
 #'
 #' @examples
-#'  #tree.model <- tree(y~x, data=df)
-#'  #deploy.tree(tree.model)
-#'
+#'  \dontrun{
+#'  #rf.model <- randomForest::randomForest(y~x, data=df)
+#'  #deploy.randomForest(rf.model)
+#'  }
 #'
 #' @export
-deploy.randomForest <- function(object){
+deploy.randomForest <- function(object, url = "https://api.jaqpot.org/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
@@ -29,7 +33,7 @@ deploy.randomForest <- function(object){
   }
 
   # Read the base path from the reader
-  base.path <- .SelectBasePath()
+  base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title
@@ -58,7 +62,12 @@ deploy.randomForest <- function(object){
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
                  title=title, description=description, algorithm="R/rf")
   # Convert the list to a JSON data format
-  json <- jsonlite::toJSON(tojson)
+  tryCatch({
+    json <- jsonlite::toJSON(tojson)
+    }, error = function(e) {
+          e$message <-"Failed to convert object to json. "
+          stop(e)
+    })
   # Function that posts the model on Jaqpot
   .PostOnService(base.path, token, json)
 }
