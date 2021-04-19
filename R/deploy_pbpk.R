@@ -180,7 +180,7 @@
 #' }
 #' @export
 
-deploy.ode <- function(user.input, out.vars, create.params, create.inits, 
+deploy.pbpk <- function(user.input, out.vars, create.params, create.inits, 
                        create.events,custom.fun, ode.fun, method = "lsodes",
                        url = "https://api.jaqpot.org/", ...){
   # Read the base path from the reader
