@@ -42,19 +42,12 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-  # Retrieve the independent variables of the model
-  check.features <- array(names(stats::coef(object)))
-  # Create the names of the  features by excluding the "(Intercept)"
-  if(check.features[1]  %in% "(Intercept)"){
-    independent.vars <- check.features[!check.features  %in% "(Intercept)"]
-  } else {
-    independent.vars <- check.features
-  }
-
-
-  # Retrieve predicted variables by using set difference
-  dependent.vars <- setdiff(names(object$model), independent.vars)
-
+  # Extract the dependent vars from the formula
+  dependent.vars <- all.vars(object$call$formula[[2]])
+  # Extract the dependent vars from the terms
+  independent.vars <- attr(object$terms,"term.labels")
+  
+  
   # Delete attributes that are not necessary in the prediction process and increase object size
   object$residuals <- NULL
   object$model <- NULL
