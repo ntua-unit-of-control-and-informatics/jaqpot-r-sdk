@@ -46,7 +46,8 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
   dependent.vars <- all.vars(object$call$formula[[2]])
   # Extract the dependent vars from the terms
   independent.vars <- attr(object$terms,"term.labels")
-  
+  # Get data class of each independent variable
+  data_class <- attr(object$terms,"dataClasses")
   
   # Delete attributes that are not necessary in the prediction process and increase object size
   object$residuals <- NULL
@@ -68,7 +69,7 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
   tojson <- list(rawModel=model, runtime="R-lm-glm", implementedWith="lm or a glm in r",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="lm/glm")
+                 title=title, description=description, algorithm="lm/glm", additionalInfo = list("data_class" = data_class))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)
