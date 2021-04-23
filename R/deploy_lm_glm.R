@@ -44,10 +44,12 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
 
   # Extract the dependent vars from the formula
   dependent.vars <- all.vars(object$call$formula[[2]])
-  # Extract the dependent vars from the terms
+  # Extract the independent vars from the terms
   independent.vars <- attr(object$terms,"term.labels")
   # Get data class of each independent variable
-  data_class <- attr(object$terms,"dataClasses")
+  data_class_all <- attr(object$terms,"dataClasses")
+  # Get data class of only the independent variable
+  data_class <- data_class_all[independent.vars]
   
   # Delete attributes that are not necessary in the prediction process and increase object size
   object$residuals <- NULL
