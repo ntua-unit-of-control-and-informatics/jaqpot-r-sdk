@@ -24,17 +24,17 @@
 #'  }
 #'
 #' @export
-deploy.lm <- function(object, url = "https://api.jaqpot.org/"){
+deploy.lm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
   if  ( (obj.class != "lm") && (obj.class != "glm")){
     stop("Model should be of class 'lm' or 'glm' ")
   }
-
+  
   # Read the base path from the reader
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
-    base.path <- url
+    base.path <- url 
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
   token <- .LoginJaqpot(base.path)
   # Ask the user for a a model title

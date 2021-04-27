@@ -13,7 +13,7 @@
     # Get username and
     username <- readline("Username: ")
     password <- getPass::getPass(msg = "Password: ", noblank = FALSE, forcemask = FALSE)
-    loginto <- paste(basepath, "jaqpot/services/aa/login/", sep = "")
+    loginto <- paste(basepath, "services/aa/login/", sep = "")
     body <- list(username=username, password = password)
     httr::set_config(httr::config(ssl_verifypeer = 0L))
     
@@ -30,7 +30,7 @@
   } else if(auth.method == 2) {
     tryCatch({
       API_key <- getPass::getPass(msg = "API Key: ", noblank = FALSE, forcemask = FALSE)
-      loginto <- paste(basepath, "jaqpot/services/aa/validate/accesstoken", sep = "")
+      loginto <- paste(basepath, "services/aa/validate/accesstoken", sep = "")
       httr::set_config(httr::config(ssl_verifypeer = 0L))
       res <-  httr::POST(loginto, body = API_key)
       stopifnot(httr::status_code(res) < 300)
@@ -47,8 +47,9 @@
 .PostOnService <- function(basepath, token, json){
   # Create a string representing the authentication method (bearer authentication)
   authentication = paste("Bearer", token, sep=" ")
+  url <- paste(basepath, "services/model", sep = "")
   # Post the information to jaqpot
-  res = httr::POST(basepath, path="jaqpot/services/model", httr::add_headers(Authorization=authentication),
+  res = httr::POST(url = url, httr::add_headers(Authorization=authentication),
                    httr::accept_json(), httr::content_type("application/json"), body = json, encode = "json")
   # If the model is successfully uploaded, it will receive the status '200'
   code <- httr::status_code(res)
