@@ -39,9 +39,11 @@ deploy.nb <- function(object, url = "https://api.jaqpot.org/"){
   description <- readline("Short description of the model: ")
 
 
-  independent.vars <- attributes(object$data$x)$names
-  # Retrieve predicted variables by using set difference
-  dependent.vars <- as.character(object$call$formula)[2]
+  
+  # Extract the dependent vars from the formula
+  dependent.vars <- all.vars(object$call$formula[[2]])
+  # Extract the independent vars from the terms
+  independent.vars <- attr(object$terms,"term.labels")
 
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
