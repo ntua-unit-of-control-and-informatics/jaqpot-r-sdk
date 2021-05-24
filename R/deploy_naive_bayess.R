@@ -20,7 +20,7 @@
 #'
 #'
 #' @export
-deploy.nb <- function(object, url = "https://api.jaqpot.org/"){
+deploy.nb <- function(object, dependent.vars, url = "https://api.jaqpot.org/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an "naive_bayes" through error
@@ -38,12 +38,10 @@ deploy.nb <- function(object, url = "https://api.jaqpot.org/"){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-
-  
-  # Extract the dependent vars from the formula
-  dependent.vars <- all.vars(object$call$formula[[2]])
-  # Extract the independent vars from the terms
-  independent.vars <- attr(object$terms,"term.labels")
+  # Retrive independent features
+  independent.vars <- attributes(object$data$x)$names
+  # Retrieve predicted variables by using set difference
+  dependent.vars <- "Prediction"
 
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
