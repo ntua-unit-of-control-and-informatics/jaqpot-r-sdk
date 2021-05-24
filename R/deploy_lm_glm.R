@@ -28,8 +28,8 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
-  if  ( (obj.class != "lm") && (obj.class != "glm")){
-    stop("Model should be of class 'lm' or 'glm' ")
+  if  ( (obj.class != "lm") && (obj.class != "glm") && (obj.class != "mlm")){
+    stop("Model should be of class 'lm', 'mlm' or 'glm' ")
   }
   
   # Read the base path from the reader
