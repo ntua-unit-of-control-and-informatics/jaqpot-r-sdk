@@ -41,7 +41,7 @@ deploy.nb <- function(object, dependent.vars, url = "https://api.jaqpot.org/"){
   # Retrive independent features
   independent.vars <- attributes(object$data$x)$names
   # Retrieve predicted variables by using set difference
-  dependent.vars <- "Prediction"
+  dependent.vars <- as.character(object$call$formula)[2]
 
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
