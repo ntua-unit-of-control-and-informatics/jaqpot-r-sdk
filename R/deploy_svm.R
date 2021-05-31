@@ -46,7 +46,7 @@ deploy.svm <- function(object, url = "https://api.jaqpot.org/"){
   all_vars <- all_vars_init[2:length(all_vars_init)]
   # Retrieve predicted variables by using set difference
   dependent.vars <- setdiff(all_vars, independent.vars)
-
+ 
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
