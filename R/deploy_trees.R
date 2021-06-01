@@ -41,12 +41,19 @@ deploy.tree <- function(object, url = "https://api.jaqpot.org/"){
   independent.vars <- attributes(object$terms)$term.labels
   # Retrieve predicted variables by using set difference
   dependent.vars <- as.character(attributes(object$terms)$predvars[[2]])
+  # Number of responses
+  N_resp <-  attributes(object$terms)$response
+  # All variables (dependent and independent)
+  all_vars_init <- as.character(attributes(object$terms)$variables)
+  all_vars <- all_vars_init[2:length(all_vars_init)]
+  # Retrieve predicted variables by using set difference
+  dependent.vars <- setdiff(all_vars, independent.vars)
 
   # Delete attributes that are not necessary in the prediction process and increase object size
-  object$where <- NULL
-  object$call <- NULL
-  object$y <- NULL
-  object$weights <- NULL
+  #object$where <- NULL
+  #object$call <- NULL
+  #object$y <- NULL
+  #object$weights <- NULL
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
