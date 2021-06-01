@@ -38,20 +38,22 @@ deploy.rpart <- function(object, url = "https://api.jaqpot.org/"){
   # Ask the user for a short model description
   description <- readline("Short description of the model: ")
 
-  # Retrieve the independent variables of the model
-  independent.vars <- array(names(object$ordered))
-
+  independent.vars <- attributes(object$terms)$term.labels
+  # Number of responses
+  N_resp <-  attributes(object$terms)$response
+  # All variables (dependent and independent)
+  all_vars_init <- as.character(attributes(object$terms)$variables)
+  all_vars <- all_vars_init[2:length(all_vars_init)]
   # Retrieve predicted variables by using set difference
-  l <- attr(object$terms,"dataClasses")
-  dependent.vars <- names(l)[1]
+  dependent.vars <- setdiff(all_vars, independent.vars)
 
   # Delete attributes that are not necessary in the prediction process and increase object size
-  object$where <- NULL
-  object$call <- NULL
-  object$cptable <- NULL
-  object$control <- NULL
-  object$functions <- NULL
-  object$variable.importance <- NULL
+  #object$where <- NULL
+  #object$call <- NULL
+  #object$cptable <- NULL
+  #object$control <- NULL
+  #object$functions <- NULL
+  #object$variable.importance <- NULL
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(MODEL=object),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
