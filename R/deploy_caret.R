@@ -22,7 +22,7 @@
 #' }
 #'
 #' @export
-deploy.caret <- function(preprocess =NULL, trained.model, url = "https://api.jaqpot.org/"){
+deploy.caret <- function(preprocess =NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/"){
   
   # Get trained.model class
   #obj.class <- attributes(trained.model)$class[1] # class of tree models is "tree"
