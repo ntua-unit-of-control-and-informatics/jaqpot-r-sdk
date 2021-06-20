@@ -48,7 +48,7 @@ deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://
   description <- readline("Short description of the model: ")
   
   # Obtain the library on which the model was built
-  library <- trained.model$modelInfo$library
+  library <- trained.model$modelInfo$library[1]
   
   if (!is.null(preprocess.model)){
     # Different handling if first preprocess object is of class dummyVars or preProcess
@@ -63,26 +63,26 @@ deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://
       independent.vars <- unlist(independent.vars)
       independent.vars <- unique(independent.vars)
     }
-    #Retrieve the model independent vars (may contain variables resulting from one-hot encoding)
-    model.independent.vars <- array(attributes(trained.model$terms)$term.labels)
-    # Number of responses
-    N_resp <-  attributes(trained.model$terms)$response
-    # All variables (dependent and independent)
-    all_vars_init <- as.character(attributes(trained.model$terms)$variables)
-    all_vars <- all_vars_init[2:length(all_vars_init)]
-    # Retrieve predicted variables by using set difference
-    dependent.vars <- setdiff(all_vars, model.independent.vars)
+      #Retrieve the model independent vars (may contain variables resulting from one-hot encoding)
+      model.independent.vars <- array(attributes(trained.model$terms)$term.labels)
+      # Number of responses
+      N_resp <-  attributes(trained.model$terms)$response
+      # All variables (dependent and independent)
+      all_vars_init <- as.character(attributes(trained.model$terms)$variables)
+      all_vars <- all_vars_init[2:length(all_vars_init)]
+      # Retrieve predicted variables by using set difference
+      dependent.vars <- setdiff(all_vars, model.independent.vars)
     
     }else{
-    #Retrieve the independent vars
-    independent.vars <- array(attributes(trained.model$terms)$term.labels)
-    # Number of responses
-    N_resp <-  attributes(trained.model$terms)$response
-    # All variables (dependent and independent)
-    all_vars_init <- as.character(attributes(trained.model$terms)$variables)
-    all_vars <- all_vars_init[2:length(all_vars_init)]
-    # Retrieve predicted variables by using set difference
-    dependent.vars <- setdiff(all_vars, independent.vars)
+      #Retrieve the independent vars
+      independent.vars <- array(attributes(trained.model$terms)$term.labels)
+      # Number of responses
+      N_resp <-  attributes(trained.model$terms)$response
+      # All variables (dependent and independent)
+      all_vars_init <- as.character(attributes(trained.model$terms)$variables)
+      all_vars <- all_vars_init[2:length(all_vars_init)]
+      # Retrieve predicted variables by using set difference
+      dependent.vars <- setdiff(all_vars, independent.vars)
   }
  
   # Serialize the model in order to upload it on Jaqpot
