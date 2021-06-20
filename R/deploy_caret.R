@@ -23,9 +23,12 @@
 #' }
 #'
 #' @export
-deploy.caret <- function(preprocess.model =NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/"){
   
-  # Get trained.model class
+  # Make sure that preprocess.model is a list
+  if ( !is.null(attributes(preprocess.model))){
+    stop("Please enclose your preprocess model(s) in a list by using the list() function")
+  }
   #obj.class <- attributes(trained.model)$class[1] # class of tree models is "tree"
   # If trained.model not an lm or glm through error
   #if  ( (obj.class != "tree")){
