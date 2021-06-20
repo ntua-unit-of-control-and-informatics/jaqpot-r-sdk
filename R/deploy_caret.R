@@ -56,7 +56,12 @@ deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://
       independent.vars <- preprocess.model[[1]]$vars
     }else if (attributes(preprocess.model[[1]])$class == "preProcess"){
       # Obtain the names of the variables from the variables on the method used, combined with the ignored variables 
-      independent.vars <- c(preprocess.model[[1]]$method[[1]],preprocess.model[[1]]$method[[2]])
+      independent.vars  <- list()
+      for (i in 1:length(preprocess.model[[1]]$method)){
+        independent.vars[[i]] <- preprocess.model[[1]]$method[[i]]
+      }
+      independent.vars <- unlist(independent.vars)
+      independent.vars <- unique(independent.vars)
     }
     #Retrieve the model independent vars (may contain variables resulting from one-hot encoding)
     model.independent.vars <- array(attributes(trained.model$terms)$term.labels)
