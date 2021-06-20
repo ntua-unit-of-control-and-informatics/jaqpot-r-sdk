@@ -48,6 +48,7 @@ deploy.caret <- function(preprocess.model =NULL, trained.model, url = "https://a
   library <- trained.model$modelInfo$library
   
   if (!is.null(preprocess.model)){
+    # Different handling if first preprocess object is of class dummyVars or preProcess
     if(attributes(preprocess.model[[1]])$class == "dummyVars"){
       independent.vars <- preprocess.model[[1]]$vars
     }else if (attributes(preprocess.model[[1]])$class == "preProcess"){
@@ -62,7 +63,7 @@ deploy.caret <- function(preprocess.model =NULL, trained.model, url = "https://a
     all_vars_init <- as.character(attributes(trained.model$terms)$variables)
     all_vars <- all_vars_init[2:length(all_vars_init)]
     # Retrieve predicted variables by using set difference
-    dependent.vars <- setdiff(all_vars, independent.vars)
+    dependent.vars <- setdiff(all_vars, model.independent.vars)
     
     }else{
     #Retrieve the independent vars
