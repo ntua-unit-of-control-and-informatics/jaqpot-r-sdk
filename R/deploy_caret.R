@@ -8,7 +8,7 @@
 #' @param trained.model An object of class "tree" (function \code{ctree(()} of package 'party'). 
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
-#'
+#'#' @param ... Extra arguments to be passed down the R client. This is not recommended.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the
 #'  function \code{ctree()} of package 'party'. Apart from the model object, the user is requested
@@ -23,7 +23,7 @@
 #' }
 #'
 #' @export
-deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/", ...){
   
   # Make sure that preprocess.model is a list
   if ( !is.null(attributes(preprocess.model))){
@@ -83,10 +83,13 @@ deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://
       all_vars <- all_vars_init[2:length(all_vars_init)]
       # Retrieve predicted variables by using set difference
       dependent.vars <- setdiff(all_vars, independent.vars)
-  }
+    }
+  
+  # Convert three dots into list
+  extra.args <- list(...)
  
   # Serialize the model in order to upload it on Jaqpot
-  model <- serialize(list(MODEL=trained.model, PREPROCESS = preprocess.model),connection=NULL)
+  model <- serialize(list(MODEL=trained.model, PREPROCESS = preprocess.model,extra.args = extra.args),connection=NULL)
   
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model, runtime="R-caret", implementedWith="caret  R",
