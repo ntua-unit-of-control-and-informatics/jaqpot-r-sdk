@@ -16,7 +16,7 @@
 #' @examples
 #'  \dontrun{
 #'  #gbm.model <- gbm::gbm(y~x, data=df)
-#'  #deploy.tree(gbm.model)
+#'  #deploy.gbm(gbm.model)
 #'  }
 #'
 #' @export
