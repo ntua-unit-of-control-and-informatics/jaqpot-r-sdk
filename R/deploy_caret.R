@@ -23,7 +23,7 @@
 #' }
 #'
 #' @export
-deploy.caret <- function(preprocess.model = NULL, trained.model, url = "https://api.jaqpot.org/jaqpot/", ...){
+deploy.caret <- function( trained.model, preprocess.model = NULL, url = "https://api.jaqpot.org/jaqpot/", ...){
   
   # Make sure that preprocess.model is a list
   if ( !is.null(attributes(preprocess.model))){
