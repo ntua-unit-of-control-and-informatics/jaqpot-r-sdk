@@ -2,87 +2,202 @@
 % Please edit documentation in R/deploy_pbpk.R
 \name{deploy.pbpk}
 \alias{deploy.pbpk}
-\title{Deploy a pbpk model on Jaqpot.}
+\title{Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.}
 \usage{
 deploy.pbpk(
   user.input,
-  predicted.feats,
+  out.vars,
   create.params,
   create.inits,
   create.events,
-  custom.func,
-  ode.func,
+  custom.fun,
+  ode.fun,
   method = "lsodes",
+  url = "https://api.jaqpot.org/",
   ...
 )
 }
 \arguments{
-\item{data}{A list of positive numbers. It should contain the independent parameters,
-i.e. parameters related to the individual (e.g. weight, age etc.) that will be forwarded to
-the covariate model (if one is provided), dose, infusion_time and initial concentration in organs.
-The naming and order of the variables included in the dataframe is very important (see Details
-section).}
+\item{user.input}{A list with keys the names of the inputs that the
+end-user will be asked to complete on the Jaqpot 
+User Interface (UI) and values expemplary input values.}
 
-\item{cov.model}{A function that takes as input the individual-related parameters provided
-in the dataframe and outputs a vector of individualised physiological parameters that will
-be forwarded to the \code{odes()} function.}
+\item{out.vars}{A vector containing the names of the state variables 
+of the ODEs to be printed on the UI. The names should be a
+subset of the names of the state variables of the ODE system.}
 
-\item{odes}{A function that contains the ODEs of the PBPK model. The format of the function
-must be in line with the \code{ode())} solver of the \code{deSolve} package (see Details section.)}
+\item{create.params}{A function that receives a list of inputs (with 
+key being the name and value the corresponding value)
+and with inner tranformations converts them to an appropriate parameter
+vector that is used by the create.inits,
+create.events and ode.fun. The function should return a list.}
 
-\item{comp.names}{a string vector containing the names of the compartments of the PBPK model,
-which should be in line with the order of the differential equations provided in \code{odes()}.}
+\item{create.inits}{A function that receives the list returned by 
+create.params and uses it to create the initial conditions of the
+ODE system. The function should return a named vector.}
 
-\item{comp.in}{The compartment through which the substance enters the system.}
+\item{create.events}{A function that receives the list returned by 
+create.params and uses it to create the events to be forced on the
+ODE system. The function should return a list.}
+
+\item{custom.fun}{A custom function that the user can call from 
+within the ode.fun}
+
+\item{ode.fun}{The ODE system in a function format that is
+appropriate for use in the 'deSolve' package solvers.}
+
+\item{method}{A string declaring the ODE solver to be used. The
+user should see all available options from 'deSolve' package}
+
+\item{url}{The base path of Jaqpot services. This argument is optional and needs 
+to be changed only if an alternative Jaqpot installation is used.}
+
+\item{...}{Extra arguments to be passed down to the solver.}
 }
 \value{
-The id of the uploaded model, if the upload process is succesful.
+The id of the uploaded model.
 }
 \description{
-Uploads a PBPK model on Jaqpot given a dataset, a set of differential equations and
--if applicable- a covariate model.
+Uploads an ODE model on Jaqpot that can be solved using the \code{ode}
+function of package 'deSolve'.
 }
 \details{
-The indivdual related parameters must be the first parameters declared in the list,
-followed by the dose (named 'dose'), the infusion time (named 'infusion.time') and finally the
-initial organ concentrtions. The latter should be named as 'init_NAME' where name is the compartment
-name, as provided in the comp.names vector. Note that the names of the individual-related
-parameters and the compartments cannot be further modified via the Jaqpot User Interface,
-so the user should choose them with caution. The order of the individual-related parameters should
-be the same as the order of input of the covariate model. The same condition holds for the output
-of the covariate model and the parameter input of the \code{odes()} function. In other words, the
-user should take into consideration that the parameters of the \code{odes()} function will be the
-output of the covariate model.
+The user should  the inputs 
+that the end-user will provide on the Jaqpot 
+User Interface (UI) and the state variables of the ODE system
+that are to be printed on the UI upon execution
+of the ODE system. In addition, the user should provide five functions.
+The first function transforms the user input according to the needs 
+second creates the initial conditions of the ODEs, the third creates the  
+events that are forced
+on the system, the fourth enables the use of custom functions 
+inside the ODEs and the last is the ODEs,
+with syntax compatible with package 'deSolve'. The functions
+are used in a nested style (see examples). Note that the names of 
+independent and dependent
+features (i.e. user.input) cannot be further modified via the Jaqpot UI,
+so the user should choose them with caution.
 }
 \examples{
-#user_input <-data.frame(weight=70 ,gender=0, dose=10, infusion_time=0.1, init_blood=0, liver=0)
+\dontrun{
+user.input <-list("weight" = 250,"dose" = c(10,12), "administration.time" = c(0,1.5) )
+out.vars <- c("Li")
+##########################################
+# Function for creating parameter vector #
+##########################################
 
-#comp_names <- c("blood", "liver")
+create.params <- function(input){
+  with( as.list(input),{
+    
+  ############################
+  # Physiological parameters #
+  ############################
+  # tissue weights (in g)
+  W_tot <- weight # ;body weight, experimental data - g
+  W_lu <-1.2 # weight of lungs, experimental data - g
+  W_li <- 10.03 # weight of liver, experimental data - g
+ 
+  W_blood <- 0.065 * W_tot
+  W_rob <- W_tot - (W_blood + W_li + W_lu)
+ 
+  #Regional blood flows (in mL per hour)
+  fQl = 0.183 # fraction of cardiac output to liver, unitless
+  fQrob = 1-fQl # fraction of cardiac output to rest of the body,  unitless
+  Q_tot <- 4980 # cardiac output, mL/h    
+  Q_li <- fQl*Q_tot    # blood flow to liver, mL/h
+  Q_rob <- fQrob*Q_tot # blood flow to rest of the body, mL/h
+ 
+  P <-1.435445 # partition coefficient tissue:blood, unitless
+  CLE_f <- 9.958839e-05 # clearance rate to feces from liver,  mL/h
+ 
+  return(list("W_lu" = W_lu, "W_li" = W_li, "W_rob" = W_rob, "W_blood" = W_blood, "Q_tot" =  Q_tot,
+                "Q_li" = Q_li, "Q_rob" = Q_rob, "P" = P,"CLE_f" = CLE_f, "dose" = dose))
+  })
+}
 
-#covariates <- function(weight, gender){
-#   Q_blood <-  #some function of weight and gender
-#   Q_liver <-  #some function of weight and gender
-#   V_blood <-  #some function of weight and gender
-#   V_liver <-   #some function of weight and gender
-#   return(Q_blood, Q_liver, V_blood, V_liver)
-# }
+### store the values
+params <- create.params(user_input)
 
-#odes <- function(time,C,params){
-#  dCdt<-rep(0,14)
-#    Q_blood <- params[1]
-#    Q_liver <- params[2]
-#    V_blood <- params[3]
-#    V_liver <- params[4]
-#    ...
-#    dose <- params[N-1]
-#    infusion_time <- params[N] # dose and infusion time must be the last two parameters
-#    kp= 10
-#    CL=10
+#################################################
+# Function for creating initial values for ODEs #
+#################################################
 
-#    dCdt[1]<- Q_blood * C[2] /  V_blood
-#    dCdt[2]<-(-Q_liver * C[2] / (kp * V_liver)) -CL
+create.inits <- function(parameters){
+  with( as.list(parameters),{
+    Lu <- 0; Rob <- 0;Li <- 0; Art_blood <- 0; Ven_blood <- 0;
+    
+    return(c("Lu" = Lu, "Rob" = Rob, "Li" = Li, "Art_blood" = Art_blood,
+             "Ven_blood" = Ven_blood))
+  })
+}
+##store the values
+inits <- create.inits(params)
 
-#    list(dCdt)
-# }
-#deploy.pbpk(data, cov.model, odes, comp.names)
+#################################################
+# Function for creating events #
+#################################################
+create.events<- function(parameters){
+  with( as.list(parameters),{
+    
+    ldose <- length(dose)
+    ltimes <- length(administration.time)
+    
+    addition <- dose
+    if (ltimes == ldose){
+      events <- list(data = rbind(data.frame(var = "Ven_blood",  time = administration.time,
+                                             value = addition, method = c("add")) ))
+    }else{
+      stop("The times when the drug is injected should be equal in number to the doses")
+    }
+    
+    
+    return(events)
+  })
+}
+
+events <- create.events(params)
+
+###################
+# Custom function #
+###################
+custom.fun <- function(W_li){
+  if (W_li<15){
+      a = 10
+  }else{
+      a = 15
+  }
+  return(a)
+}
+
+#################
+# ODEs system #
+#################
+
+ode.fun <- function(time, Initial.values, Parameters, custom.func){
+  with( as.list(c(Initial.values, Parameters)),{
+ 
+  #cleararance coefficient
+  cl = custom.func(weight)
+  # concentrations in tissues
+  C_lu <- Lu/W_lu
+  C_re  <-  Rob/W_re
+  C_li  <-  Li_tissue/W_li
+  C_art <- Art_blood/(0.2*W_blood)
+  C_ven <- Ven_blood/(0.8*W_blood)
+ 
+ # Lungs
+  dlu <- Q_tot * (C_ven - C_lu/P)
+  # Rest of the body
+  dRob_tissue <-  Q_rob * (C_art - C_rob/P)
+  # Liver
+  dLi_tissue <- Q_li * (C_art - C_li/P)- CLE*cl*C_li
+  # Arterial blood
+  dArt_blood <- Q_tot* C_lu/P - Cart * (Q_li + Q_rob)
+  # Venous blood
+  dVen_blood <- Q_li*C_li/P + Q_rob*C_rob/P - Q_tot * C_ven
+  list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
+  })
+}
+deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.fun, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+}
 }

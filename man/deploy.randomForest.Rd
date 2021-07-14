@@ -2,32 +2,37 @@
 % Please edit documentation in R/deploy_randomForest.R
 \name{deploy.randomForest}
 \alias{deploy.randomForest}
-\title{Deploy (rpart) Tree models on Jaqpot}
+\title{Deploy Random Forest Models on Jaqpot}
 \usage{
-deploy.randomForest(object)
+deploy.randomForest(object, url = "https://api.jaqpot.org/")
 }
 \arguments{
-\item{object}{An object of either class "" (base function \code{tree()}) or "tree"
-(randomForest function \code{tree()})}
+\item{object}{An object of class "randomForest.formula"
+(function \code{randomForest()} of package 'randomForest').}
+
+\item{url}{The base path of Jaqpot services. This argument is optional and needs 
+to be changed only if an alternative Jaqpot installation is used.}
 }
 \value{
-The id of the uploaded model
+The id of the uploaded model.
 }
 \description{
-Uploads trained rpart tree model on Jaqpot given
-a "tree" object.
+Uploads trained random forest models on Jaqpot given
+a "randomForest.formula" object (function \code{(randomForest)} 
+of package 'randomForest').
 }
 \details{
-The user can upload on Jaqpot a model that has been trained using the base
- function \code{tree()}. The data used for training are deleted before the
- model is uploaded on the platform. Apart from the model object, the user is requested
- to provide further information (e.g. Jaqpot API key or credentials, model title, short
+The user can upload on Jaqpot a model that has been trained using the
+ function function \code{(randomForest)} 
+of package 'randomForest'. Apart from the model object, the user is requested
+ to provide further information (i.e. Jaqpot API key or credentials, model title and short
  description etc.) via prompt messages. If the upload process is successful,
  the user is given a unique model id key.
 }
 \examples{
- #tree.model <- tree(y~x, data=df)
- #deploy.tree(tree.model)
-
+ \dontrun{
+ #rf.model <- randomForest::randomForest(y~x, data=df)
+ #deploy.randomForest(rf.model)
+ }
 
 }

@@ -2,31 +2,33 @@
 % Please edit documentation in R/deploy_gbm.R
 \name{deploy.gbm}
 \alias{deploy.gbm}
-\title{Deploy (gbm) Tree models on Jaqpot}
+\title{Deploy Generalized Boosted Regression Models (GBM) on Jaqpot}
 \usage{
-deploy.gbm(object)
+deploy.gbm(object, url = "https://api.jaqpot.org/")
 }
 \arguments{
-\item{object}{An object of either class "gbm" (base function \code{gbm()})}
+\item{object}{An object of class "gbm" (function \code{gbm()} of package 'gbm').}
+
+\item{url}{The base path of Jaqpot services. This argument is optional and needs
+to be changed only if an alternative Jaqpot installation is used.}
 }
 \value{
-The id of the uploaded model
+The id of the uploaded model.
 }
 \description{
-Uploads trained tree tree regression model on Jaqpot given
-a "gbm" object.
+Uploads a trained GBM model on Jaqpot given a "gbm" object.
 }
 \details{
-The user can upload on Jaqpot a model that has been trained using the base
- function \code{gbm()}. The data used for training are deleted before the
- model is uploaded on the platform. Apart from the model object, the user is requested
- to provide further information (e.g. Jaqpot API key or credentials, model title, short
- description etc.) via prompt messages. If the upload process is successful,
+The user can upload on Jaqpot a model that has been trained using the
+  \code{gbm()} function of package 'gbm'. Apart from the model object, the user is requested
+ to provide further information (i.e. Jaqpot API key or credentials, model title and short
+ description) via prompt messages. If the upload process is successful,
  the user is given a unique model id key.
 }
 \examples{
- #gbm.model <- gbm(y~x, data=df)
+ \dontrun{
+ #gbm.model <- gbm::gbm(y~x, data=df)
  #deploy.tree(gbm.model)
-
+ }
 
 }

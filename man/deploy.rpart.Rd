@@ -2,32 +2,34 @@
 % Please edit documentation in R/deploy_rpart.R
 \name{deploy.rpart}
 \alias{deploy.rpart}
-\title{Deploy (rpart) Regression tree models on Jaqpot}
+\title{Deploy  Classification  and Regression Tree Models on Jaqpot}
 \usage{
-deploy.rpart(object)
+deploy.rpart(object, url = "https://api.jaqpot.org/")
 }
 \arguments{
-\item{object}{An object of  (base function \code{rpart()}) or "rpart model"
-(base function \code{rpart()})}
+\item{object}{An object of class "rpart" (function \code{rpart()} of package 'rpart').}
+
+\item{url}{The base path of Jaqpot services. This argument is optional and needs 
+to be changed only if an alternative Jaqpot installation is used.}
 }
 \value{
-The id of the uploaded model
+The id of the uploaded model.
 }
 \description{
-Uploads trained rpart tree model on Jaqpot given
-a "tree" object.
+Uploads trained rpart tree regression and classification models on Jaqpot given
+an "rpart" object.
 }
 \details{
-The user can upload on Jaqpot a classification rpart model that has been trained using the base
- function \code{rpart()} . The data used for training are deleted before the
- model is uploaded on the platform. Apart from the model object, the user is requested
- to provide further information (e.g. Jaqpot API key or credentials, model title, short
- description etc.) via prompt messages. If the upload process is successful,
+The user can upload on Jaqpot an rpart model that has been trained using the
+ function \code{rpart()} of package 'rpart'. Apart from the model object, the user is requested
+ to provide further information (i.e. Jaqpot API key or credentials, model title and short
+ description) via prompt messages. If the upload process is successful,
  the user is given a unique model id key.
 }
 \examples{
- #rpart.model <- rpart(y~x, data=df)
- #deploy.rpart.tree(rpart.model)
-
+ \dontrun{
+ #rpart.model <- rpart::rpart(y~x, data=df)
+ #deploy.rpart(rpart.model)
+}
 
 }

@@ -2,32 +2,34 @@
 % Please edit documentation in R/deploy_svm.R
 \name{deploy.svm}
 \alias{deploy.svm}
-\title{Deploy (svm) svm models on Jaqpot}
+\title{Deploy Support Vector Machine (SVM) Models on Jaqpot}
 \usage{
-deploy.svm(object)
+deploy.svm(object, url = "https://api.jaqpot.org/")
 }
 \arguments{
-\item{object}{An object of either class "" (e1071 function \code{svm()}) or "svm"
-(e1071 function \code{tsvm()})}
+\item{object}{An object of  class "svm.formula" (function \code{svm()} of package 'e1071').}
+
+\item{url}{The base path of Jaqpot services. This argument is optional and needs 
+to be changed only if an alternative Jaqpot installation is used.}
 }
 \value{
-The id of the uploaded model
+The id of the uploaded model.
 }
 \description{
-Uploads trained tree tree regression model on Jaqpot given
-a "svm" object.
+Uploads trained SVM models on Jaqpot given
+an "svm.formula" object.
 }
 \details{
-The user can upload on Jaqpot a model that has been trained using the base
- function \code{svm()}. The data used for training are deleted before the
- model is uploaded on the platform. Apart from the model object, the user is requested
- to provide further information (e.g. Jaqpot API key or credentials, model title, short
- description etc.) via prompt messages. If the upload process is successful,
+The user can upload on Jaqpot a model that has been trained using the function
+  \code{svm()} of package 'e1071'. Apart from the model object, the user is requested
+ to provide further information (i.e. Jaqpot API key or credentials, model title and short
+ description) via prompt messages. If the upload process is successful,
  the user is given a unique model id key.
 }
 \examples{
- #svm.model <- svm(y~x, data=df)
+ \dontrun{
+ #svm.model <- e1071::svm(y~x, data=df)
  #deploy.svm(tree.model)
-
+ }
 
 }
