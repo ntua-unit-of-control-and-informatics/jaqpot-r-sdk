@@ -20,7 +20,7 @@
 #'  }
 #'
 #' @export
-deploy.gbm <- function(object, url = "https://api.jaqpot.org/"){
+deploy.gbm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
