@@ -21,7 +21,7 @@
 #'
 #' @export
 
-deploy.rpart <- function(object, url = "https://api.jaqpot.org/"){
+deploy.rpart <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
