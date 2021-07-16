@@ -21,7 +21,7 @@
 #' }
 #'
 #' @export
-deploy.party <- function(object, url = "https://api.jaqpot.org/"){
+deploy.party <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   #obj.class <- attributes(object)$class[1] # class of tree models is "tree"
