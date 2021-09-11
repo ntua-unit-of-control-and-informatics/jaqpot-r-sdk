@@ -12,6 +12,8 @@
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @param ymin Minimum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
 #' @param ymax Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
+#' @param replace used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
+#' for doing the substitution before or after preprocessing, and the second being the desired replacement value.
 #' @param ... Extra arguments to be passed down the R client. This is not recommended.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the
@@ -27,7 +29,7 @@
 #' }
 #'
 #' @export
-deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model = NULL, ymax =NULL, ymin =NULL, url = "https://api.jaqpot.org/jaqpot/", ...){
+deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model = NULL, replace = NULL, ymax =NULL, ymin =NULL, url = "https://api.jaqpot.org/jaqpot/", ...){
   
   # Make sure that preprocess.model is a list
   if ( !is.null(attributes(preprocess.model))){
@@ -39,11 +41,7 @@ deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model
       stop("Please enclose your trained models in a list by using the list() function")
     }
   }
-  #obj.class <- attributes(trained.model)$class[1] # class of tree models is "tree"
-  # If trained.model not an lm or glm through error
-  #if  ( (obj.class != "tree")){
-  #  stop("Model should be of class 'tree' ")
-  #}
+
   
   # !!!!!!!!ATTENTION !!!!!!!!!!!!!!!!!
   # Check the model size here
@@ -115,7 +113,8 @@ deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model
   tojson <- list(rawModel=model, runtime="R-caret", implementedWith="caret  R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="Rcaret", additionalInfo = list(ymax = ymax, ymin = ymin, ensemble.vars = ensemble.vars))
+                 title=title, description=description, algorithm="Rcaret", additionalInfo = list(ymax = ymax, ymin = ymin, ensemble.vars = ensemble.vars,
+                                                                                                 replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)
