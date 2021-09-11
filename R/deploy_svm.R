@@ -4,6 +4,7 @@
 #' an "svm.formula" object.
 #'
 #' @param object An object of  class "svm.formula" (function \code{svm()} of package 'e1071'). 
+#' @param replace used for NA substitution with a desired numeric value.
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
@@ -20,13 +21,19 @@
 #'  }
 #'
 #' @export
-deploy.svm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.svm <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1]
   # If object not an svm through error
   if  ( (obj.class != "svm.formula")){
     stop("Model should be of class 'svm' ")
+  }
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
   }
 
   # Read the base path from the reader
@@ -53,7 +60,7 @@ deploy.svm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-svm", implementedWith="e1071",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="r / svm")
+                 title=title, description=description, algorithm="r / svm",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)

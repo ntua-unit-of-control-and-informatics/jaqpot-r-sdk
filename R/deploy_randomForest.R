@@ -6,6 +6,7 @@
 #'
 #' @param object An object of class "randomForest.formula"
 #' (function \code{randomForest()} of package 'randomForest').
+#' @param replace used for NA substitution with a desired numeric value.
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
@@ -23,13 +24,19 @@
 #'  }
 #'
 #' @export
-deploy.randomForest <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.randomForest <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
   if (obj.class != "randomForest.formula"){
     stop("Model should be of class 'randomForest' ")
+  }
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
   }
 
   # Read the base path from the reader
@@ -66,7 +73,7 @@ deploy.randomForest <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-rf-tree", implementedWith="Random forest in R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="R/rf")
+                 title=title, description=description, algorithm="R/rf",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)

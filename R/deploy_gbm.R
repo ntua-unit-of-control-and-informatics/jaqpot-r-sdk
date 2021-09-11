@@ -4,6 +4,7 @@
 #'
 #'
 #' @param object An object of class "gbm" (function \code{gbm()} of package 'gbm').
+#'  @param replace used for NA substitution with a desired numeric value. 
 #' @param url The base path of Jaqpot services. This argument is optional and needs
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
@@ -20,13 +21,20 @@
 #'  }
 #'
 #' @export
-deploy.gbm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.gbm <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an gbm through error
   if  ( (obj.class != "gbm")){
     stop("Model should be of class 'gbm' ")
+  }
+  
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
   }
 
   # Read the base path from the reader
@@ -51,7 +59,7 @@ deploy.gbm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-gbm", implementedWith="gbm tree in R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="R/tree/gmb")
+                 title=title, description=description, algorithm="R/tree/gmb",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)

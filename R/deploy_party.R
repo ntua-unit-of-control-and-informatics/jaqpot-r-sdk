@@ -4,6 +4,7 @@
 #' a "tree" object.
 #'
 #' @param object An object of class "tree" (function \code{ctree(()} of package 'party'). 
+#' @param replace used for NA substitution with a desired numeric value.
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
 #'
@@ -21,7 +22,7 @@
 #' }
 #'
 #' @export
-deploy.party <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.party <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
 
   # Get object class
   #obj.class <- attributes(object)$class[1] # class of tree models is "tree"
@@ -29,6 +30,12 @@ deploy.party <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   #if  ( (obj.class != "tree")){
   #  stop("Model should be of class 'tree' ")
   #}
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
+  }
 
   # Read the base path from the reader
     base.path <- url
@@ -57,7 +64,7 @@ deploy.party <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-tree", implementedWith="tree in R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="R/tree")
+                 title=title, description=description, algorithm="R/tree",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)

@@ -4,6 +4,7 @@
 #' an "rpart" object.
 #'
 #' @param object An object of class "rpart" (function \code{rpart()} of package 'rpart').
+#' @param replace used for NA substitution with a desired numeric value.
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
@@ -21,12 +22,18 @@
 #'
 #' @export
 
-deploy.rpart <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.rpart <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
   if(obj.class != "rpart"){
     stop("Model should be of class 'rpart' ")
+  }
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
   }
 
   # Read the base path from the reader
@@ -60,7 +67,7 @@ deploy.rpart <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-rpart", implementedWith="R rpart",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="rpart tree")
+                 title=title, description=description, algorithm="rpart tree",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)

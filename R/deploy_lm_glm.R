@@ -5,6 +5,7 @@
 #'
 #' @param object An object of class "lm" (base function \code{lm()}) or "glm"
 #' (base function \code{glm()}).
+#' @param replace used for NA substitution with a desired numeric value. 
 #' @param url The base path of Jaqpot services. This argument is optional and needs 
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @return  The id of the uploaded model.
@@ -24,14 +25,19 @@
 #'  }
 #'
 #' @export
-deploy.lm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
+deploy.lm <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/"){
   # Get object class
   obj.class <- attributes(object)$class[1] # class of glm models is "glm" "lm"
   # If object not an lm or glm through error
   if  ( (obj.class != "lm") && (obj.class != "glm") && (obj.class != "mlm")){
     stop("Model should be of class 'lm', 'mlm' or 'glm' ")
   }
-  
+  # Check if replace is provided that it is numeric
+  if(!is.null(replace)){
+    if ( !is.numeric(replace)){
+      stop("Please provide a numeric value for NA replacement")
+    }
+  }
   # Read the base path from the reader
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
     base.path <- url 
@@ -68,7 +74,7 @@ deploy.lm <- function(object, url = "https://api.jaqpot.org/jaqpot/"){
   tojson <- list(rawModel=model, runtime="R-lm-glm", implementedWith="lm or a glm in r",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="lm/glm", additionalInfo = list())
+                 title=title, description=description, algorithm="lm/glm",additionalInfo = list(replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
     json <- jsonlite::toJSON(tojson)
