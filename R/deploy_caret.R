@@ -64,7 +64,7 @@ deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model
     ensemble.vars <- NULL
   }else{
     ModelForNames <- trained.model[[1]]
-    ensemble.vars <- array(attributes(RFEnsembleXA1$terms)$term.labels)
+    ensemble.vars <- array(attributes(ensemble.model$terms)$term.labels)
   }
   
   if (!is.null(preprocess.model)){
