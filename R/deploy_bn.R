@@ -57,7 +57,7 @@ deploy.bn <- function( trained.model, implemented.in = "bnlearn", type = "discre
   
   if( type == "discrete"){
     # Define the dependent variables of a discrete network
-    dependent.vars <- c("query node", "prediction class", "probability")
+    dependent.vars <- c("node", "prediction class", "probability")
   }else{
     stop("Only discrete networks are currently supported.")
   }
