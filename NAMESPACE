@@ -10,3 +10,5 @@ export(deploy.randomForest)
 export(deploy.rpart)
 export(deploy.svm)
 export(deploy.tree)
+export(deploy.bn)
+
