@@ -4,11 +4,13 @@
 \alias{deploy.lm}
 \title{Deploy (Generalized) Linear Models on Jaqpot}
 \usage{
-deploy.lm(object, url = "https://api.jaqpot.org/jaqpot/")
+deploy.lm(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/")
 }
 \arguments{
 \item{object}{An object of class "lm" (base function \code{lm()}) or "glm"
 (base function \code{glm()}).}
+
+\item{replace}{used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
 to be changed only if an alternative Jaqpot installation is used.}

@@ -4,10 +4,12 @@
 \alias{deploy.svm}
 \title{Deploy Support Vector Machine (SVM) Models on Jaqpot}
 \usage{
-deploy.svm(object, url = "https://api.jaqpot.org/")
+deploy.svm(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/")
 }
 \arguments{
 \item{object}{An object of  class "svm.formula" (function \code{svm()} of package 'e1071').}
+
+\item{replace}{used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
 to be changed only if an alternative Jaqpot installation is used.}

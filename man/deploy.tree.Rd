@@ -4,10 +4,12 @@
 \alias{deploy.tree}
 \title{Deploy Tree Models on Jaqpot}
 \usage{
-deploy.tree(object, url = "https://api.jaqpot.org/")
+deploy.tree(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/")
 }
 \arguments{
 \item{object}{An object of class "tree" (function \code{tree()} of package 'tree').}
+
+\item{replace}{used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
 to be changed only if an alternative Jaqpot installation is used.}

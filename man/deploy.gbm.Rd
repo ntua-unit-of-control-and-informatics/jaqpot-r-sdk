@@ -4,10 +4,11 @@
 \alias{deploy.gbm}
 \title{Deploy Generalized Boosted Regression Models (GBM) on Jaqpot}
 \usage{
-deploy.gbm(object, url = "https://api.jaqpot.org/")
+deploy.gbm(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/")
 }
 \arguments{
-\item{object}{An object of class "gbm" (function \code{gbm()} of package 'gbm').}
+\item{object}{An object of class "gbm" (function \code{gbm()} of package 'gbm').
+@param replace used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs
 to be changed only if an alternative Jaqpot installation is used.}
@@ -28,7 +29,7 @@ The user can upload on Jaqpot a model that has been trained using the
 \examples{
  \dontrun{
  #gbm.model <- gbm::gbm(y~x, data=df)
- #deploy.tree(gbm.model)
+ #deploy.gbm(gbm.model)
  }
 
 }

@@ -5,21 +5,35 @@
 \title{Deploy Decision Tree Models on Jaqpot}
 \usage{
 deploy.caret(
-  preprocess.model = NULL,
   trained.model,
+  preprocess.model = NULL,
+  ensemble.model = NULL,
+  replace = NULL,
+  ymax = NULL,
+  ymin = NULL,
   url = "https://api.jaqpot.org/jaqpot/",
   ...
 )
 }
 \arguments{
-\item{preprocess.model}{The preprocess model. Here it is very important not to include the response into the preprocessing phase!
+\item{trained.model}{An object of class "tree" (function \code{ctree(()} of package 'party'). 
+#' @param ensemble.model The ensemble model, with default value NULL. Only applicable type is stacked ensemble. Note that if an ensemble model is use, 
+then the trained.model should be a list of models.}
+
+\item{preprocess.model}{The preprocess model, with default value NULL. Here it is very important NOT to include the response into the preprocessing phase!
 Allowed types of preprocessing: 'preProcess' and 'dummyVars' caret functions.}
 
-\item{trained.model}{An object of class "tree" (function \code{ctree(()} of package 'party').}
+\item{replace}{used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
+for doing the substitution before or after preprocessing, and the second being the desired replacement value.}
+
+\item{ymax}{Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.}
+
+\item{ymin}{Minimum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
-to be changed only if an alternative Jaqpot installation is used.
-#' @param ... Extra arguments to be passed down the R client. This is not recommended.}
+to be changed only if an alternative Jaqpot installation is used.}
+
+\item{...}{Extra arguments to be passed down the R client. This is not recommended.}
 }
 \value{
 The id of the uploaded model.

@@ -4,11 +4,17 @@
 \alias{deploy.randomForest}
 \title{Deploy Random Forest Models on Jaqpot}
 \usage{
-deploy.randomForest(object, url = "https://api.jaqpot.org/")
+deploy.randomForest(
+  object,
+  replace = NULL,
+  url = "https://api.jaqpot.org/jaqpot/"
+)
 }
 \arguments{
 \item{object}{An object of class "randomForest.formula"
 (function \code{randomForest()} of package 'randomForest').}
+
+\item{replace}{used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
 to be changed only if an alternative Jaqpot installation is used.}

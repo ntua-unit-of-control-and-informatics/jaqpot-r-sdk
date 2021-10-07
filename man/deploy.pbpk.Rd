@@ -13,7 +13,7 @@ deploy.pbpk(
   custom.fun,
   ode.fun,
   method = "lsodes",
-  url = "https://api.jaqpot.org/",
+  url = "https://api.jaqpot.org/jaqpot/",
   ...
 )
 }

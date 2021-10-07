@@ -4,10 +4,12 @@
 \alias{deploy.nb}
 \title{Deploy Naive Bayes (NB) Models on Jaqpot}
 \usage{
-deploy.nb(object, dependent.vars, url = "https://api.jaqpot.org/")
+deploy.nb(object, replace = NULL, url = "https://api.jaqpot.org/jaqpot/")
 }
 \arguments{
 \item{object}{An object of class "naive_bayes"  (function \code{naive_bayes()} of package 'naivebayes').}
+
+\item{replace}{used for NA substitution with a desired numeric value.}
 
 \item{url}{The base path of Jaqpot services. This argument is optional and needs 
 to be changed only if an alternative Jaqpot installation is used.}
