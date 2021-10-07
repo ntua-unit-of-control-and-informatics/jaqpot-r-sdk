@@ -332,7 +332,7 @@ get.orgs.models <- function(orgID, min = 0, max = 10, url = 'https://api.jaqpot.
   uri <- paste(BasePath, "model/", sep = "")
   # Authentication
   authentication = paste("Bearer", token, sep=" ")
-  params <- list( 'min'= min, 'max'= max, 'organization' : orgId)
+  params <- list( 'min'= min, 'max'= max, 'organization' = orgID)
   tryCatch({
     res = httr::GET(url = uri, httr::add_headers(Authorization=authentication),  
                     httr::content_type("application/json"), httr::accept("application/json"),query=params)
@@ -346,59 +346,6 @@ get.orgs.models <- function(orgID, min = 0, max = 10, url = 'https://api.jaqpot.
   return(Response)
   
 }
-
-
-
-####################################################################################################
-####################################################################################################
-
-
-#' Get a Number of Models of a Specific Tag
-#'
-#' The user can obtain a number of models that have been uploaded on Jaqpot and contain a specific tag.
-#'  
-#' @param tag A string containing the model tag.
-#' @param min The minimum number of models to return.
-#' @param max The maximum number of models to return.
-#' @param url The base path of Jaqpot services. This argument is optional and needs 
-#' to be changed only if an alternative Jaqpot installation is used.
-#' @return All information of the upoaded models that contain the selected tag.
-#' @details The user can obtain the information of a number of models that have been uploaded on Jaqpot and contain a specific tag.
-#' Notethat the user should also be the model creator.
-#'
-#' @examples
-#'  \dontrun{
-#' #get_tag_models <- get.tag.models()
-#' }
-#'
-#' @export
-get.models.byTag <- function(tag, min = 0, max = 10, url = 'https://api.jaqpot.org/jaqpot/'){
-  
-  loginpath <- url
-  # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
-  BasePath <- paste(loginpath, "services/", sep = "")
-  # Split the jwt and retrieve the user id
-  userID =   jose::jwt_split(token)$payload$sub
-  # Build the uri to apply get
-  uri <- paste(BasePath, "model/", sep = "")
-  # Authentication
-  authentication = paste("Bearer", token, sep=" ")
-  params <- list( 'min'= min, 'max'= max, 'tag' : tag)
-  tryCatch({
-    res = httr::GET(url = uri, httr::add_headers(Authorization=authentication),  
-                    httr::content_type("application/json"), httr::accept("application/json"),query=params)
-    stopifnot(httr::status_code(res) < 300)
-    res <- httr::content(res, "text", encoding = 'UTF-8')
-    Response <- jsonlite::fromJSON(res)
-  }, error = function(e) {
-    e$message <-"Could not get information regarding the specific tag."
-    stop(e)
-  })
-  return(Response)
-  
-}
-
 
 
 
@@ -438,7 +385,7 @@ get.orgs.models.byTag <- function(orgID, tag, min = 0, max = 10, url = 'https://
   uri <- paste(BasePath, "model/", sep = "")
   # Authentication
   authentication = paste("Bearer", token, sep=" ")
-  params <- list( 'min'= min, 'max'= max, 'tag' : tag, 'organization' : orgId)
+  params <- list( 'min'= min, 'max'= max, 'tag'  = tag, 'organization'  = orgID)
   tryCatch({
     res = httr::GET(url = uri, httr::add_headers(Authorization=authentication),  
                     httr::content_type("application/json"), httr::accept("application/json"),query=params)
