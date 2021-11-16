@@ -62,7 +62,7 @@ get.model.feats <- function(modelID, url = 'https://api.jaqpot.org/jaqpot/'){
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
   # Retrive the information stored in the model (gets everything except from the raw model)
-  model = .get.model.internal(modelID, token, userID, BasePath)
+  mod = .get.model.internal(modelID, token, userID, BasePath)
   list_feats <- unlist(mod$additionalInfo$independentFeatures)
   feats <- rep(NA, length(list_feats))
   for(i in 1:length(list_feats)){
