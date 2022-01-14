@@ -124,7 +124,7 @@ deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model
   })
   
   # Check object size
-  if(object.size(json) > 5000000 ){
+  if(object.size(json) > 16000000 ){
     stop(" The model(s) you are trying to upload exceed the maximum size that the system can currently support")
   }
   # Function that posts the model on Jaqpot
