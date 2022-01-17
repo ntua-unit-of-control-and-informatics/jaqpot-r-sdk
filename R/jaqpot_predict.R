@@ -147,7 +147,15 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   print(paste0("The generated prediction dataset has the following ID: ", predictedDatasetID))
   dataset <- .get.dataset.internal(BasePath, token, predictedDatasetID)
   decoded <- .decode.predicted.dataset(dataset)
-  return (list(features = df, predictions = decoded[,which(!(colnames(decoded)%in% colnames(df))), drop = FALSE], predictionDatasetID =predictedDatasetID, 
+  # Separate predictions from input features
+  final_predictions <- decoded[,which(!(colnames(decoded)%in% colnames(df))), drop = FALSE]
+  # Check which columns contain numerical values and convert the column to numeric 
+  for (i in 1:dim(final_predictions)[2]){  
+    if(!is.na(as.numeric(final_predictions[1,i]))){
+       final_predictions[,i] <-  as.numeric(final_predictions[,i])
+    }
+  }
+  return (list(features = df, predictions = final_predictions, predictionDatasetID =predictedDatasetID, 
                inputDatasetID =ifelse(is.pbpk,datasetId,"Input included in the prediction dataset")))
 
   
