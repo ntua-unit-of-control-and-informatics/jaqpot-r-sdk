@@ -155,6 +155,7 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
        final_predictions[,i] <-  as.numeric(final_predictions[,i])
     }
   }
+  print(paste0("Visit the model at https://app.jaqpot.org/model/", modelID, " for more information regarding the model and its features"))
   return (list(features = df, predictions = final_predictions, predictionDatasetID =predictedDatasetID, 
                inputDatasetID =ifelse(is.pbpk,datasetId,"Input included in the prediction dataset")))
 
