@@ -25,7 +25,7 @@
 #' create.params and uses it to create the events to be forced on the
 #' ODE system. The function should return a list.
 #'
-#' @param custom.fun  A custom function that the user can call from 
+#' @param custom.func  A custom function that the user can call from 
 #' within the ode.fun
 #'
 #' @param ode.fun  The ODE system in a function format that is
@@ -138,7 +138,7 @@
 #' ###################
 #' # Custom function #
 #' ###################
-#' custom.fun <- function(W_li){
+#' custom.func <- function(W_li){
 #'   if (W_li<15){
 #'       a = 10
 #'   }else{
@@ -176,7 +176,7 @@
 #'   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
 #'   })
 #' }
-#' deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.fun, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+#' deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
 #' }
 #' @export
 
@@ -203,7 +203,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   predicts[length(predicts)+1] <- "time"
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(create.params = create.params, create.inits = create.inits,
-                          create.events = create.events, custom.func = custom.fun,
+                          create.events = create.events, custom.func = custom.func,
                           ode.func = ode.func),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
