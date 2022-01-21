@@ -181,7 +181,7 @@
 #' @export
 
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits, 
-                       create.events,custom.fun, ode.fun, method = "lsodes",
+                       create.events,custom.func, ode.fun, method = "lsodes",
                        url = "https://api.jaqpot.org/jaqpot/", ...){
   # Read the base path from the reader
     base.path <- url
