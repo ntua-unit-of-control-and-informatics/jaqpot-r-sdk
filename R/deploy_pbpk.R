@@ -203,7 +203,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   predicts[length(predicts)+1] <- "time"
   # Serialize the model in order to upload it on Jaqpot
   model <- serialize(list(create.params = create.params, create.inits = create.inits,
-                          create.events = create.events, custom.func = custom.func,
+                          create.events = create.events, custom.func = custom.fun,
                           ode.func = ode.func),connection=NULL)
   # Create a list containing the information that will be uploaded on Jaqpot
   tojson <- list(rawModel=model,runtime="pbpk-ode", implementedWith=libabry_in, pmmlModel=NULL,
