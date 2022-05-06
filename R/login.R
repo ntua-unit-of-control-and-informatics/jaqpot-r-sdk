@@ -112,7 +112,7 @@ login.api.safe <- function(url = "https://api.jaqpot.org/jaqpot/"){
 #' token that is used by jaqpotr functions by providing the jaqpot api key. 
 #'
 #' @export 
-login.api.safe <- function(API_key, url = "https://api.jaqpot.org/jaqpot/"){
+login.api <- function(API_key, url = "https://api.jaqpot.org/jaqpot/"){
  
     tryCatch({
       loginto <- paste(url, "services/aa/validate/accesstoken", sep = "")
