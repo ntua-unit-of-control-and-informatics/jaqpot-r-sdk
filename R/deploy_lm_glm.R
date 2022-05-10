@@ -42,7 +42,7 @@ deploy.lm <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaqp
   # base.path <- readline("Base path of jaqpot *e.g.: https://api.jaqpot.org/ : ")
     base.path <- url 
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
-  token <- .LoginJaqpot(base.path)
+  token <- jaqpot.token
   # Ask the user for a a model title
   title <- readline("Title of the model: ")
   # Ask the user for a short model description

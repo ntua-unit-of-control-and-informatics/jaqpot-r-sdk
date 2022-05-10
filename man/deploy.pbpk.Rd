@@ -10,7 +10,7 @@ deploy.pbpk(
   create.params,
   create.inits,
   create.events,
-  custom.fun,
+  custom.func,
   ode.fun,
   method = "lsodes",
   url = "https://api.jaqpot.org/jaqpot/",
@@ -40,7 +40,7 @@ ODE system. The function should return a named vector.}
 create.params and uses it to create the events to be forced on the
 ODE system. The function should return a list.}
 
-\item{custom.fun}{A custom function that the user can call from 
+\item{custom.func}{A custom function that the user can call from 
 within the ode.fun}
 
 \item{ode.fun}{The ODE system in a function format that is
@@ -160,7 +160,7 @@ events <- create.events(params)
 ###################
 # Custom function #
 ###################
-custom.fun <- function(W_li){
+custom.func <- function(W_li){
   if (W_li<15){
       a = 10
   }else{
@@ -198,6 +198,6 @@ ode.fun <- function(time, Initial.values, Parameters, custom.func){
   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
   })
 }
-deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.fun, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
 }
 }

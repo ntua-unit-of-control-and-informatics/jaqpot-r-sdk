@@ -11,6 +11,11 @@
 #' token that is used by jaqpotr functions by providing the jaqpot username and password. The difference of this
 #' function with the function `login.cred` is that it receives the user input with masking. 
 #' 
+#' @examples
+#'  \dontrun{
+#' login.cred()
+#' }
+#' 
 #' @export
 
 login.cred <- function(url = "https://api.jaqpot.org/jaqpot/"){
@@ -48,6 +53,11 @@ login.cred <- function(url = "https://api.jaqpot.org/jaqpot/"){
 #' @details The user  generates a 
 #' token that is used by jaqpotr functions by providing the jaqpot username and password.
 #' 
+#' @examples
+#'  \dontrun{
+#' login.cred.unmask('my_username', 'my_password')
+#' }
+#'  
 #' @export
 
 
@@ -85,6 +95,11 @@ login.cred.unmask <- function(username, password, url = "https://api.jaqpot.org/
 #' token that is used by jaqpotr functions by providing the jaqpot api key. The difference of this
 #' function with the function `login.api` is that it receives the user input with masking. 
 #' 
+#' @examples
+#'  \dontrun{
+#' login.api()
+#' }
+#'
 #' @export 
 login.api <- function(url = "https://api.jaqpot.org/jaqpot/"){
   
@@ -115,6 +130,11 @@ login.api <- function(url = "https://api.jaqpot.org/jaqpot/"){
 #' so that it can be used by other jaqpotr functions.
 #' @details The user  generates a 
 #' token that is used by jaqpotr functions by providing the jaqpot api key. 
+#' 
+#' @examples
+#'  \dontrun{
+#' login.api.unmask("my_API_key")
+#' }
 #'
 #' @export 
 login.api.unmask <- function(API_key, url = "https://api.jaqpot.org/jaqpot/"){

@@ -42,7 +42,7 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub

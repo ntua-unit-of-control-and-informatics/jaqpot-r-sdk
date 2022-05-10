@@ -39,7 +39,7 @@ deploy.svm <- function(object, replace = NULL, url = "https://api.jaqpot.org/jaq
   # Read the base path from the reader
     base.path <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R
-  token <- .LoginJaqpot(base.path)
+  token <- jaqpot.token
   # Ask the user for a a model title
   title <- readline("Title of the model: ")
   # Ask the user for a short model description
