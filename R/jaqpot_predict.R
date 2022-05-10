@@ -38,7 +38,7 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   ##
   #
   
-
+  
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
@@ -96,12 +96,12 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   
   dataset <- .Dataset()
   meta <- .MetaInfo() 
- 
+  
   meta$creators <-  list(userID)
   dataset$meta <- meta
   dataset$totalRows <- dim(df)[1]
   dataset$totalColumns <- dim(df)[2]
-    
+  
   data_entry <- .create.data.entry(df, feat_map, userID)
   dataset$dataEntry <- data_entry
   dataset$features <- features
@@ -147,17 +147,24 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   print(paste0("The generated prediction dataset has the following ID: ", predictedDatasetID))
   dataset <- .get.dataset.internal(BasePath, token, predictedDatasetID)
   decoded <- .decode.predicted.dataset(dataset)
+  
+  # Keep only the output dictated by the model uploader through predicted.feats
+  predicted.feats <- rep(0,  length(model$additionalInfo$predictedFeatures))
+  for (i in 1:length(predicted.feats)){
+    predicted.feats[i] <- model$additionalInfo$predictedFeatures[[i]]
+  }
+  
   # Separate predictions from input features
-  final_predictions <- decoded[,which(!(colnames(decoded)%in% colnames(df))), drop = FALSE]
+  final_predictions <- decoded[,predicted.feats, drop = FALSE]
   # Check which columns contain numerical values and convert the column to numeric 
   for (i in 1:dim(final_predictions)[2]){  
     if(!is.na(as.numeric(final_predictions[1,i]))){
-       final_predictions[,i] <-  as.numeric(final_predictions[,i])
+      final_predictions[,i] <-  as.numeric(final_predictions[,i])
     }
   }
   print(paste0("Visit the model at https://app.jaqpot.org/model/", modelID, " for more information regarding the model, its feature description and units and other relevant metadata infromation"))
   return (list(features = df, predictions = final_predictions, predictionDatasetID =predictedDatasetID, 
                inputDatasetID =ifelse(is.pbpk,datasetId,"Input included in the prediction dataset")))
-
+  
   
 }
