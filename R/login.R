@@ -13,10 +13,10 @@
 #' 
 #' @export
 
-login.cred.safe <- function(url = "https://api.jaqpot.org/jaqpot/"){
+login.cred <- function(url = "https://api.jaqpot.org/jaqpot/"){
   # Get jaqpot username and password
   username <- readline("Username: ")
-  password <- getPass::getPass(msg = "Password: ", noblank = FALSE, forcemask = FALSE)
+  password <- getPass::getPass("Password: ")
   loginto <- paste(url, "services/aa/login/", sep = "")
   body <- list(username=username, password = password)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
@@ -51,7 +51,7 @@ login.cred.safe <- function(url = "https://api.jaqpot.org/jaqpot/"){
 #' @export
 
 
-login.cred <- function(username, password, url = "https://api.jaqpot.org/jaqpot/"){
+login.cred.unmask <- function(username, password, url = "https://api.jaqpot.org/jaqpot/"){
   loginto <- paste(url, "services/aa/login/", sep = "")
   body <- list(username=username, password = password)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
@@ -86,10 +86,10 @@ login.cred <- function(username, password, url = "https://api.jaqpot.org/jaqpot/
 #' function with the function `login.api` is that it receives the user input with masking. 
 #' 
 #' @export 
-login.api.safe <- function(url = "https://api.jaqpot.org/jaqpot/"){
+login.api <- function(url = "https://api.jaqpot.org/jaqpot/"){
   
   tryCatch({
-    API_key <- getPass::getPass(msg = "API Key: ", noblank = FALSE, forcemask = FALSE)
+    API_key <- getPass::getPass("API Key: ")
     loginto <- paste(url, "services/aa/validate/accesstoken", sep = "")
     httr::set_config(httr::config(ssl_verifypeer = 0L))
     res <-  httr::POST(loginto, body = API_key)
@@ -117,7 +117,7 @@ login.api.safe <- function(url = "https://api.jaqpot.org/jaqpot/"){
 #' token that is used by jaqpotr functions by providing the jaqpot api key. 
 #'
 #' @export 
-login.api <- function(API_key, url = "https://api.jaqpot.org/jaqpot/"){
+login.api.unmask <- function(API_key, url = "https://api.jaqpot.org/jaqpot/"){
   
   tryCatch({
     loginto <- paste(url, "services/aa/validate/accesstoken", sep = "")
