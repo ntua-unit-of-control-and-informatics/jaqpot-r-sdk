@@ -158,8 +158,8 @@ jaqpot.predict <- function( df, modelID, url = 'https://api.jaqpot.org/jaqpot/')
   final_predictions <- decoded[,predicted.feats, drop = FALSE]
   # Check which columns contain numerical values and convert the column to numeric 
   for (i in 1:dim(final_predictions)[2]){  
-    if(!is.na(as.numeric(final_predictions[1,i]))){
-      final_predictions[,i] <-  as.numeric(final_predictions[,i])
+    if(!is.na(as.numeric(as.character(final_predictions[1,i])))){
+      final_predictions[,i] <-  as.numeric(as.character(final_predictions[,i]))
     }
   }
   print(paste0("Visit the model at https://app.jaqpot.org/model/", modelID, " for more information regarding the model, its feature description and units and other relevant metadata infromation"))

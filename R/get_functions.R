@@ -20,7 +20,7 @@ get.model.byID <- function(modelID, url = 'https://api.jaqpot.org/jaqpot/'){
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -57,7 +57,7 @@ get.model.feats <- function(modelID, url = 'https://api.jaqpot.org/jaqpot/'){
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -100,7 +100,7 @@ get.dataset.byID <- function(datasetID, url = 'https://api.jaqpot.org/jaqpot/'){
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -140,7 +140,7 @@ get.dataset.feats <- function(datasetID, url = 'https://api.jaqpot.org/jaqpot/')
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -180,7 +180,7 @@ get.feature.byID <- function(featID, url = 'https://api.jaqpot.org/jaqpot/'){
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -220,7 +220,7 @@ get.my.models <- function(min = 0, max = 10, url = 'https://api.jaqpot.org/jaqpo
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -272,7 +272,7 @@ get.my.datasets <- function(min = 0, max = 10, url = 'https://api.jaqpot.org/jaq
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -324,7 +324,7 @@ get.orgs.models <- function(orgID, min = 0, max = 10, url = 'https://api.jaqpot.
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub
@@ -377,7 +377,7 @@ get.orgs.models.byTag <- function(orgID, tag, min = 0, max = 10, url = 'https://
   
   loginpath <- url
   # Log into Jaqpot using the LoginJaqpot helper function in utils.R and return the jwt json 
-  token <- .LoginJaqpot(loginpath)
+  token <- jaqpot.token
   BasePath <- paste(loginpath, "services/", sep = "")
   # Split the jwt and retrieve the user id
   userID =   jose::jwt_split(token)$payload$sub

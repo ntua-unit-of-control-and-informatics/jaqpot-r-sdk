@@ -220,7 +220,7 @@
   authentication = paste("Bearer", token, sep=" ")
   params <- list( 'dataEntries'= "true",
                   'rowStart'= "0",
-                  'rowMax'= '1000')
+                  'rowMax'= '10000')
   tryCatch({
     res = httr::GET(url = uri, httr::add_headers(Authorization=authentication),  
                     httr::content_type("application/json"), httr::accept("application/json"),query=params)
@@ -287,7 +287,7 @@
   authentication = paste("Bearer", token, sep=" ")
   params <- list( 'dataEntries'= "true",
                   'rowStart'= "0",
-                  'rowMax'= '1000')
+                  'rowMax'= '10000')
   tryCatch({
     res = httr::GET(url = uri, httr::add_headers(Authorization=authentication),  
                     httr::content_type("application/json"), httr::accept("application/json"),query=params)
