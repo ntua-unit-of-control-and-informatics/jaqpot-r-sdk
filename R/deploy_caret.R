@@ -26,8 +26,15 @@
 #'
 #' @examples
 #'  \dontrun{
-#'  #party.model <- party::ctree(y~x, data=df)
-#'  #deploy.party(tree.model)
+#'   #preprocessParams <- caret::preProcess(DATATrain, method=c("center","scale"))
+#'   #DATATrainPre<-predict(preprocessParams, DATA1Train)
+#'   #DATATrainPre[is.na(DATATrainPre)]<--20
+#'   #trainControl<-trainControl(method="repeatedcv", number=20, repeats=3,verboseIter = FALSE,
+#'   allowParallel = FALSE, savePredictions=TRUE)
+#'   #fitXGB<-caret::train(y~., data =DATATrainPre, method="xgbTree", trControl=trainControl ,
+#'                tuneGrid=tunegrid , importance=TRUE,verbosity=0) 
+#'   #jaqpotr::deploy.caret(trained.model = list(fitXGB), preprocess.model = list(preprocessParams), 
+#'   replace = list("after", -20) )
 #' }
 #'
 #' @export
