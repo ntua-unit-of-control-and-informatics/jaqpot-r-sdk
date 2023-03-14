@@ -2,7 +2,7 @@
 % Please edit documentation in R/deploy_caret.R
 \name{deploy.caret}
 \alias{deploy.caret}
-\title{Deploy Decision Tree Models on Jaqpot}
+\title{Deploy A caret model on Jaqpot}
 \usage{
 deploy.caret(
   trained.model,
@@ -18,15 +18,18 @@ deploy.caret(
 )
 }
 \arguments{
-\item{trained.model}{An object of class "tree" (function \code{ctree(()} of package 'party'). 
-#' @param ensemble.model The ensemble model, with default value NULL. Only applicable type is stacked ensemble. Note that if an ensemble model is use, 
-then the trained.model should be a list of models.}
+\item{trained.model}{An object of 'train' (function \code{train(()} of package 'caret'). The model object(s) should be enclosed in a list
+#' @param ensemble.model The ensemble model, with default value NULL. Only applicable type is stacked ensemble. Note that if an ensemble model is used, 
+then the order of the models in the list provided in 'trained.model' should be the same as the one used in the stacking process.}
 
-\item{preprocess.model}{The preprocess model, with default value NULL. Here it is very important NOT to include the response into the preprocessing phase!
+\item{preprocess.model}{The preprocess model(s), with default value NULL.The model object(s) should be enclosed in a list. Consecutive
+ preprocessing steps are supported by providing the consecutive preprocessing models with the same order in the list.
+ DO NOT include the response into the preprocessing model! The preprocessing of the response should be done seperately and the
+ detransformation step of the response is facilitated by the ymin, ymax, ymean and ystd arguments, depending on the preprocessing type used.
 Allowed types of preprocessing: 'preProcess' and 'dummyVars' caret functions.}
 
 \item{replace}{used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
-for doing the substitution before or after preprocessing, and the second being the desired replacement value.}
+for doing the substitution before or after the preprocessing step, and the second list argument is the desired replacement value.}
 
 \item{ymax}{Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
 #' @param ymean Mean of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.}
@@ -44,8 +47,8 @@ to be changed only if an alternative Jaqpot installation is used.}
 The id of the uploaded model.
 }
 \description{
-Uploads trained decision tree models on Jaqpot given
-a "tree" object.
+Uploads trained caret model on Jaqpot given
+a "train" object.
 }
 \details{
 The user can upload on Jaqpot a model that has been trained using the
@@ -58,12 +61,14 @@ The user can upload on Jaqpot a model that has been trained using the
  \dontrun{
   #preprocessParams <- caret::preProcess(DATATrain, method=c("center","scale"))
   #DATATrainPre<-predict(preprocessParams, DATA1Train)
-  #DATATrainPre[is.na(DATATrainPre)]<--20
+  dmyRTD<-dummyVars(~.,data=DATATrainPre)
+  dmy_df<-predict(dmyRTD, newdata=DATATrainPre)
+  #dmy_df[is.na(dmy_df)]<--20
   #trainControl<-trainControl(method="repeatedcv", number=20, repeats=3,verboseIter = FALSE,
   allowParallel = FALSE, savePredictions=TRUE)
-  #fitXGB<-caret::train(y~., data =DATATrainPre, method="xgbTree", trControl=trainControl ,
+  #fitXGB<-caret::train(y~., data =dmy_df, method="xgbTree", trControl=trainControl ,
                tuneGrid=tunegrid , importance=TRUE,verbosity=0) 
-  #jaqpotr::deploy.caret(trained.model = list(fitXGB), preprocess.model = list(preprocessParams), 
+  #jaqpotr::deploy.caret(trained.model = list(fitXGB), preprocess.model = list(preprocessParams, dmyRTD), 
   replace = list("after", -20) )
 }
 
