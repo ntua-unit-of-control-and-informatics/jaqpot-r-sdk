@@ -12,6 +12,8 @@
 #' to be changed only if an alternative Jaqpot installation is used.
 #' @param ymin Minimum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
 #' @param ymax Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
+#' #' @param ymean Mean of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
+#' @param ystd Standard deviation of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
 #' @param replace used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
 #' for doing the substitution before or after preprocessing, and the second being the desired replacement value.
 #' @param ... Extra arguments to be passed down the R client. This is not recommended.
