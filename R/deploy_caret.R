@@ -2,24 +2,25 @@
 #'
 #' Uploads trained caret model on Jaqpot given
 #' a "train" object.
-#'  
+#'
+#' @param trained.model An object of 'train' (function \code{train()} of package 'caret'). The model object(s) should be enclosed in a list
+#'
 #' @param preprocess.model The preprocess model(s), with default value NULL.The model object(s) should be enclosed in a list. Consecutive
 #'  preprocessing steps are supported by providing the consecutive preprocessing models with the same order in the list.
 #'  DO NOT include the response into the preprocessing model! The preprocessing of the response should be done seperately and the
 #'  detransformation step of the response is facilitated by the ymin, ymax, ymean and ystd arguments, depending on the preprocessing type used.
 #' Allowed types of preprocessing: 'preProcess' and 'dummyVars' caret functions. 
-#' @param trained.model An object of 'train' (function \code{train(()} of package 'caret'). The model object(s) should be enclosed in a list
-#' #' @param ensemble.model The ensemble model, with default value NULL. Only applicable type is stacked ensemble. Note that if an ensemble model is used, 
+#' @param ensemble.model The ensemble model, with default value NULL. Only applicable type is stacked ensemble. Note that if an ensemble model is used, 
 #' then the order of the models in the list provided in 'trained.model' should be the same as the one used in the stacking process.
-#' @param url The base path of Jaqpot services. This argument is optional and needs 
-#' to be changed only if an alternative Jaqpot installation is used.
-#' @param ymin Minimum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
-#' @param ymax Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
-#' #' @param ymean Mean of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
-#' @param ystd Standard deviation of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
 #' @param replace used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
 #' for doing the substitution before or after the preprocessing step, and the second list argument is the desired replacement value. The default
 #' replacement is after the preprocessing step with the value of -100. 
+#' @param ymin Minimum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
+#' @param ymax Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
+#' @param ymean Mean of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
+#' @param ystd Standard deviation of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.
+#' @param url The base path of Jaqpot services. This argument is optional and needs 
+#' to be changed only if an alternative Jaqpot installation is used.
 #' @param ... Extra arguments to be passed down the R client. This is not recommended.
 #' @return  The id of the uploaded model.
 #' @details The user can upload on Jaqpot a model that has been trained using the
