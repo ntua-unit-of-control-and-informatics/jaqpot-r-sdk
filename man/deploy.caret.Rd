@@ -8,7 +8,7 @@ deploy.caret(
   trained.model,
   preprocess.model = NULL,
   ensemble.model = NULL,
-  replace = list("when", 0),
+  replace = list("after", -100),
   ymax = NULL,
   ymin = NULL,
   ymean = NULL,
@@ -29,7 +29,8 @@ then the order of the models in the list provided in 'trained.model' should be t
 Allowed types of preprocessing: 'preProcess' and 'dummyVars' caret functions.}
 
 \item{replace}{used for NA substitution with a desired value. It should be a list of two arguments, with the first being either "before" or "after", 
-for doing the substitution before or after the preprocessing step, and the second list argument is the desired replacement value.}
+for doing the substitution before or after the preprocessing step, and the second list argument is the desired replacement value. The default
+replacement is after the preprocessing step with the value of -100.}
 
 \item{ymax}{Maximum y value to be used for y detrasformation. This applies if y has been scaled using the \code{range} method of \code{preProcess()} function.
 #' @param ymean Mean of y to be used for y detrasformation. This applies if y has been scaled using the \code{c("center","scale")} method of \code{preProcess()} function.}
