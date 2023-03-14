@@ -8,9 +8,11 @@ deploy.caret(
   trained.model,
   preprocess.model = NULL,
   ensemble.model = NULL,
-  replace = NULL,
+  replace = list("when", 0),
   ymax = NULL,
   ymin = NULL,
+  ymean = NULL,
+  ystd = NULL,
   url = "https://api.jaqpot.org/jaqpot/",
   ...
 )

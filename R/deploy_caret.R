@@ -29,7 +29,8 @@
 #' }
 #'
 #' @export
-deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model = NULL, replace = list("when",0), ymax =NULL, ymin =NULL, url = "https://api.jaqpot.org/jaqpot/", ...){
+deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model = NULL, replace = list("when",0), ymax =NULL, ymin =NULL, 
+                          ymean =NULL, ystd =NULL, url = "https://api.jaqpot.org/jaqpot/", ...){
   
   # Make sure that preprocess.model is a list
   if ( !is.null(attributes(preprocess.model))){
@@ -113,7 +114,9 @@ deploy.caret <- function( trained.model, preprocess.model = NULL, ensemble.model
   tojson <- list(rawModel=model, runtime="R-caret", implementedWith="caret  R",
                  pmmlModel=NULL, independentFeatures=independent.vars,
                  predictedFeatures=dependent.vars, dependentFeatures=dependent.vars,
-                 title=title, description=description, algorithm="Rcaret", additionalInfo = list(ymax = ymax, ymin = ymin, ensemble.vars = ensemble.vars,
+                 title=title, description=description, algorithm="Rcaret", additionalInfo = list(ymax = ymax, ymin = ymin, 
+                                                                                                 ymean = ymean, ystd = ystd,
+                                                                                                 ensemble.vars = ensemble.vars,
                                                                                                  replace = replace))
   # Convert the list to a JSON data format
   tryCatch({
