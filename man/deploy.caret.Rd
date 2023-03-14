@@ -18,7 +18,8 @@ deploy.caret(
 )
 }
 \arguments{
-\item{trained.model}{An object of 'train' (function \code{train()} of package 'caret'). The model object(s) should be enclosed in a list}
+\item{trained.model}{An object of 'train' (function \code{train()} of package 'caret'). If an ensemble
+of models is used, then the trained models should be enclosed in a list, with the same order as the one used in the ensemble}
 
 \item{preprocess.model}{The preprocess model(s), with default value NULL.The model object(s) should be enclosed in a list. Consecutive
  preprocessing steps are supported by providing the consecutive preprocessing models with the same order in the list.
@@ -71,7 +72,7 @@ The user can upload on Jaqpot a model that has been trained using the
   allowParallel = FALSE, savePredictions=TRUE)
   #fitXGB<-caret::train(y~., data =dmy_df, method="xgbTree", trControl=trainControl ,
                tuneGrid=tunegrid , importance=TRUE,verbosity=0) 
-  #jaqpotr::deploy.caret(trained.model = list(fitXGB), preprocess.model = list(preprocessParams, dmyRTD), 
+  #jaqpotr::deploy.caret(trained.model = fitXGB, preprocess.model = list(preprocessParams, dmyRTD), 
   replace = list("after", -20) )
 }
 

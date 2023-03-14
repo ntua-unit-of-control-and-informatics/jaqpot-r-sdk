@@ -3,8 +3,8 @@
 #' Uploads trained caret model on Jaqpot given
 #' a "train" object.
 #'
-#' @param trained.model An object of 'train' (function \code{train()} of package 'caret'). The model object(s) should be enclosed in a list
-#'
+#' @param trained.model An object of 'train' (function \code{train()} of package 'caret'). If an ensemble
+#' of models is used, then the trained models should be enclosed in a list, with the same order as the one used in the ensemble
 #' @param preprocess.model The preprocess model(s), with default value NULL.The model object(s) should be enclosed in a list. Consecutive
 #'  preprocessing steps are supported by providing the consecutive preprocessing models with the same order in the list.
 #'  DO NOT include the response into the preprocessing model! The preprocessing of the response should be done seperately and the
@@ -40,7 +40,7 @@
 #'   allowParallel = FALSE, savePredictions=TRUE)
 #'   #fitXGB<-caret::train(y~., data =dmy_df, method="xgbTree", trControl=trainControl ,
 #'                tuneGrid=tunegrid , importance=TRUE,verbosity=0) 
-#'   #jaqpotr::deploy.caret(trained.model = list(fitXGB), preprocess.model = list(preprocessParams, dmyRTD), 
+#'   #jaqpotr::deploy.caret(trained.model = fitXGB, preprocess.model = list(preprocessParams, dmyRTD), 
 #'   replace = list("after", -20) )
 #' }
 #'
