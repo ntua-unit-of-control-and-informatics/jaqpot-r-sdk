@@ -39,13 +39,13 @@
 #' @param ... Extra arguments to be passed down to the solver.
 #'
 #' @return  The id of the uploaded model.
-#' @details The user should  the inputs 
+#' @details The user should provide the inputs 
 #' that the end-user will provide on the Jaqpot 
 #' User Interface (UI) and the state variables of the ODE system
 #' that are to be printed on the UI upon execution
 #' of the ODE system. In addition, the user should provide five functions.
 #' The first function transforms the user input according to the needs 
-#" of the ODE model, the 
+#' of the ODE model, the 
 #' second creates the initial conditions of the ODEs, the third creates the  
 #' events that are forced
 #' on the system, the fourth enables the use of custom functions 
