@@ -176,7 +176,7 @@
 #'   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
 #'   })
 #' }
-#' deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+#' deploy.pbpk(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
 #' }
 #' @export
 
