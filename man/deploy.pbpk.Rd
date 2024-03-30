@@ -62,12 +62,13 @@ Uploads an ODE model on Jaqpot that can be solved using the \code{ode}
 function of package 'deSolve'.
 }
 \details{
-The user should  the inputs 
+The user should provide the inputs 
 that the end-user will provide on the Jaqpot 
 User Interface (UI) and the state variables of the ODE system
 that are to be printed on the UI upon execution
 of the ODE system. In addition, the user should provide five functions.
 The first function transforms the user input according to the needs 
+of the ODE model, the 
 second creates the initial conditions of the ODEs, the third creates the  
 events that are forced
 on the system, the fourth enables the use of custom functions 
@@ -198,6 +199,6 @@ ode.fun <- function(time, Initial.values, Parameters, custom.func){
   list(c(dLu = dLu, dRob = dRob,  dLi = dLi, dArt_blood = dArt_blood, dVen_blood = dVen_blood)
   })
 }
-deploy.ode(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
+deploy.pbpk(user.input, out.vars, create.params, create.inits, create.events, custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09)
 }
 }
