@@ -19,6 +19,7 @@
 #' @field featurizers List of featurizer configurations applied to the model list(\link{Transformer}) [optional]
 #' @field preprocessors List of preprocessor configurations applied to the model list(\link{Transformer}) [optional]
 #' @field torchConfig Torch configuration settings, optional named list(\link{AnyType}) [optional]
+#' @field rPbpkOdeSolver  character [optional]
 #' @field legacyAdditionalInfo Legacy additional information settings, optional named list(\link{AnyType}) [optional]
 #' @field legacyPredictionService Legacy prediction service information, if available character [optional]
 #' @importFrom R6 R6Class
@@ -39,6 +40,7 @@ PredictionModel <- R6::R6Class(
     `featurizers` = NULL,
     `preprocessors` = NULL,
     `torchConfig` = NULL,
+    `rPbpkOdeSolver` = NULL,
     `legacyAdditionalInfo` = NULL,
     `legacyPredictionService` = NULL,
 
@@ -57,10 +59,11 @@ PredictionModel <- R6::R6Class(
     #' @param featurizers List of featurizer configurations applied to the model
     #' @param preprocessors List of preprocessor configurations applied to the model
     #' @param torchConfig Torch configuration settings, optional
+    #' @param rPbpkOdeSolver rPbpkOdeSolver
     #' @param legacyAdditionalInfo Legacy additional information settings, optional
     #' @param legacyPredictionService Legacy prediction service information, if available
     #' @param ... Other optional arguments.
-    initialize = function(`dependentFeatures`, `independentFeatures`, `type`, `rawModel`, `task`, `id` = NULL, `rawPreprocessor` = NULL, `doas` = NULL, `selectedFeatures` = NULL, `featurizers` = NULL, `preprocessors` = NULL, `torchConfig` = NULL, `legacyAdditionalInfo` = NULL, `legacyPredictionService` = NULL, ...) {
+    initialize = function(`dependentFeatures`, `independentFeatures`, `type`, `rawModel`, `task`, `id` = NULL, `rawPreprocessor` = NULL, `doas` = NULL, `selectedFeatures` = NULL, `featurizers` = NULL, `preprocessors` = NULL, `torchConfig` = NULL, `rPbpkOdeSolver` = NULL, `legacyAdditionalInfo` = NULL, `legacyPredictionService` = NULL, ...) {
       if (!missing(`dependentFeatures`)) {
         stopifnot(is.vector(`dependentFeatures`), length(`dependentFeatures`) != 0)
         sapply(`dependentFeatures`, function(x) stopifnot(R6::is.R6(x)))
@@ -127,6 +130,12 @@ PredictionModel <- R6::R6Class(
         stopifnot(is.vector(`torchConfig`), length(`torchConfig`) != 0)
         sapply(`torchConfig`, function(x) stopifnot(R6::is.R6(x)))
         self$`torchConfig` <- `torchConfig`
+      }
+      if (!is.null(`rPbpkOdeSolver`)) {
+        if (!(is.character(`rPbpkOdeSolver`) && length(`rPbpkOdeSolver`) == 1)) {
+          stop(paste("Error! Invalid data for `rPbpkOdeSolver`. Must be a string:", `rPbpkOdeSolver`))
+        }
+        self$`rPbpkOdeSolver` <- `rPbpkOdeSolver`
       }
       if (!is.null(`legacyAdditionalInfo`)) {
         stopifnot(is.vector(`legacyAdditionalInfo`), length(`legacyAdditionalInfo`) != 0)
@@ -195,6 +204,10 @@ PredictionModel <- R6::R6Class(
         PredictionModelObject[["torchConfig"]] <-
           lapply(self$`torchConfig`, function(x) x$toJSON())
       }
+      if (!is.null(self$`rPbpkOdeSolver`)) {
+        PredictionModelObject[["rPbpkOdeSolver"]] <-
+          self$`rPbpkOdeSolver`
+      }
       if (!is.null(self$`legacyAdditionalInfo`)) {
         PredictionModelObject[["legacyAdditionalInfo"]] <-
           lapply(self$`legacyAdditionalInfo`, function(x) x$toJSON())
@@ -252,6 +265,9 @@ PredictionModel <- R6::R6Class(
       }
       if (!is.null(this_object$`torchConfig`)) {
         self$`torchConfig` <- ApiClient$new()$deserializeObj(this_object$`torchConfig`, "map(AnyType)", loadNamespace("openapi"))
+      }
+      if (!is.null(this_object$`rPbpkOdeSolver`)) {
+        self$`rPbpkOdeSolver` <- this_object$`rPbpkOdeSolver`
       }
       if (!is.null(this_object$`legacyAdditionalInfo`)) {
         self$`legacyAdditionalInfo` <- ApiClient$new()$deserializeObj(this_object$`legacyAdditionalInfo`, "map(AnyType)", loadNamespace("openapi"))
@@ -364,6 +380,14 @@ PredictionModel <- R6::R6Class(
           jsonlite::toJSON(lapply(self$`torchConfig`, function(x){ x$toJSON() }), auto_unbox = TRUE, digits = NA)
           )
         },
+        if (!is.null(self$`rPbpkOdeSolver`)) {
+          sprintf(
+          '"rPbpkOdeSolver":
+            "%s"
+                    ',
+          self$`rPbpkOdeSolver`
+          )
+        },
         if (!is.null(self$`legacyAdditionalInfo`)) {
           sprintf(
           '"legacyAdditionalInfo":
@@ -404,6 +428,7 @@ PredictionModel <- R6::R6Class(
       self$`featurizers` <- ApiClient$new()$deserializeObj(this_object$`featurizers`, "array[Transformer]", loadNamespace("openapi"))
       self$`preprocessors` <- ApiClient$new()$deserializeObj(this_object$`preprocessors`, "array[Transformer]", loadNamespace("openapi"))
       self$`torchConfig` <- ApiClient$new()$deserializeObj(this_object$`torchConfig`, "map(AnyType)", loadNamespace("openapi"))
+      self$`rPbpkOdeSolver` <- this_object$`rPbpkOdeSolver`
       self$`legacyAdditionalInfo` <- ApiClient$new()$deserializeObj(this_object$`legacyAdditionalInfo`, "map(AnyType)", loadNamespace("openapi"))
       self$`legacyPredictionService` <- this_object$`legacyPredictionService`
       self

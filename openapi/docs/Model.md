@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **tags** | **character** |  | [optional] [Max. length: 1000] 
 **legacyPredictionService** | **character** |  | [optional] 
 **scores** | [**ModelScores**](Model_scores.md) |  | [optional] 
+**rPbpkConfig** | [**RPbpkConfig**](RPbpkConfig.md) |  | [optional] 
 **createdAt** | **character** | The date and time when the feature was created. | [optional] 
 **updatedAt** | **character** | The date and time when the feature was last updated. | [optional] 
 

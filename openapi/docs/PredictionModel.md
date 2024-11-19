@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **featurizers** | [**array[Transformer]**](Transformer.md) | List of featurizer configurations applied to the model | [optional] 
 **preprocessors** | [**array[Transformer]**](Transformer.md) | List of preprocessor configurations applied to the model | [optional] 
 **torchConfig** | [**map(AnyType)**](AnyType.md) | Torch configuration settings, optional | [optional] 
+**rPbpkOdeSolver** | **character** |  | [optional] 
 **legacyAdditionalInfo** | [**map(AnyType)**](AnyType.md) | Legacy additional information settings, optional | [optional] 
 **legacyPredictionService** | **character** | Legacy prediction service information, if available | [optional] 
 

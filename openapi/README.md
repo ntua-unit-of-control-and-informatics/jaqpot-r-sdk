@@ -156,6 +156,7 @@ Class | Method | HTTP request | Description
  - [PredictionModel](docs/PredictionModel.md)
  - [PredictionRequest](docs/PredictionRequest.md)
  - [PredictionResponse](docs/PredictionResponse.md)
+ - [RPbpkConfig](docs/RPbpkConfig.md)
  - [RegressionScores](docs/RegressionScores.md)
  - [Scores](docs/Scores.md)
  - [Transformer](docs/Transformer.md)

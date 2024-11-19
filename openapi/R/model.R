@@ -31,6 +31,7 @@
 #' @field tags  character [optional]
 #' @field legacyPredictionService  character [optional]
 #' @field scores  \link{ModelScores} [optional]
+#' @field rPbpkConfig  \link{RPbpkConfig} [optional]
 #' @field createdAt The date and time when the feature was created. character [optional]
 #' @field updatedAt The date and time when the feature was last updated. character [optional]
 #' @importFrom R6 R6Class
@@ -63,6 +64,7 @@ Model <- R6::R6Class(
     `tags` = NULL,
     `legacyPredictionService` = NULL,
     `scores` = NULL,
+    `rPbpkConfig` = NULL,
     `createdAt` = NULL,
     `updatedAt` = NULL,
 
@@ -93,10 +95,11 @@ Model <- R6::R6Class(
     #' @param tags tags
     #' @param legacyPredictionService legacyPredictionService
     #' @param scores scores
+    #' @param rPbpkConfig rPbpkConfig
     #' @param createdAt The date and time when the feature was created.
     #' @param updatedAt The date and time when the feature was last updated.
     #' @param ... Other optional arguments.
-    initialize = function(`name`, `type`, `jaqpotpyVersion`, `libraries`, `dependentFeatures`, `independentFeatures`, `visibility`, `task`, `rawModel`, `id` = NULL, `description` = NULL, `doas` = NULL, `sharedWithOrganizations` = NULL, `torchConfig` = NULL, `preprocessors` = NULL, `featurizers` = NULL, `rawPreprocessor` = NULL, `creator` = NULL, `canEdit` = NULL, `isAdmin` = NULL, `selectedFeatures` = NULL, `tags` = NULL, `legacyPredictionService` = NULL, `scores` = NULL, `createdAt` = NULL, `updatedAt` = NULL, ...) {
+    initialize = function(`name`, `type`, `jaqpotpyVersion`, `libraries`, `dependentFeatures`, `independentFeatures`, `visibility`, `task`, `rawModel`, `id` = NULL, `description` = NULL, `doas` = NULL, `sharedWithOrganizations` = NULL, `torchConfig` = NULL, `preprocessors` = NULL, `featurizers` = NULL, `rawPreprocessor` = NULL, `creator` = NULL, `canEdit` = NULL, `isAdmin` = NULL, `selectedFeatures` = NULL, `tags` = NULL, `legacyPredictionService` = NULL, `scores` = NULL, `rPbpkConfig` = NULL, `createdAt` = NULL, `updatedAt` = NULL, ...) {
       if (!missing(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
           stop(paste("Error! Invalid data for `name`. Must be a string:", `name`))
@@ -225,6 +228,10 @@ Model <- R6::R6Class(
         stopifnot(R6::is.R6(`scores`))
         self$`scores` <- `scores`
       }
+      if (!is.null(`rPbpkConfig`)) {
+        stopifnot(R6::is.R6(`rPbpkConfig`))
+        self$`rPbpkConfig` <- `rPbpkConfig`
+      }
       if (!is.null(`createdAt`)) {
         if (!is.character(`createdAt`)) {
           stop(paste("Error! Invalid data for `createdAt`. Must be a string:", `createdAt`))
@@ -341,6 +348,10 @@ Model <- R6::R6Class(
         ModelObject[["scores"]] <-
           self$`scores`$toJSON()
       }
+      if (!is.null(self$`rPbpkConfig`)) {
+        ModelObject[["rPbpkConfig"]] <-
+          self$`rPbpkConfig`$toJSON()
+      }
       if (!is.null(self$`createdAt`)) {
         ModelObject[["createdAt"]] <-
           self$`createdAt`
@@ -440,6 +451,11 @@ Model <- R6::R6Class(
         `scores_object` <- ModelScores$new()
         `scores_object`$fromJSON(jsonlite::toJSON(this_object$`scores`, auto_unbox = TRUE, digits = NA))
         self$`scores` <- `scores_object`
+      }
+      if (!is.null(this_object$`rPbpkConfig`)) {
+        `rpbpkconfig_object` <- RPbpkConfig$new()
+        `rpbpkconfig_object`$fromJSON(jsonlite::toJSON(this_object$`rPbpkConfig`, auto_unbox = TRUE, digits = NA))
+        self$`rPbpkConfig` <- `rpbpkconfig_object`
       }
       if (!is.null(this_object$`createdAt`)) {
         self$`createdAt` <- this_object$`createdAt`
@@ -648,6 +664,14 @@ Model <- R6::R6Class(
           jsonlite::toJSON(self$`scores`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
+        if (!is.null(self$`rPbpkConfig`)) {
+          sprintf(
+          '"rPbpkConfig":
+          %s
+          ',
+          jsonlite::toJSON(self$`rPbpkConfig`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
         if (!is.null(self$`createdAt`)) {
           sprintf(
           '"createdAt":
@@ -700,6 +724,7 @@ Model <- R6::R6Class(
       self$`tags` <- this_object$`tags`
       self$`legacyPredictionService` <- this_object$`legacyPredictionService`
       self$`scores` <- ModelScores$new()$fromJSON(jsonlite::toJSON(this_object$`scores`, auto_unbox = TRUE, digits = NA))
+      self$`rPbpkConfig` <- RPbpkConfig$new()$fromJSON(jsonlite::toJSON(this_object$`rPbpkConfig`, auto_unbox = TRUE, digits = NA))
       self$`createdAt` <- this_object$`createdAt`
       self$`updatedAt` <- this_object$`updatedAt`
       self
