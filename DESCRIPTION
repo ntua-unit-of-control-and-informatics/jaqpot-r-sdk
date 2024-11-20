@@ -3,8 +3,8 @@ Type: Package
 Title: Deploys R models as web services on the Jaqpot platform
 Version: 0.0.1
 Authors@R: 
-    c(person(given = "Pantelis",
-             family = "Karatzas",
+        c(person(given = "Alex",
+             family = "Arvanitidis",
              role = c("aut", "cre"),
              email = "pantelispanka@gmail.com"),
       person(given = "Periklis",
