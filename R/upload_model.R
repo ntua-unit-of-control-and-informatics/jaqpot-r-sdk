@@ -221,27 +221,34 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                           create.events = create.events, custom.func = custom.func,
                           ode.func = ode.func),connection=NULL))
 
-    i <- 1
-    independent.feats <- list()
-      for (name in independent.features){
-        independent.feats[[i]] <- Feature$new(name, name, FeatureType$new("FLOAT"))
-        i <- i + 1
-      }
-
-    i <- 1
-    dependent.feats <- list()
-     for (name in predicts){
-       dependent.feats[[i]] <- Feature$new(name, name, FeatureType$new("FLOAT"))
-    }
-
+  independentFeatures <- list()
+  for (i in 1:length(independent.features)){
+    independentFeatures[[i]] <- Feature$new(key = independent.features[i], name = independent.features[i], 
+                                            featureType = FeatureType$new(c("FLOAT")))
+  }
+  
+  dependentFeatures <- list()
+  for (i in 1:length(predicts)){
+    dependentFeatures[[i]] <- Feature$new(key = predicts[i], name = predicts[i], 
+                                          featureType = FeatureType$new(c("FLOAT")))
+  }
+  
+  library <-  c(Library$new(name = "deSolve", version = "1.40" ))
+  type <-  ModelType$new("R_PBPK")
+  task <- ModelTask$new("REGRESSION")
+  rPbpkConfig <- RPbpkConfig$new(odeSolver = method)
+  visilibity <- ModelVisibility$new("PRIVATE")
+  
+  var_model <- Model$new(name = 'hi', description = 'description',
+                         independentFeatures = independentFeatures,
+                         dependentFeatures = dependentFeatures,  
+                         libraries =library,  jaqpotpyVersion = '0.0',
+                         rawModel = model, type = type, 
+                         task = task,
+                         rPbpkConfig =  rPbpkConfig,
+                         visibility = visilibity)
+  
   default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
-  var_model <- Model$new(`name` = title,`dependentFeatures` = dependent.feats,  `libraries` = list(),
-                         `independentFeatures` = independent.feats,
-                         `description` = description,
-                         `rawModel` = model,`type` =  ModelType$new("R_PBPK"),
-                         `task` = ModelTask$new("REGRESSION"),
-                         `rPbpkConfig` =  RPbpkConfig$new(`odeSolver` = method),
-                         `visibility` = ModelVisibility$new("PRIVATE"))
   api_client <- ApiClient$new(`base_path` = url,`default_headers` = default_headers)
   api_instance <- ModelApi$new(`api_client` = api_client)
   #Create a new model
