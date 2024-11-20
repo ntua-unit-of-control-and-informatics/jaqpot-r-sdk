@@ -23,6 +23,6 @@ Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
 Packaged: 2020-11-19 20:05:56 UTC; periklis
-Author: Pantelis Karatzas [aut, cre],
+Author: Alex Arvanitidis [aut, cre],
   Periklis Tsiros [ctb]
-Maintainer: Pantelis Karatzas <pantelispanka@gmail.com>
+Maintainer: Periklis Tsiros <ptsirostsib@gmail.com>
