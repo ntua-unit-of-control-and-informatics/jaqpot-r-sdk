@@ -68,6 +68,12 @@ Feature <- R6::R6Class(
         self$`name` <- `name`
       }
       if (!missing(`featureType`)) {
+        if (!(as.character(`featureType`$toJSON()) %in% c("\"INTEGER\"", "\"FLOAT\"", "\"CATEGORICAL\"", 
+                                                          "\"SMILES\"", "\"STRING\"", "\"TEXT\"", "\"FLOAT_ARRAY\"",
+                                                          "\"STRING_ARRAY\""))) {
+          stop(paste("Error! \"", `featureType`, "\" cannot be assigned to `featureType`. Must be .", sep = ""))
+          
+        }
         stopifnot(R6::is.R6(`featureType`))
         self$`featureType` <- `featureType`
       }
