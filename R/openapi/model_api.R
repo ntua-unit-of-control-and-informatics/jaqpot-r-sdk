@@ -17,7 +17,7 @@
 #' ####################  CreateModel  ####################
 #'
 #' library(openapi)
-#' var_model <- Model$new("name_example", ModelType$new(), "jaqpotpyVersion_example", c(Library$new("name_example", "version_example", 123, "createdAt_example", "updatedAt_example")), c(Feature$new("key_example", "name_example", FeatureType$new(), 123, "units_example", "range_example", "description_example", "DEPENDENT", "visible_example", c(FeaturePossibleValue$new("key_example", "value_example")), "createdAt_example", "updatedAt_example")), c(Feature$new("key_example", "name_example", FeatureType$new(), 123, "units_example", "range_example", "description_example", "DEPENDENT", "visible_example", c(FeaturePossibleValue$new("key_example", "value_example")), "createdAt_example", "updatedAt_example")), ModelVisibility$new(), ModelTask$new(), "rawModel_example", 123, "description_example", c(Doa$new(DoaMethod$new(), c(key = TODO), 123, "createdAt_example", "updatedAt_example")), c(Organization$new("name_example", OrganizationVisibility$new(), "contactEmail_example", 123, User$new("id_example", "username_example", "firstName_example", "lastName_example", "email_example", "emailVerified_example"), "description_example", c(OrganizationUser$new("userId_example", OrganizationUserAssociationType$new(), 123, "username_example", "email_example")), "contactPhone_example", "website_example", "address_example", "canEdit_example", "isMember_example", "created_at_example", "updated_at_example")), c(key = TODO), c(Transformer$new("name_example", c(key = TODO), 123)), c(Transformer$new("name_example", c(key = TODO), 123)), "rawPreprocessor_example", User$new("id_example", "username_example", "firstName_example", "lastName_example", "email_example", "emailVerified_example"), "canEdit_example", "isAdmin_example", c("selectedFeatures_example"), "tags_example", "legacyPredictionService_example", Model_scores$new(c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))))), c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))))), c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123)))))), RPbpkConfig$new("odeSolver_example"), "createdAt_example", "updatedAt_example") # Model | 
+#' var_model <- Model$new("name_example", ModelType$new(), "jaqpotpyVersion_example", c(Library$new("name_example", "version_example", 123, "createdAt_example", "updatedAt_example")), c(Feature$new("key_example", "name_example", FeatureType$new(), 123, "units_example", "range_example", "description_example", "DEPENDENT", "visible_example", c(FeaturePossibleValue$new("key_example", "value_example")), "createdAt_example", "updatedAt_example")), c(Feature$new("key_example", "name_example", FeatureType$new(), 123, "units_example", "range_example", "description_example", "DEPENDENT", "visible_example", c(FeaturePossibleValue$new("key_example", "value_example")), "createdAt_example", "updatedAt_example")), ModelVisibility$new(), ModelTask$new(), "rawModel_example", 123, "description_example", c(Doa$new(DoaMethod$new(), c(key = TODO), 123, "createdAt_example", "updatedAt_example")), c(Organization$new("name_example", OrganizationVisibility$new(), "contactEmail_example", 123, User$new("id_example", "username_example", "firstName_example", "lastName_example", "email_example", "emailVerified_example"), "description_example", c(OrganizationUser$new("userId_example", OrganizationUserAssociationType$new(), 123, "username_example", "email_example")), "contactPhone_example", "website_example", "address_example", "canEdit_example", "isMember_example", "created_at_example", "updated_at_example")), c(key = TODO), c(Transformer$new("name_example", c(key = TODO), 123)), c(Transformer$new("name_example", c(key = TODO), 123)), "rawPreprocessor_example", User$new("id_example", "username_example", "firstName_example", "lastName_example", "email_example", "emailVerified_example"), "canEdit_example", "isAdmin_example", c("selectedFeatures_example"), "tags_example", "legacyPredictionService_example", Model_scores$new(c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))))), c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))))), c(Scores$new(RegressionScores$new("yName_example", 123, 123, 123, 123), BinaryClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123))), MulticlassClassificationScores$new("yName_example", c("labels_example"), 123, 123, 123, c(123), c(123), c(123), c(123), 123, c(c(123)))))), RPbpkConfig$new("odeSolver_example"), "createdAt_example", "updatedAt_example") # Model |
 #'
 #' #Create a new model
 #' api_instance <- ModelApi$new()
@@ -118,8 +118,8 @@
 #' ####################  PartiallyUpdateModel  ####################
 #'
 #' library(openapi)
-#' var_id <- 56 # integer | 
-#' var_partially_update_model_request <- partiallyUpdateModel_request$new("name_example", ModelVisibility$new(), ModelTask$new(), "description_example", "tags_example", c(123)) # PartiallyUpdateModelRequest | 
+#' var_id <- 56 # integer |
+#' var_partially_update_model_request <- partiallyUpdateModel_request$new("name_example", ModelVisibility$new(), ModelTask$new(), "description_example", "tags_example", c(123)) # PartiallyUpdateModelRequest |
 #'
 #' #Partially update specific fields of a model
 #' api_instance <- ModelApi$new()
@@ -137,7 +137,7 @@
 #'
 #' library(openapi)
 #' var_model_id <- 0 # integer | The ID of the model to use for prediction
-#' var_dataset <- Dataset$new(DatasetType$new(), "ARRAY", c(TODO), 123, c(TODO), "CREATED", "failureReason_example", "userId_example", 123, "modelName_example", "executedAt_example", "executionFinishedAt_example", "createdAt_example", "updatedAt_example") # Dataset | 
+#' var_dataset <- Dataset$new(DatasetType$new(), "ARRAY", c(TODO), 123, c(TODO), "CREATED", "failureReason_example", "userId_example", 123, "modelName_example", "executedAt_example", "executionFinishedAt_example", "createdAt_example", "updatedAt_example") # Dataset |
 #'
 #' #Predict with Model
 #' api_instance <- ModelApi$new()
@@ -152,7 +152,7 @@
 #'
 #' library(openapi)
 #' var_model_id <- 0 # integer | The ID of the model to use for prediction
-#' var_dataset_csv <- DatasetCSV$new(DatasetType$new(), "inputFile_example", 123, c(TODO), "CREATED", "failureReason_example", 123, "modelName_example", "executedAt_example", "executionFinishedAt_example", "createdAt_example", "updatedAt_example") # DatasetCSV | 
+#' var_dataset_csv <- DatasetCSV$new(DatasetType$new(), "inputFile_example", 123, c(TODO), "CREATED", "failureReason_example", 123, "modelName_example", "executedAt_example", "executionFinishedAt_example", "createdAt_example", "updatedAt_example") # DatasetCSV |
 #'
 #' #Predict using CSV with Model
 #' api_instance <- ModelApi$new()
@@ -166,7 +166,7 @@
 #' ####################  SearchModels  ####################
 #'
 #' library(openapi)
-#' var_query <- "query_example" # character | 
+#' var_query <- "query_example" # character |
 #' var_page <- 0 # integer |  (Optional)
 #' var_size <- 10 # integer |  (Optional)
 #'
@@ -206,12 +206,13 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Create a new model
     #'
-    #' @param model 
+    #' @param model
     #' @param ... Other optional arguments
     #'
     #' @return void
     CreateModel = function(model, ...) {
       local_var_response <- self$CreateModelWithHttpInfo(model, ...)
+      print(local_var_response$status_code)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -226,7 +227,7 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Create a new model
     #'
-    #' @param model 
+    #' @param model
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
@@ -795,8 +796,8 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Partially update specific fields of a model
     #'
-    #' @param id 
-    #' @param partially_update_model_request 
+    #' @param id
+    #' @param partially_update_model_request
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -817,8 +818,8 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Partially update specific fields of a model
     #'
-    #' @param id 
-    #' @param partially_update_model_request 
+    #' @param id
+    #' @param partially_update_model_request
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -908,7 +909,7 @@ ModelApi <- R6::R6Class(
     #' Predict with Model
     #'
     #' @param model_id The ID of the model to use for prediction
-    #' @param dataset 
+    #' @param dataset
     #' @param ... Other optional arguments
     #'
     #' @return void
@@ -929,7 +930,7 @@ ModelApi <- R6::R6Class(
     #' Predict with Model
     #'
     #' @param model_id The ID of the model to use for prediction
-    #' @param dataset 
+    #' @param dataset
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
@@ -1007,7 +1008,7 @@ ModelApi <- R6::R6Class(
     #' Predict using CSV with Model
     #'
     #' @param model_id The ID of the model to use for prediction
-    #' @param dataset_csv 
+    #' @param dataset_csv
     #' @param ... Other optional arguments
     #'
     #' @return void
@@ -1028,7 +1029,7 @@ ModelApi <- R6::R6Class(
     #' Predict using CSV with Model
     #'
     #' @param model_id The ID of the model to use for prediction
-    #' @param dataset_csv 
+    #' @param dataset_csv
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
@@ -1105,7 +1106,7 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Search for models
     #'
-    #' @param query 
+    #' @param query
     #' @param page (optional) No description (default value: 0)
     #' @param size (optional) No description (default value: 10)
     #' @param data_file (optional) name of the data file to save the result
@@ -1128,7 +1129,7 @@ ModelApi <- R6::R6Class(
     #' @description
     #' Search for models
     #'
-    #' @param query 
+    #' @param query
     #' @param page (optional) No description (default value: 0)
     #' @param size (optional) No description (default value: 10)
     #' @param data_file (optional) name of the data file to save the result

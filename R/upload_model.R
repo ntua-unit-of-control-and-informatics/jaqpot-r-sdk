@@ -187,6 +187,8 @@
 #' @export
 #'
 
+library(stringr)
+
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
                         url = "http://localhost.jaqpot.org:8080"){
@@ -232,6 +234,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
        dependent.feats[[i]] <- Feature$new(name, name, FeatureType$new("FLOAT"))
     }
 
+  default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
   var_model <- Model$new(`name` = title,`dependentFeatures` = dependent.feats,  `libraries` = list(),
                          `independentFeatures` = independent.feats,
                          `description` = description,
@@ -239,10 +242,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                          `task` = ModelTask$new("REGRESSION"),
                          `rPbpkConfig` =  RPbpkConfig$new(`odeSolver` = method),
                          `visibility` = ModelVisibility$new("PRIVATE"))
-  api_client <- ApiClient$new(`base_path` = url,`default_headers` =
-                                list('X-Api-Key' = JAQPOT_API_KEY,
-                                     'X-Api-Secret' = JAQPOT_API_SECRET)
-                              )
+  api_client <- ApiClient$new(`base_path` = url,`default_headers` = default_headers)
   api_instance <- ModelApi$new(`api_client` = api_client)
   #Create a new model
   response <- api_instance$CreateModel(var_model)
