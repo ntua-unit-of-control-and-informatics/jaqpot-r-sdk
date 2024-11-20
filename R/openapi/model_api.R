@@ -247,7 +247,8 @@ ModelApi <- R6::R6Class(
 
 
       if (!is.null(`model`)) {
-        local_var_body <- `model`#$toJSONString()
+        local_var_body <- jsonlite::toJSON(`model`$toJSON(), auto_unbox = TRUE, digits = NA)
+
       } else {
         body <- NULL
       }
@@ -264,6 +265,8 @@ ModelApi <- R6::R6Class(
       # The Content-Type representation header
       local_var_content_types <- list("application/json")
 
+      print(self$api_client)
+   
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
                                  method = "POST",
                                  query_params = query_params,

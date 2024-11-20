@@ -249,13 +249,12 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                          rPbpkConfig =  rPbpkConfig,
                          visibility = visilibity)
 
-  json_string <- jsonlite::toJSON(var_model$toJSON(), auto_unbox = TRUE, digits = NA)
   
   default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
-  api_client <- ApiClient$new(`base_path` = url,`default_headers` = default_headers)
-  api_instance <- ModelApi$new(`api_client` = api_client)
+  api_client <- ApiClient$new(base_path = url,default_headers = default_headers)
+  api_instance <- ModelApi$new(api_client = api_client)
   #Create a new model
-  response <- api_instance$CreateModel(json_string)
+  response <- api_instance$CreateModel(var_model)
   print(response)
 
 
