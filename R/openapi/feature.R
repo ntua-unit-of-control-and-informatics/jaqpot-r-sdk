@@ -168,7 +168,7 @@ Feature <- R6::R6Class(
       }
       if (!is.null(self$`featureType`)) {
         FeatureObject[["featureType"]] <-
-          self$`featureType`$toJSON()
+          self$`featureType`$getValue()
       }
       if (!is.null(self$`featureDependency`)) {
         FeatureObject[["featureDependency"]] <-

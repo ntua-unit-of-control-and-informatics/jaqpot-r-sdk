@@ -247,7 +247,7 @@ ModelApi <- R6::R6Class(
 
 
       if (!is.null(`model`)) {
-        local_var_body <- `model`$toJSONString()
+        local_var_body <- `model`#$toJSONString()
       } else {
         body <- NULL
       }

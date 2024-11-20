@@ -43,6 +43,14 @@ ModelType <- R6::R6Class(
     toJSON = function() {
         jsonlite::toJSON(private$value, auto_unbox = TRUE)
     },
+    
+    #' @description
+    #' Get string value
+    #'
+    #' @return string
+    getValue = function() {
+      private$value
+    },
 
     #' @description
     #' Deserialize JSON string into an instance of ModelType
@@ -55,6 +63,7 @@ ModelType <- R6::R6Class(
           simplifyVector = FALSE)
       self
     },
+    
 
     #' @description
     #' To JSON String

@@ -107,7 +107,7 @@ Model <- R6::R6Class(
         self$`name` <- `name`
       }
       if (!missing(`type`)) {
-        if (!(`type`$toJSON() %in% c("\"R_PBPK\""))) {
+        if (!(`type`$getValue() %in% c("R_PBPK"))) {
           stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
         }
         stopifnot(R6::is.R6(`type`))
@@ -135,14 +135,14 @@ Model <- R6::R6Class(
         self$`independentFeatures` <- `independentFeatures`
       }
       if (!missing(`visibility`)) {
-        if (!(`visibility`$toJSON()  %in%  c("\"PUBLIC\"", "\"SHARED_WITH\"", "\"PRIVATE\""))) {
+        if (!(`visibility`$getValue()  %in%  c("PUBLIC", "SHARED_WITH", "PRIVATE"))) {
           stop(paste("Error! \"", `visibility`, "\" cannot be assigned to `visibility`. Must be .", sep = ""))
         }
         stopifnot(R6::is.R6(`visibility`))
         self$`visibility` <- `visibility`
       }
       if (!missing(`task`)) {
-        if (!(`task`$toJSON()  %in% c("\"REGRESSION\"", "\"BINARY_CLASSIFICATION\"", "\"MULTICLASS_CLASSIFICATION\""))) {
+        if (!(`task`$getValue()  %in% c("REGRESSION", "BINARY_CLASSIFICATION", "MULTICLASS_CLASSIFICATION"))) {
           stop(paste("Error! \"", `task`, "\" cannot be assigned to `task`. Must be .", sep = ""))
         }
         stopifnot(R6::is.R6(`task`))
@@ -266,7 +266,7 @@ Model <- R6::R6Class(
       }
       if (!is.null(self$`type`)) {
         ModelObject[["type"]] <-
-          self$`type`$toJSON()
+          self$`type`$getValue()
       }
       if (!is.null(self$`jaqpotpyVersion`)) {
         ModelObject[["jaqpotpyVersion"]] <-
@@ -290,15 +290,15 @@ Model <- R6::R6Class(
       }
       if (!is.null(self$`sharedWithOrganizations`)) {
         ModelObject[["sharedWithOrganizations"]] <-
-          lapply(self$`sharedWithOrganizations`, function(x) x$toJSON())
+          lapply(self$`sharedWithOrganizations`, function(x) x$getValue())
       }
       if (!is.null(self$`visibility`)) {
         ModelObject[["visibility"]] <-
-          self$`visibility`$toJSON()
+          self$`visibility`$getValue()
       }
       if (!is.null(self$`task`)) {
         ModelObject[["task"]] <-
-          self$`task`$toJSON()
+          self$`task`$getValue()
       }
       if (!is.null(self$`torchConfig`)) {
         ModelObject[["torchConfig"]] <-

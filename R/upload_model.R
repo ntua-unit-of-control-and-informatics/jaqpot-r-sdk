@@ -235,6 +235,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   
   library <-  c(Library$new(name = "deSolve", version = "1.40" ))
   type <-  ModelType$new("R_PBPK")
+
   task <- ModelTask$new("REGRESSION")
   rPbpkConfig <- RPbpkConfig$new(odeSolver = method)
   visilibity <- ModelVisibility$new("PRIVATE")
@@ -247,8 +248,8 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                          task = task,
                          rPbpkConfig =  rPbpkConfig,
                          visibility = visilibity)
-  #json_string <- var_model$toJSONString()
-  json_string <- var_model$toJSON()
+
+  json_string <- jsonlite::toJSON(var_model$toJSON(), auto_unbox = TRUE, digits = NA)
   
   default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
   api_client <- ApiClient$new(`base_path` = url,`default_headers` = default_headers)
