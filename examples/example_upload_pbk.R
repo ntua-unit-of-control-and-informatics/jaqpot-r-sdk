@@ -112,7 +112,7 @@ ode.func <- function(time, Initial.values, Parameters, custom.func){
  }
 
 user.input <-list("weight" = 250,"dose" = c(10,12), "administration.time" = c(0,1.5) )
-out.vars <- c("Li")
+out.vars <- c("Mli")
 params <- create.params(user.input)
 inits <- create.inits(params)
 events <- create.events(params)
