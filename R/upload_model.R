@@ -187,14 +187,11 @@
 #' @export
 #'
 
-source('openapi/')
-
-
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
-                        url = "https://api.jaqpot.org"){
+                        url = "http://localhost.jaqpot.org:8080"){
   before_sourcing <- ls()
-  openapi_folder <- file.path( "openapi")
+  openapi_folder <- file.path( "./openapi")
   r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
   invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
   after_sourcing <- ls()
@@ -204,9 +201,9 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
 
   # Ask the user for a a model title
-  title <- readline("Title of the model: ")
+  title = "Title of the model"
   # Ask the user for a short model description
-  description <- readline("Short description of the model:")
+  description = "Short description of the model"
   # Set the time vector variables (for ODE output)
   independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step")
   # # Convert three dots into list
@@ -222,14 +219,26 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                           create.events = create.events, custom.func = custom.func,
                           ode.func = ode.func),connection=NULL))
 
-  var_model <- Model$new(`name` = title,`dependentFeatures` = predicts,  `libraries` = list(),
-                         `independentFeatures` = independent.features,
+    i <- 1
+    independent.feats <- list()
+      for (name in independent.features){
+        independent.feats[[i]] <- Feature$new(name, name, FeatureType$new("FLOAT"))
+        i <- i + 1
+      }
+
+    i <- 1
+    dependent.feats <- list()
+     for (name in predicts){
+       dependent.feats[[i]] <- Feature$new(name, name, FeatureType$new("FLOAT"))
+    }
+
+  var_model <- Model$new(`name` = title,`dependentFeatures` = dependent.feats,  `libraries` = list(),
+                         `independentFeatures` = independent.feats,
                          `description` = description,
                          `rawModel` = model,`type` =  ModelType$new("R_PBPK"),
                          `task` = ModelTask$new("REGRESSION"),
                          `rPbpkConfig` =  RPbpkConfig$new(`odeSolver` = method),
-                         `visibility` = "PRIVATE")
-
+                         `visibility` = ModelVisibility$new("PRIVATE"))
   api_client <- ApiClient$new(`base_path` = url,`default_headers` =
                                 list('X-Api-Key' = JAQPOT_API_KEY,
                                      'X-Api-Secret' = JAQPOT_API_SECRET)

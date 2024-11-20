@@ -107,9 +107,9 @@ Model <- R6::R6Class(
         self$`name` <- `name`
       }
       if (!missing(`type`)) {
-        if (!(`type` %in% c())) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
-        }
+#         if (!(`type` %in% c())) {
+#           stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`type`))
         self$`type` <- `type`
       }
@@ -119,11 +119,11 @@ Model <- R6::R6Class(
         }
         self$`jaqpotpyVersion` <- `jaqpotpyVersion`
       }
-      if (!missing(`libraries`)) {
-        stopifnot(is.vector(`libraries`), length(`libraries`) != 0)
-        sapply(`libraries`, function(x) stopifnot(R6::is.R6(x)))
-        self$`libraries` <- `libraries`
-      }
+#       if (!missing(`libraries`)) {
+#         stopifnot(is.vector(`libraries`), length(`libraries`) != 0)
+#         sapply(`libraries`, function(x) stopifnot(R6::is.R6(x)))
+#         self$`libraries` <- `libraries`
+#       }
       if (!missing(`dependentFeatures`)) {
         stopifnot(is.vector(`dependentFeatures`), length(`dependentFeatures`) != 0)
         sapply(`dependentFeatures`, function(x) stopifnot(R6::is.R6(x)))
@@ -135,16 +135,16 @@ Model <- R6::R6Class(
         self$`independentFeatures` <- `independentFeatures`
       }
       if (!missing(`visibility`)) {
-        if (!(`visibility` %in% c())) {
-          stop(paste("Error! \"", `visibility`, "\" cannot be assigned to `visibility`. Must be .", sep = ""))
-        }
+#         if (!(`visibility` %in% c())) {
+#           stop(paste("Error! \"", `visibility`, "\" cannot be assigned to `visibility`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`visibility`))
         self$`visibility` <- `visibility`
       }
       if (!missing(`task`)) {
-        if (!(`task` %in% c())) {
-          stop(paste("Error! \"", `task`, "\" cannot be assigned to `task`. Must be .", sep = ""))
-        }
+#         if (!(`task` %in% c())) {
+#           stop(paste("Error! \"", `task`, "\" cannot be assigned to `task`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`task`))
         self$`task` <- `task`
       }

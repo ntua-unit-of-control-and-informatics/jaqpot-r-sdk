@@ -56,9 +56,9 @@ DatasetCSV <- R6::R6Class(
     #' @param ... Other optional arguments.
     initialize = function(`type`, `inputFile`, `id` = NULL, `values` = NULL, `status` = NULL, `failureReason` = NULL, `modelId` = NULL, `modelName` = NULL, `executedAt` = NULL, `executionFinishedAt` = NULL, `createdAt` = NULL, `updatedAt` = NULL, ...) {
       if (!missing(`type`)) {
-        if (!(`type` %in% c())) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
-        }
+#         if (!(`type` %in% c())) {
+#           stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`type`))
         self$`type` <- `type`
       }

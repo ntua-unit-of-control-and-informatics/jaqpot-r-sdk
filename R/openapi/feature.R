@@ -68,12 +68,10 @@ Feature <- R6::R6Class(
         self$`name` <- `name`
       }
       if (!missing(`featureType`)) {
-        if (!(`featureType` %in% c())) {
-          stop(paste("Error! \"", `featureType`, "\" cannot be assigned to `featureType`. Must be .", sep = ""))
-        }
         stopifnot(R6::is.R6(`featureType`))
         self$`featureType` <- `featureType`
       }
+
       if (!is.null(`id`)) {
         if (!(is.numeric(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be an integer:", `id`))
@@ -99,9 +97,9 @@ Feature <- R6::R6Class(
         self$`description` <- `description`
       }
       if (!is.null(`featureDependency`)) {
-        if (!(`featureDependency` %in% c("DEPENDENT", "INDEPENDENT"))) {
-          stop(paste("Error! \"", `featureDependency`, "\" cannot be assigned to `featureDependency`. Must be \"DEPENDENT\", \"INDEPENDENT\".", sep = ""))
-        }
+#         if (!(`featureDependency` %in% c("DEPENDENT", "INDEPENDENT"))) {
+#           stop(paste("Error! \"", `featureDependency`, "\" cannot be assigned to `featureDependency`. Must be \"DEPENDENT\", \"INDEPENDENT\".", sep = ""))
+#         }
         if (!(is.character(`featureDependency`) && length(`featureDependency`) == 1)) {
           stop(paste("Error! Invalid data for `featureDependency`. Must be a string:", `featureDependency`))
         }

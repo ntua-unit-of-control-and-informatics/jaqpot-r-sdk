@@ -44,9 +44,9 @@ PartialUpdateOrganizationRequest <- R6::R6Class(
         self$`contactEmail` <- `contactEmail`
       }
       if (!missing(`visibility`)) {
-        if (!(`visibility` %in% c())) {
-          stop(paste("Error! \"", `visibility`, "\" cannot be assigned to `visibility`. Must be .", sep = ""))
-        }
+#         if (!(`visibility` %in% c())) {
+#           stop(paste("Error! \"", `visibility`, "\" cannot be assigned to `visibility`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`visibility`))
         self$`visibility` <- `visibility`
       }

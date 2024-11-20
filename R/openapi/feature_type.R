@@ -33,7 +33,9 @@ FeatureType <- R6::R6Class(
           paste0(enumvec, collapse = ", "),
           ". If you did not manually initialize FeatureType, this may already be overwritten by an enum loaded from a JSON config.")
       }
+
       private$value <- val
+
     },
 
     #' @description

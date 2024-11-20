@@ -35,9 +35,9 @@ Doa <- R6::R6Class(
     #' @param ... Other optional arguments.
     initialize = function(`method`, `data`, `id` = NULL, `createdAt` = NULL, `updatedAt` = NULL, ...) {
       if (!missing(`method`)) {
-        if (!(`method` %in% c())) {
-          stop(paste("Error! \"", `method`, "\" cannot be assigned to `method`. Must be .", sep = ""))
-        }
+#         if (!(`method` %in% c())) {
+#           stop(paste("Error! \"", `method`, "\" cannot be assigned to `method`. Must be .", sep = ""))
+#         }
         stopifnot(R6::is.R6(`method`))
         self$`method` <- `method`
       }
