@@ -222,10 +222,12 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                           create.events = create.events, custom.func = custom.func,
                           ode.func = ode.func),connection=NULL))
 
-  var_model <- Model$new(`name` = title,`dependentFeatures` = predicts,
+  var_model <- Model$new(`name` = title,`dependentFeatures` = predicts,  `libraries` = list(),
                          `independentFeatures` = independent.features,
                          `description` = description,
-                         `rawModel` = model,
+                         `rawModel` = model,`type` =  ModelType$new("R_PBPK"), 
+                         `task` = ModelTask$new("REGRESSION"),
+                         `rPbpkConfig` =  RPbpkConfig$new(`odeSolver` = method),
                          `visibility` = "PRIVATE")
   
   api_client <- ApiClient$new(`base_path` = url,`api_keys` = 
