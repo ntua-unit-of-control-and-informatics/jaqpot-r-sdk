@@ -192,6 +192,7 @@ library(stringr)
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
                         url = "http://localhost.jaqpot.org:8080"){
+  
   before_sourcing <- ls()
   openapi_folder <- file.path( "./openapi")
   r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
@@ -203,9 +204,9 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
 
   # Ask the user for a a model title
-  title = "Title of the model"
+  title <- readline("Title of the model: ")
   # Ask the user for a short model description
-  description = "Short description of the model"
+  description  <- readline("Short description of the model:")
   # Set the time vector variables (for ODE output)
   independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step")
   # # Convert three dots into list
