@@ -1,0 +1,28 @@
+Package: jaqpotr
+Type: Package
+Title: Deploys R models as web services on the Jaqpot platform
+Version: 0.0.1
+Authors@R: 
+        c(person(given = "Alex",
+             family = "Arvanitidis",
+             role = c("aut", "cre"),
+             email = "upci.ntua@gmail.com"),
+      person(given = "Periklis",
+             family = "Tsiros",
+             role = "ctb",
+             email = "upci.ntua@gmail.com"))
+Description: This library allows R users to deploy their models on the Jaqpot platform and expose them as ready to use web services.
+License: MIT + file LICENSE
+URL: https://github.com/ntua-unit-of-control-and-informatics
+BugReports: https://github.com/ntua-unit-of-control-and-informatics
+Encoding: UTF-8
+LazyData: true
+Imports: httr, jsonlite, getPass, stats, jose, base64enc, stringr
+RoxygenNote: 7.3.1
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2020-11-19 20:05:56 UTC; 
+Author: Alex Arvanitidis [aut, cre],
+  Periklis Tsiros [ctb]
+Maintainer: Periklis Tsiros <upci.ntua@gmail.com>
