@@ -1,2 +1,2 @@
 # jaqpot-r-sdk
-This repository contains the finalized  R client for jaqpot
+This repository contains the R client for jaqpot
