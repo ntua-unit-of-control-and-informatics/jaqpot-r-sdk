@@ -191,22 +191,35 @@ library(stringr)
 
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
-                        url = "http://localhost.jaqpot.org:8080"){
+                        url = "https://api.jaqpot.org/", envFile =NULL){
   
   before_sourcing <- ls()
+  
+  if (!is.null(envFile)){
+    dotenv::load_dot_env(file = envFile)
+    JAQPOT_API_KEY <- Sys.getenv("JAQPOT_API_KEY")
+    JAQPOT_API_SECRET <- Sys.getenv("JAQPOT_API_SECRET") 
+  }else{
+    JAQPOT_API_KEY <- getPass::getPass("Provide JAQPOT_API_KEY: ")
+    JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
+  } 
   openapi_folder <- file.path( "./openapi")
   r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
   invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
   after_sourcing <- ls()
 
-  # Log into Jaqpot using the LoginJaqpot helper function in utils.R
-  JAQPOT_API_KEY <- getPass::getPass("Provide JAQPOT_API_KEY: ")
-  JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
+  
 
   # Ask the user for a a model title
   title <- readline("Title of the model: ")
+  if (nchar(title) < 3){
+    stop("Please provide a title that is more than 3 characters long")
+  }
   # Ask the user for a short model description
   description  <- readline("Short description of the model:")
+  if (nchar(description)!= 0 && nchar(description) < 3){
+    stop("Please provide a description that is more than 3 characters long")
+  }
   # Set the time vector variables (for ODE output)
   independent.features <- c(names(user.input), "sim.start" , "sim.end", "sim.step")
   # # Convert three dots into list
@@ -241,7 +254,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   rPbpkConfig <- RPbpkConfig$new(odeSolver = method)
   visilibity <- ModelVisibility$new("PRIVATE")
   
-  var_model <- Model$new(name = 'hi', description = 'description',
+  var_model <- Model$new(name = title, description = description,
                          independentFeatures = independentFeatures,
                          dependentFeatures = dependentFeatures,  
                          libraries =library,  jaqpotpyVersion = '0.0',
@@ -254,9 +267,8 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
   api_client <- ApiClient$new(base_path = url,default_headers = default_headers)
   api_instance <- ModelApi$new(api_client = api_client)
-  #Create a new model
+  #Deploy model
   response <- api_instance$CreateModel(var_model)
-  print(response)
 
 
   new_objects <- setdiff(after_sourcing, before_sourcing)
