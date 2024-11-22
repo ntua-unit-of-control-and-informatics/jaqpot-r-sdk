@@ -195,7 +195,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   
   before_sourcing <- ls()
   
-  if is.null(envFile){
+  if !is.null(envFile){
     dotenv::load_dot_env(file = envFile)
     JAQPOT_API_KEY <- Sys.getenv("JAQPOT_API_KEY")
     JAQPOT_API_SECRET <- Sys.getenv("JAQPOT_API_SECRET") 
