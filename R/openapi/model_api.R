@@ -281,7 +281,7 @@ ModelApi <- R6::R6Class(
         model_id <- sub(".*/models/([0-9]+).*", "\\1", api_url)
         dashboard_url <- paste0("https://app.jaqpot.org/dashboard/models/", model_id, "/")
         
-        print(paste0("Model has been deployed on the Jaqpot platform. Visti model at: ", dashboard_url))
+        print(paste0("Model has been deployed on the Jaqpot platform. Visit model at: ", dashboard_url))
         #local_var_resp$content <- NULL
         return(local_var_resp)
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
