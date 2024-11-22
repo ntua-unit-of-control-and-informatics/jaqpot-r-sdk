@@ -217,7 +217,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   }
   # Ask the user for a short model description
   description  <- readline("Short description of the model:")
-  if (nchar(description) < 3){
+  if (nchar(description)!= 0 && nchar(description) < 3){
     stop("Please provide a description that is more than 3 characters long")
   }
   # Set the time vector variables (for ODE output)
