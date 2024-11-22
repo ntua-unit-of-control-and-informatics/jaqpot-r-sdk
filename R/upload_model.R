@@ -191,17 +191,24 @@ library(stringr)
 
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
-                        url = "https://api.jaqpot.org/"){
+                        url = "https://api.jaqpot.org/", envFile =NULL){
   
   before_sourcing <- ls()
+  
+  if is.null(envFile){
+    dotenv::load_dot_env(file = envFile)
+    JAQPOT_API_KEY <- Sys.getenv("JAQPOT_API_KEY")
+    JAQPOT_API_SECRET <- Sys.getenv("JAQPOT_API_SECRET") 
+  }else{
+    JAQPOT_API_KEY <- getPass::getPass("Provide JAQPOT_API_KEY: ")
+    JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
+  } 
   openapi_folder <- file.path( "./openapi")
   r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
   invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
   after_sourcing <- ls()
 
-  # Log into Jaqpot using the LoginJaqpot helper function in utils.R
-  JAQPOT_API_KEY <- getPass::getPass("Provide JAQPOT_API_KEY: ")
-  JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
+  
 
   # Ask the user for a a model title
   title <- readline("Title of the model: ")
