@@ -925,13 +925,13 @@ ModelApi <- R6::R6Class(
     PredictWithModel = function(model_id, dataset, ...) {
       local_var_response <- self$PredictWithModelWithHttpInfo(model_id, dataset, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -952,7 +952,7 @@ ModelApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-
+  
       if (missing(`model_id`)) {
         stop("Missing required parameter `model_id`.")
       }
@@ -964,11 +964,13 @@ ModelApi <- R6::R6Class(
 
 
       if (!is.null(`dataset`)) {
-        local_var_body <- `dataset`$toJSONString()
+        json_data <- `dataset`$toJSON()
+        json_data$type <- gsub('"', '', json_data$type)
+        local_var_body <- jsonlite::toJSON(json_data, auto_unbox = TRUE, digits = NA)
       } else {
         body <- NULL
       }
-
+      
       local_var_url_path <- "/v1/models/{modelId}/predict"
       if (!missing(`model_id`)) {
         local_var_url_path <- gsub("\\{modelId\\}", URLencode(as.character(`model_id`), reserved = TRUE), local_var_url_path)
@@ -997,19 +999,26 @@ ModelApi <- R6::R6Class(
                                  is_oauth = is_oauth,
                                  oauth_scopes = oauth_scopes,
                                  ...)
-
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        local_var_resp$content <- NULL
-        local_var_resp
+        return(local_var_resp)
+        
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        print(paste0("Error, status code ", local_var_resp$status_code))
+        return(local_var_resp)
+        
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
+        print(paste0("API client error, status code ", local_var_resp$status_code))
+        return(local_var_resp)
+        
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        
+        print(paste0("API server error, status code ", local_var_resp$status_code))
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
