@@ -10,7 +10,7 @@
 #' @field data  object [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 CityBlockDoa <- R6::R6Class(
   "CityBlockDoa",
   public = list(

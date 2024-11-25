@@ -10,7 +10,7 @@
 #' @field emails List of email addresses to invite list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 CreateInvitationsRequest <- R6::R6Class(
   "CreateInvitationsRequest",
   public = list(

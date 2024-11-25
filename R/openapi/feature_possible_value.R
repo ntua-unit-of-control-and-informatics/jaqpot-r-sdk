@@ -11,7 +11,7 @@
 #' @field value  character
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 FeaturePossibleValue <- R6::R6Class(
   "FeaturePossibleValue",
   public = list(

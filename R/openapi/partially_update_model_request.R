@@ -15,7 +15,7 @@
 #' @field sharedWithOrganizationIds  list(integer) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PartiallyUpdateModelRequest <- R6::R6Class(
   "PartiallyUpdateModelRequest",
   public = list(

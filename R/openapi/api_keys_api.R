@@ -82,7 +82,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 ApiKeysApi <- R6::R6Class(
   "ApiKeysApi",
   public = list(

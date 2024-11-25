@@ -11,7 +11,7 @@
 #' @field name  character
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 OrganizationSummary <- R6::R6Class(
   "OrganizationSummary",
   public = list(

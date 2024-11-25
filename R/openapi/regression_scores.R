@@ -14,7 +14,7 @@
 #' @field rmse  numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 RegressionScores <- R6::R6Class(
   "RegressionScores",
   public = list(

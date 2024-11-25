@@ -4,7 +4,7 @@
 #' @format An \code{R6Class} generator object
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 OrganizationVisibility <- R6::R6Class(
   "OrganizationVisibility",
   public = list(

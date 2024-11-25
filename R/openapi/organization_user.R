@@ -14,7 +14,7 @@
 #' @field associationType  \link{OrganizationUserAssociationType}
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 OrganizationUser <- R6::R6Class(
   "OrganizationUser",
   public = list(

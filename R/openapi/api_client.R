@@ -33,7 +33,7 @@
 #' @field retry_status_codes vector of status codes to retry
 #' @field max_retry_attempts maximum number of retries for the status codes
 #' @importFrom httr add_headers accept timeout content
-#' @export
+#' @keywords internal
 ApiClient <- R6::R6Class(
   "ApiClient",
   public = list(
@@ -73,7 +73,7 @@ ApiClient <- R6::R6Class(
     #' @param timeout Timeout.
     #' @param retry_status_codes Status codes for retry.
     #' @param max_retry_attempts Maxmium number of retry.
-    #' @export
+    #' @keywords internal
     initialize = function(base_path = NULL, user_agent = NULL,
                           default_headers = NULL,
                           username = NULL, password = NULL, api_keys = NULL,

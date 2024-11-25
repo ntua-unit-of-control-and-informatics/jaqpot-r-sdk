@@ -14,7 +14,7 @@
 #' @field updatedAt The date and time when the feature was last updated. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PredictionDoa <- R6::R6Class(
   "PredictionDoa",
   public = list(

@@ -14,7 +14,7 @@
 #' @field expirationDate Expiration date of the invitation character
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 OrganizationInvitation <- R6::R6Class(
   "OrganizationInvitation",
   public = list(

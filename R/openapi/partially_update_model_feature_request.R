@@ -15,7 +15,7 @@
 #' @field possibleValues  list(\link{FeaturePossibleValue}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PartiallyUpdateModelFeatureRequest <- R6::R6Class(
   "PartiallyUpdateModelFeatureRequest",
   public = list(

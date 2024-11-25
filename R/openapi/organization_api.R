@@ -98,7 +98,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 OrganizationApi <- R6::R6Class(
   "OrganizationApi",
   public = list(

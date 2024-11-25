@@ -11,7 +11,7 @@
 #' @field dataset  \link{Dataset}
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PredictionRequest <- R6::R6Class(
   "PredictionRequest",
   public = list(

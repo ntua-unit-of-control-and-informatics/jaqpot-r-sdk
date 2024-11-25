@@ -13,7 +13,7 @@
 #' @field visibility  \link{OrganizationVisibility}
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PartialUpdateOrganizationRequest <- R6::R6Class(
   "PartialUpdateOrganizationRequest",
   public = list(

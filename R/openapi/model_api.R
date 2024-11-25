@@ -185,7 +185,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 ModelApi <- R6::R6Class(
   "ModelApi",
   public = list(

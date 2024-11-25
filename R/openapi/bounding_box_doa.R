@@ -10,7 +10,7 @@
 #' @field boundingBox  list(list(numeric)) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 BoundingBoxDoa <- R6::R6Class(
   "BoundingBoxDoa",
   public = list(

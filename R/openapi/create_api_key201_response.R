@@ -11,7 +11,7 @@
 #' @field clientSecret The generated API secret character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 CreateApiKey201Response <- R6::R6Class(
   "CreateApiKey201Response",
   public = list(

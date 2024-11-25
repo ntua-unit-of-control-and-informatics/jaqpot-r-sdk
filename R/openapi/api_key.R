@@ -17,7 +17,7 @@
 #' @field enabled Whether the API key is active or disabled character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 ApiKey <- R6::R6Class(
   "ApiKey",
   public = list(
