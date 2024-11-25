@@ -6,7 +6,7 @@ df <-list(
   "administration.time" = 0.1,
   "sim.start" = 0,
   "sim.step" = 1,
-  "sim.stop" = 10
+  "sim.end" = 10
 )
 
 jaqpot.predict( df, modelID, url = "https://api.jaqpot.org/", envFile =envFile)
