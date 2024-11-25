@@ -61,8 +61,8 @@ DatasetType <- R6::R6Class(
     #'
     #' @return DatasetType in JSON format
     toJSONString = function() {
-      as.character(jsonlite::toJSON(private$value,
-          auto_unbox = TRUE))
+      jsonlite::toJSON(private$value,
+          auto_unbox = TRUE)
     },
 
     #' @description
@@ -73,7 +73,7 @@ DatasetType <- R6::R6Class(
     #' @return the instance of DatasetType
     fromJSONString = function(input_json) {
       private$value <- jsonlite::fromJSON(input_json,
-          simplifyVector = FALSE)
+          simplifyVector = TRUE)
       self
     }
   ),
@@ -82,9 +82,14 @@ DatasetType <- R6::R6Class(
   )
 )
 
-# add to utils.R
-.parse_DatasetType <- function(vals) {
-  res <- gsub("^\\[|\\]$", "", "[PREDICTION]")
-  unlist(strsplit(res, ", "))
+# # add to utils.R
+# .parse_DatasetType <- function(vals) {
+#   res <- gsub("^\\[|\\]$", "", "[PREDICTION]")
+#   unlist(strsplit(res, ", "))
+# }
+
+# Enum definition
+.parse_DatasetType <- function() {
+  c("PREDICTION", "DUMMY_ENUM")
 }
 

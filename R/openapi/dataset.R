@@ -172,7 +172,7 @@ Dataset <- R6::R6Class(
       }
       if (!is.null(self$`input`)) {
         DatasetObject[["input"]] <-
-          lapply(self$`input`, function(x) x$toJSON())
+          lapply(self$`input`, function(x) x$data)
       }
       if (!is.null(self$`result`)) {
         DatasetObject[["result"]] <-
@@ -296,7 +296,7 @@ Dataset <- R6::R6Class(
           '"type":
           %s
           ',
-          jsonlite::toJSON(self$`type`$toJSON(), auto_unbox = TRUE, digits = NA)
+          self$`type`$toJSON()
           )
         },
         if (!is.null(self$`entryType`)) {
@@ -312,7 +312,7 @@ Dataset <- R6::R6Class(
           '"input":
           [%s]
 ',
-          paste(sapply(self$`input`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
+          paste(sapply(self$`input`, function(x) jsonlite::toJSON(x$data, auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         },
         if (!is.null(self$`result`)) {

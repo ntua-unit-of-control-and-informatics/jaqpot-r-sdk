@@ -123,4 +123,4 @@ solution <- data.frame(deSolve::ode(times = sample_time,  func = ode.func,
                                     method="lsodes",rtol = 1e-07, atol = 1e-07))
 
 deploy.pbpk(user.input, out.vars, create.params, create.inits, create.events,
-             custom.func, ode.fun)
+             custom.func, ode.fun, envFile = "jaqpot.env")
