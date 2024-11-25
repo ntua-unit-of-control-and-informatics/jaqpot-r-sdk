@@ -11,7 +11,7 @@
 #' @field enabled Set to `false` to disable the API key character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 UpdateApiKeyRequest <- R6::R6Class(
   "UpdateApiKeyRequest",
   public = list(

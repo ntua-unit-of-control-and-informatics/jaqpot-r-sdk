@@ -11,7 +11,7 @@
 #' @field doaMatrix  list(list(numeric)) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 LeverageDoa <- R6::R6Class(
   "LeverageDoa",
   public = list(

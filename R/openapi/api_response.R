@@ -15,7 +15,7 @@
 #' @field status_code The HTTP response status code.
 #' @field status_code_desc The brief description of the HTTP response status code.
 #' @field headers The HTTP response headers.
-#' @export
+#' @keywords internal
 ApiResponse <- R6::R6Class(
   "ApiResponse",
   public = list(

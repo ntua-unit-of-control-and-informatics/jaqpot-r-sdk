@@ -92,7 +92,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 LeadApi <- R6::R6Class(
   "LeadApi",
   public = list(

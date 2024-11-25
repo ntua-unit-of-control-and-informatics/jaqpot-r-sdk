@@ -11,7 +11,7 @@
 #' @field code Error code integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 ErrorResponse <- R6::R6Class(
   "ErrorResponse",
   public = list(

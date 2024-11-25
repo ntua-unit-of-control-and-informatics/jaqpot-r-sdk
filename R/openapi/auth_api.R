@@ -30,7 +30,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 AuthApi <- R6::R6Class(
   "AuthApi",
   public = list(

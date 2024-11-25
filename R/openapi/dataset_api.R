@@ -53,7 +53,7 @@
 #' }
 #' @importFrom R6 R6Class
 #' @importFrom base64enc base64encode
-#' @export
+#' @keywords internal
 DatasetApi <- R6::R6Class(
   "DatasetApi",
   public = list(

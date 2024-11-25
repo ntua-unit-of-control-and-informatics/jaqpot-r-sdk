@@ -12,7 +12,7 @@
 #' @field config  named list(\link{AnyType})
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 Transformer <- R6::R6Class(
   "Transformer",
   public = list(

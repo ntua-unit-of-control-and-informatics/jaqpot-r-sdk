@@ -1,6 +1,6 @@
-#' Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.
+#' @title Deploy an Ordinary Differential Equation (ODE) model on Jaqpot.
 #'
-#' Uploads an ODE model on Jaqpot that can be solved using the \code{ode}
+#' @description Uploads an ODE model on Jaqpot that can be solved using the \code{ode}
 #' function of package 'deSolve'.
 #'
 #' @param user.input A list with keys the names of the inputs that the
@@ -183,11 +183,10 @@
 #'                                     method="lsodes",rtol = 1e-07, atol = 1e-07))
 #' deploy.pbpk(user.input, out.vars, create.params, create.inits, create.events,
 #'             custom.func, ode.fun, method = "bdf", list(rtol=1e-07, atol=1e-09))
-#'
+#'}
 #' @export
 #'
 
-library(stringr)
 
 deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",

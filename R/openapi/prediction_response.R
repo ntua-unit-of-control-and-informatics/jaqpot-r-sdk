@@ -10,7 +10,7 @@
 #' @field predictions  list(\link{AnyType})
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PredictionResponse <- R6::R6Class(
   "PredictionResponse",
   public = list(

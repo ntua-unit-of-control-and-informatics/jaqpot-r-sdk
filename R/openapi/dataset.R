@@ -23,7 +23,7 @@
 #' @field updatedAt  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 Dataset <- R6::R6Class(
   "Dataset",
   public = list(

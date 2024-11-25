@@ -13,7 +13,7 @@
 #' @field status  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 Lead <- R6::R6Class(
   "Lead",
   public = list(

@@ -1,3 +1,4 @@
+#' @keywords internal
 #' Create a new PredictionModel
 #'
 #' @description
@@ -24,7 +25,7 @@
 #' @field legacyPredictionService Legacy prediction service information, if available character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 PredictionModel <- R6::R6Class(
   "PredictionModel",
   public = list(

@@ -17,8 +17,8 @@ URL: https://github.com/ntua-unit-of-control-and-informatics
 BugReports: https://github.com/ntua-unit-of-control-and-informatics
 Encoding: UTF-8
 LazyData: true
-Imports: httr, jsonlite, getPass, stats, jose, base64enc, stringr, dotenv, R6
-RoxygenNote: 7.3.1
+Imports: httr, jsonlite, getPass, stats, base64enc, dotenv, R6
+RoxygenNote: 7.3.2
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no

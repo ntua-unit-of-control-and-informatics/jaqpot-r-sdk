@@ -23,7 +23,7 @@
 #' @field updated_at  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
-#' @export
+#' @keywords internal
 Organization <- R6::R6Class(
   "Organization",
   public = list(
