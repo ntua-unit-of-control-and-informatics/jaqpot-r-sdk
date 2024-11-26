@@ -376,7 +376,7 @@ ApiClient <- R6::R6Class(
         return(invisible(NULL))
       } else {
         for (header in headers) {
-          if (str_detect(header, "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$")) {
+          if (stringr::str_detect(header, "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$")) {
             # return JSON-related MIME
             return(header)
           }
