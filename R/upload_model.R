@@ -192,7 +192,7 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
                         create.events,custom.func, ode.fun, method = "lsodes",
                         url = "https://api.jaqpot.org/", envFile =NULL){
   
-  before_sourcing <- ls()
+  # before_sourcing <- ls()
   
   if (!is.null(envFile)){
     dotenv::load_dot_env(file = envFile)
@@ -202,10 +202,10 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
     JAQPOT_API_KEY <- getPass::getPass("Provide JAQPOT_API_KEY: ")
     JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
   } 
-  openapi_folder <- file.path( "./openapi")
-  r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
-  invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
-  after_sourcing <- ls()
+  # openapi_folder <- file.path( "./openapi")
+  # r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
+  # invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
+  # after_sourcing <- ls()
 
   
 
@@ -270,6 +270,6 @@ deploy.pbpk <- function(user.input, out.vars, create.params, create.inits,
   response <- api_instance$CreateModel(var_model)
 
 
-  new_objects <- setdiff(after_sourcing, before_sourcing)
-  rm(list = new_objects)
+  # new_objects <- setdiff(after_sourcing, before_sourcing)
+  # rm(list = new_objects)
 }

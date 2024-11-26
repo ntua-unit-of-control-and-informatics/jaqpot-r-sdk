@@ -2,3 +2,11 @@
 
 export(deploy.pbpk)
 export(jaqpot.predict)
+importFrom(R6,R6Class)
+importFrom(base64enc,base64encode)
+importFrom(httr,accept)
+importFrom(httr,add_headers)
+importFrom(httr,content)
+importFrom(httr,timeout)
+importFrom(jsonlite,fromJSON)
+importFrom(jsonlite,toJSON)

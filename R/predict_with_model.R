@@ -33,7 +33,7 @@ jaqpot.predict <- function( df, modelID, url = "https://api.jaqpot.org/", envFil
     stop("The modelID should be a string ('charachter' type).")
   }
   
-  before_sourcing <-  ls(envir = .GlobalEnv)
+  # before_sourcing <-  ls(envir = .GlobalEnv)
   if (!is.null(envFile)){
     dotenv::load_dot_env(file = envFile)
     JAQPOT_API_KEY <- Sys.getenv("JAQPOT_API_KEY")
@@ -43,10 +43,10 @@ jaqpot.predict <- function( df, modelID, url = "https://api.jaqpot.org/", envFil
     JAQPOT_API_SECRET <- getPass::getPass("Provide JAQPOT_API_SECRET: ")
   } 
  
-  openapi_folder <- file.path( "./openapi")
-  r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
-  invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
-  after_sourcing <-  ls(envir = .GlobalEnv)
+  # openapi_folder <- file.path( "./openapi")
+  # r_files <- list.files(openapi_folder, pattern = "\\.R$", full.names = TRUE)
+  # invisible(lapply(r_files, function(file) source(file, echo = FALSE, print.eval = FALSE)))
+  # after_sourcing <-  ls(envir = .GlobalEnv)
   
   default_headers <- c("X-Api-Key" = JAQPOT_API_KEY, "X-Api-Secret" = JAQPOT_API_SECRET)
   api_client <- ApiClient$new(base_path = url,default_headers = default_headers)
@@ -94,8 +94,8 @@ jaqpot.predict <- function( df, modelID, url = "https://api.jaqpot.org/", envFil
     Sys.sleep(step)
   }
   
-  new_objects <- setdiff(after_sourcing, before_sourcing)
-  rm(list = new_objects, envir = .GlobalEnv)
+  # new_objects <- setdiff(after_sourcing, before_sourcing)
+  # rm(list = new_objects, envir = .GlobalEnv)
   
   return (list( predictions = dataset_response$content$result, predictionDatasetID =dataset_id))
   
